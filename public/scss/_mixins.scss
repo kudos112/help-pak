@@ -1,0 +1,45 @@
+@mixin FlexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin HeadingWithGrayGreenColor {
+  .heading {
+    @include FlexCenter();
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 1rem;
+
+    .gray {
+      font-size: 1.8rem;
+      font-weight: bolder;
+      color: $gray;
+    }
+
+    .green {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: $green;
+    }
+  }
+}
+
+@mixin respond($breakpoint) {
+  @if ($breakpoint == small) {
+    @media (max-width: 426px) {
+      @content;
+    }
+  }
+
+  @if ($breakpoint == medium) {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+
+  @if ($breakpoint == large) {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  }
+}

@@ -1,40 +1,45 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
 .page {
   display: flex;
   margin: 0px;
   width: 100%;
 
   .img {
+    @include FlexCenter();
     background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 70%;
+    @include respond(medium) {
+      display: none;
+    }
   }
 
   .pageContent {
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     width: 20%;
     margin: auto;
+    @include respond(medium) {
+      width: 50%;
+    }
 
     .heading {
-      display: flex;
+      @include FlexCenter();
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
       gap: 10px;
 
       .gray {
         font-size: 1.8rem;
         font-weight: bolder;
-        color: #6b7280;
+        color: $gray;
       }
 
       .green {
         font-size: 1.8rem;
         font-weight: bold;
-        color: #15803d;
+        color: $green;
       }
     }
 
@@ -43,15 +48,13 @@
       margin-bottom: 2rem;
 
       .fields {
-        display: flex;
+        @include FlexCenter();
         gap: 0.3rem;
         align-items: flex-start;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
 
         .title {
-          color: #6b7280;
+          color: $gray;
           font-size: 0.8rem;
           left: 0;
           margin: 0px;
@@ -63,8 +66,14 @@
         }
 
         .signup {
-          color: #15803d;
+          color: $green;
           margin-left: 0.5rem;
+        }
+
+        .footer {
+          width: 100%;
+          @include FlexCenter();
+          flex-direction: column;
         }
       }
     }

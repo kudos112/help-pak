@@ -1,1 +1,15 @@
+@import "/public/scss/mixins";
 
+.a {
+  background-color: aqua;
+  @include respond(large) {
+    background-color: black;
+  }
+
+  @include respond(medium) {
+    background-color: yellow;
+  }
+  @include respond(small) {
+    background-color: white;
+  }
+}

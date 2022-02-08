@@ -8,7 +8,7 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
+  Link as ChakraLink,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -21,6 +21,8 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+
+import Link from "next/link";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -51,8 +53,12 @@ export default function NavBar() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <span className={styles.help}>Help</span>
-          <span className={styles.pak}>Pak</span>
+          <Link href="/" passHref>
+            <div style={{ cursor: "pointer" }}>
+              <span className={styles.help}>Help</span>
+              <span className={styles.pak}>Pak</span>
+            </div>
+          </Link>
           <Flex display={{ base: "none", md: "flex" }} align={"center"} ml={10}>
             <DesktopNav />
           </Flex>
@@ -99,9 +105,8 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
+              <ChakraLink
                 p={2}
-                href={navItem.href ?? "#"}
                 fontSize={"md"}
                 fontWeight={600}
                 color={linkColor}
@@ -110,8 +115,10 @@ const DesktopNav = () => {
                   color: linkHoverColor,
                 }}
               >
-                {navItem.label}
-              </Link>
+                <Link href={navItem.href ?? "#"} passHref>
+                  {navItem.label}
+                </Link>
+              </ChakraLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -139,39 +146,40 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
-    <Link
-      href={href}
-      role={"group"}
-      display={"block"}
-      p={2}
-      rounded={"md"}
-      _hover={{ bg: useColorModeValue("#F6F9FA", "gray.900") }}
-    >
-      <Stack direction={"row"} align={"center"}>
-        <Box>
-          <Text
+    <Link href={href} passHref>
+      <ChakraLink
+        role={"group"}
+        display={"block"}
+        p={2}
+        rounded={"md"}
+        _hover={{ bg: useColorModeValue("#F6F9FA", "gray.900") }}
+      >
+        <Stack direction={"row"} align={"center"}>
+          <Box>
+            <Text
+              transition={"all .3s ease"}
+              _groupHover={{ color: "#15803D" }}
+              fontWeight={500}
+            >
+              {label}
+            </Text>
+            <Text fontSize={"sm"} fontWeight={200}>
+              {subLabel}
+            </Text>
+          </Box>
+          <Flex
             transition={"all .3s ease"}
-            _groupHover={{ color: "#15803D" }}
-            fontWeight={500}
+            transform={"translateX(-10px)"}
+            opacity={0}
+            _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
+            justify={"flex-end"}
+            align={"center"}
+            flex={1}
           >
-            {label}
-          </Text>
-          <Text fontSize={"sm"} fontWeight={200}>
-            {subLabel}
-          </Text>
-        </Box>
-        <Flex
-          transition={"all .3s ease"}
-          transform={"translateX(-10px)"}
-          opacity={0}
-          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-          justify={"flex-end"}
-          align={"center"}
-          flex={1}
-        >
-          <Icon color={"#F6F9FA"} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
-      </Stack>
+            <Icon color={"#F6F9FA"} w={5} h={5} as={ChevronRightIcon} />
+          </Flex>
+        </Stack>
+      </ChakraLink>
     </Link>
   );
 };
@@ -197,7 +205,7 @@ const MobileNavItem = ({ label, children, href }) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
+        as={ChakraLink}
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
@@ -233,9 +241,11 @@ const MobileNavItem = ({ label, children, href }) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
+              <div key={child.label}>
+                <Link href={child.href} passHref>
+                  <ChakraLink py={2}>{child.label}</ChakraLink>
+                </Link>
+              </div>
             ))}
         </Stack>
       </Collapse>
@@ -249,13 +259,13 @@ const NAV_ITEMS = [
     children: [
       {
         label: "Create Fundraising Post",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
+        subLabel: "Collect ",
+        href: "/fundraising/request",
       },
       {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
+        label: "Fundraising Posts",
+        subLabel: "",
+        href: "/fundraising",
       },
     ],
   },
@@ -263,12 +273,12 @@ const NAV_ITEMS = [
     label: "Medical Camps",
     children: [
       {
-        label: "Job Board",
+        label: "Create Medical Camps",
         subLabel: "Find your dream design job",
         href: "#",
       },
       {
-        label: "Freelance Projects",
+        label: "Medical Camps",
         subLabel: "An exclusive list for contract work",
         href: "#",
       },
@@ -278,12 +288,12 @@ const NAV_ITEMS = [
     label: "Old Item Donation",
     children: [
       {
-        label: "Job Board",
+        label: "Create donation request",
         subLabel: "Find your dream design job",
         href: "#",
       },
       {
-        label: "Freelance Projects",
+        label: "Available Old Items",
         subLabel: "An exclusive list for contract work",
         href: "#",
       },
@@ -293,12 +303,12 @@ const NAV_ITEMS = [
     label: "Medical Assistance",
     children: [
       {
-        label: "Job Board",
+        label: "Add Medical Assistance",
         subLabel: "Find your dream design job",
         href: "#",
       },
       {
-        label: "Freelance Projects",
+        label: "Medical Assistance",
         subLabel: "An exclusive list for contract work",
         href: "#",
       },

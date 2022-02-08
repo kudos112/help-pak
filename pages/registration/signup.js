@@ -1,5 +1,5 @@
-import CustomInput from "../../components/custom-input/custom-input";
-import CustomButton from "../../components/custom-button/custom-button";
+import CustomInput from "../../components/custom-input/custom-input.component";
+import CustomButton from "../../components/custom-button/custom-button.component";
 import { Divider, Select } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -68,14 +68,16 @@ export default function SignUp() {
             />
             <Divider className="mt-3" />
 
-            <span style={{ color: "#6b7280" }}>
-              Already have account? Go to
-              <Link href="/registration/login" passHref>
-                <a style={{ color: "#15803d", marginLeft: "0.5rem" }}>
-                  Login Page
-                </a>
-              </Link>
-            </span>
+            <div className={styles.footer}>
+              <span style={{ color: "#6b7280" }}>
+                Already have account? Go to
+                <Link href="/registration/login" passHref>
+                  <a style={{ color: "#15803d", marginLeft: "0.5rem" }}>
+                    Login Page
+                  </a>
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
       </div>

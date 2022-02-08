@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "../components/layout/layout";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.scss";
+import { ReduxWrapper } from "../redux/store";
 
 const MyApp = ({ Component, pageProps }) => (
   <ChakraProvider theme={theme} resetCSS={false}>
@@ -16,7 +17,7 @@ const MyApp = ({ Component, pageProps }) => (
   </ChakraProvider>
 );
 
-export default MyApp;
+export default ReduxWrapper.withRedux(MyApp);
 
 const theme = extendTheme({
   styles: {
