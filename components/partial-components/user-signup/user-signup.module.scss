@@ -1,0 +1,10 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.signup {
+  @include FlexCenter();
+  gap: 0.3rem;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}

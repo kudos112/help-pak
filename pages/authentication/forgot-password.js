@@ -30,7 +30,7 @@ export default function Login() {
             <div className={styles.footer}>
               <span style={{ color: "#6b7280" }}>
                 Go to
-                <Link href="/registration/login" passHref>
+                <Link href="/authentication/login" passHref>
                   <a style={{ color: "#15803d", marginLeft: "0.5rem" }}>
                     Login Page
                   </a>

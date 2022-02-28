@@ -11,12 +11,12 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="icon" href="/pakistan.svg" />
-          <link
+          {/* <link
             rel="preload"
             href="/fonts/Gilroy-Light.ttf"
             as="font"
             crossOrigin="anonymous"
-          />
+          /> */}
         </Head>
         <body>
           <Main />

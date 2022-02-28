@@ -1,0 +1,86 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.page {
+  display: flex;
+  margin: 0px;
+  width: 100%;
+
+  .img {
+    @include FlexCenter();
+    background-color: white;
+    width: 70%;
+    @include respond(medium) {
+      display: none;
+    }
+  }
+
+  .pageContent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 20%;
+    margin: auto;
+    @include respond(medium) {
+      width: 50%;
+    }
+
+    .spinner {
+      width: 100%;
+      @include FlexCenter();
+    }
+
+    .heading {
+      @include FlexCenter();
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .gray {
+        font-size: 1.8rem;
+        font-weight: bolder;
+        color: $gray;
+      }
+
+      .green {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $green;
+      }
+    }
+
+    .inputContent {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+
+      .fields {
+        @include FlexCenter();
+        gap: 0.3rem;
+        align-items: flex-start;
+        flex-direction: column;
+
+        .title {
+          color: $gray;
+          font-size: 0.8rem;
+          left: 0;
+          margin: 0px;
+        }
+
+        .forgotPassword {
+          color: red;
+          margin-top: 0.2rem;
+        }
+
+        .signup {
+          color: $green;
+          margin-left: 0.5rem;
+        }
+
+        .footer {
+          width: 100%;
+          @include FlexCenter();
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

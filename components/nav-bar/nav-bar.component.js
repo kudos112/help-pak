@@ -14,18 +14,22 @@ import {
   PopoverContent,
   useColorModeValue,
   useDisclosure,
+  Avatar,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  AiOutlineUser,
 } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
 
 import Link from "next/link";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
 
   return (
     <Box>
@@ -63,27 +67,29 @@ export default function NavBar() {
             <DesktopNav />
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
         >
-          <Link href="/registration/login" passHref>
-            <Button
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={300}
-              color={"white"}
-              bg={"#15803D"}
-              _hover={{
-                bg: "#6B7280",
-              }}
-            >
-              Sign In
-            </Button>
-          </Link>
+          {!isLoggedIn ? (
+            <Link href="/authentication/login" passHref>
+              <Button
+                fontSize={"sm"}
+                fontWeight={300}
+                color={"white"}
+                bg={"#15803D"}
+                _hover={{
+                  bg: "#6B7280",
+                }}
+              >
+                Sign In
+              </Button>
+            </Link>
+          ) : (
+            <Avatar bg="gray" />
+          )}
         </Stack>
       </Flex>
 

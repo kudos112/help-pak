@@ -1,20 +1,22 @@
+import { AttachmentIcon } from "@chakra-ui/icons";
 import Dropzone from "react-dropzone";
 import styles from "./file-upload.module.scss";
 
-const FileUploader = ({ title, placeholder, fileName, onDrop, ...props }) => {
+const FileUploader = ({ title, placeholder, ...props }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputContainer}>
         <p className={styles.title}>{title}</p>
 
         <div className={styles.dropzone}>
-          <Dropzone onDrop={onDrop}>
+          <Dropzone {...props}>
             {({ getRootProps, getInputProps }) => (
               <section>
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
                   <p className={styles.placeholder}>
-                    {fileName ? fileName : placeholder}
+                    {placeholder}
+                    <AttachmentIcon />
                   </p>
                 </div>
               </section>
