@@ -92,12 +92,12 @@ function* loginSaga(action) {
       };
       _user = user;
     }
-    successNotification("Welcome Back", "logged In successfully");
     yield put(loginSuccess(_user));
     for (const key of Object.keys(_tokens))
       localStorage.setItem(`${appName}_${key}`, _tokens[key]);
-    Router.push("/");
     action.callback();
+    Router.push("/");
+    successNotification("Welcome Back", "logged In successfully");
   } catch (error) {
     if (action && action.callback) {
       action.callback();
@@ -119,7 +119,7 @@ function* logOutSaga(action) {
     localStorage.removeItem(`${appName}_refreshToken`);
     successNotification("Information", "logout successfully");
     action.callback();
-    Router.replace("/");
+    Router.push("/");
     yield put(logOutSuccess());
   } catch (err) {
     console.log(err);
