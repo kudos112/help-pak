@@ -30,6 +30,8 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
     setData({ ...data, [key]: value });
   };
 
+  const deleteImage = () => {};
+
   const handleLoading = () => {
     setLoading(false);
   };
@@ -50,8 +52,8 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
       };
       console.log(payload);
       setLoading(true);
+      dispatch(userSignUpRequest(payload, handleLoading));
     }
-    dispatch(userSignUpRequest(payload, handleLoading));
   };
 
   const onDrop = (acceptedFiles, rejectedFiles, imgName) => {

@@ -105,16 +105,16 @@ export default function Login() {
                   <CustomButton title="Lets Help Pakistan" type="submit" />
                 </form>
 
-                <Divider className="mt-7" />
+                <Divider />
 
                 <div className={styles.footer}>
-                  <Link href="/authentication/forgot-password" passHref>
+                  <Link href="/account/forgot-password" passHref>
                     <a className={styles.forgotPassword}>forgot password?</a>
                   </Link>
 
                   <span>
                     {"don't have account?"}
-                    <Link href="/authentication/signup" passHref>
+                    <Link href="/account/signup" passHref>
                       <a className={styles.signup}>Create Now</a>
                     </Link>
                   </span>

@@ -32,6 +32,23 @@ class AuthenticationRepository {
       throw getError(error);
     }
   }
+
+  async ngoRegister(payload) {
+    try {
+      const request = await Repository.post(
+        `${baseUrl}/${routes.ngoRegister}`,
+        payload
+      );
+      const { data } = request;
+      return {
+        tokens: data.tokens,
+        user: data.ngo,
+      };
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
   async login(payload) {
     try {
       const postObject = { ...payload };
@@ -49,44 +66,30 @@ class AuthenticationRepository {
     }
   }
 
-  //   async logout() {
-  //     try {
-  //       const val = await Repository.post(`${baseUrl}${routes.logout}`, {
-  //         deviceToken,
-  //       });
-  //     } catch (error) {
-  //       throw getError(error);
-  //     }
-  //   }
-  //   async sendotp({ email }) {
-  //     try {
-  //       return await Repository.post(`${baseUrl}${routes.generateoptp}`, {
-  //         email,
-  //       });
-  //     } catch (error) {
-  //       throw getError(error);
-  //     }
-  //   }
-  //   async verifyOtp({ email, otp }) {
-  //     try {
-  //       return await Repository.post(`${baseUrl}${routes.verifyotp}`, {
-  //         email,
-  //         otp,
-  //       });
-  //     } catch (error) {
-  //       throw getError(error);
-  //     }
-  //   }
-  //   async newpassword({ email, newPassword }) {
-  //     try {
-  //       return await Repository.post(`${baseUrl}${routes.changepassword}`, {
-  //         email,
-  //         newPassword,
-  //       });
-  //     } catch (error) {
-  //       throw getError(error);
-  //     }
-  //   }
+  async logout(payload) {
+    try {
+      await Repository.post(`${baseUrl}${routes.logout}`, payload);
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+  async forgetPassword(payload) {
+    try {
+      await Repository.post(`${baseUrl}${routes.forgetPassword}`, payload);
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+  async resetPassword(payload, token) {
+    try {
+      await Repository.post(
+        `${baseUrl}${routes.resetPassword}?${token}`,
+        payload
+      );
+    } catch (error) {
+      throw getError(error);
+    }
+  }
 }
 
 export default new AuthenticationRepository();

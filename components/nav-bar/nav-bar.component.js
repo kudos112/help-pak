@@ -21,6 +21,7 @@ import {
   MenuItem,
   MenuDivider,
   Center,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -29,23 +30,29 @@ import {
   ChevronRightIcon,
   AiOutlineUser,
 } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
+import { logOutRequest } from "~/redux/auth/auth.actions";
+import { useState } from "react";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
   const user = useSelector(({ auth }) => auth.user);
-
+  const [loading, setLoading] = useState(false);
+  const handleLoading = () => {
+    setLoading(false);
+  };
   return (
     <Box>
       <Flex
         bg={useColorModeValue("white")}
         color={useColorModeValue("gray.600")}
-        minH={"60px"}
+        minH={"70px"}
         py={{ base: 2 }}
-        px={{ base: 4 }}
+        px={{ base: 8 }}
         borderBottom={1}
         align={"center"}
       >
@@ -81,10 +88,10 @@ export default function NavBar() {
           spacing={6}
         >
           {!isLoggedIn ? (
-            <Link href="/authentication/login" passHref>
+            <Link href="/account/login" passHref>
               <Button
                 fontSize={"sm"}
-                fontWeight={300}
+                fontWeight={500}
                 color={"white"}
                 bg={"#15803D"}
                 _hover={{
@@ -103,7 +110,7 @@ export default function NavBar() {
                 cursor={"pointer"}
                 minW={0}
               >
-                <Avatar size={"sm"} bg={"gray"} />
+                <Avatar size={"sm"} bg={"customGray"} />
               </MenuButton>
               <MenuList alignItems={"center"}>
                 <br />
@@ -112,7 +119,23 @@ export default function NavBar() {
                 </Center>
                 <br />
                 <MenuDivider />
-                <MenuItem>Logout</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setLoading(true);
+                    dispatch(logOutRequest(handleLoading));
+                  }}
+                >
+                  Logout
+                  {loading && (
+                    <Spinner
+                      size="sm"
+                      speed="0.65s"
+                      emptyColor="lightGreen"
+                      color="green"
+                      ml={3}
+                    />
+                  )}
+                </MenuItem>
               </MenuList>
             </Menu>
           )}

@@ -3,9 +3,9 @@ import { extendTheme } from "@chakra-ui/react";
 export const theme = extendTheme({
   colors: {
     transparent: "transparent",
-    green: "#15803D",
+    customGreen: "#15803D",
     lightGreen: "#F6F9FA",
-    gray: "#6B7280",
+    customGray: "#6B7280",
     white: "#fff",
   },
   styles: {
@@ -20,7 +20,6 @@ export const theme = extendTheme({
         h5: "",
         div: "",
       },
-      Button: "",
     },
   },
 });

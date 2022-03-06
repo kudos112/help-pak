@@ -46,6 +46,38 @@ function* userSignUpSaga(action) {
   }
 }
 
+function* ngoSignUpSaga(action) {
+  try {
+    const { user, tokens } = yield call(
+      AuthService.ngoRegister,
+      action.payload
+    );
+
+    let _tokens = {
+      accessToken: tokens.access.accessToken,
+      refreshToken: tokens.refresh.refreshToken,
+    };
+
+    successNotification("Welcome Back", "logged In successfully");
+
+    yield put(loginSuccess(user));
+
+    for (const key of Object.keys(_tokens))
+      localStorage.setItem(`${appName}_${key}`, _tokens[key]);
+
+    Router.push("/");
+
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 function* loginSaga(action) {
   try {
     let _tokens;
@@ -61,7 +93,6 @@ function* loginSaga(action) {
       _user = user;
     }
     successNotification("Welcome Back", "logged In successfully");
-    console.log("logged in called");
     yield put(loginSuccess(_user));
     for (const key of Object.keys(_tokens))
       localStorage.setItem(`${appName}_${key}`, _tokens[key]);
@@ -77,61 +108,63 @@ function* loginSaga(action) {
   }
 }
 
-// function* logOutSaga() {
-//   try {
-//     yield call(AuthService.logout);
-//     yield put(logOutSuccess());
-//     localStorage.removeItem(`${appName}_xAuthToken`);
-//     localStorage.removeItem(`${appName}_refreshToken`);
-//     modalWarning("warning");
-//     Router.replace("/");
-//   } catch (err) {}
-// }
+function* logOutSaga(action) {
+  try {
+    const payload = {
+      refreshToken: localStorage.getItem(`${appName}_refreshToken`),
+    };
+    console.log(payload);
+    yield call(AuthService.logout, payload);
+    localStorage.removeItem(`${appName}_accessToken`);
+    localStorage.removeItem(`${appName}_refreshToken`);
+    successNotification("Information", "logout successfully");
+    action.callback();
+    Router.replace("/");
+    yield put(logOutSuccess());
+  } catch (err) {
+    console.log(err);
+    errorNotification("Error", err);
+  }
+}
 
-// function* forgotpasswordSaga({ method, payload, callback }) {
-//   try {
-//     switch (method) {
-//       case "send-otp":
-//         yield call(AuthService.sendotp, payload);
-//         notification.success({
-//           message: "Success",
-//           description: "Please check your email for the OTP",
-//         });
-//         if (callback) callback();
-//         break;
-//       case "verify-otp":
-//         yield call(AuthService.verifyOtp, payload);
-//         notification.success({
-//           message: "Success",
-//           description: "OTP has been verified!",
-//         });
-//         if (callback) callback();
-//         break;
-//       case "newpassword":
-//         yield call(AuthService.newpassword, payload);
-//         notification.success({
-//           message: "Success",
-//           description: "Your password has been reset!",
-//         });
-//         if (callback) callback();
-//         break;
-//     }
-//   } catch (error) {
-//     notification.error({
-//       message: "Failed",
-//       description: error + "",
-//     });
-//     if (callback) callback(true);
-//   } finally {
-//     yield cancel();
-//   }
-// }
+function* forgotpasswordSaga({ payload, callback }) {
+  try {
+    yield call(AuthService.forgetPassword, payload);
+    infoNotification(
+      "Success",
+      "Please check your email to reset the password"
+    );
+    if (callback) callback();
+  } catch (error) {
+    errorNotification("Failed", error);
+    if (callback) callback(true);
+  } finally {
+    yield cancel();
+  }
+}
+
+function* resetPasswordSaga({ payload, callback }) {
+  try {
+    const token = Router.query.token;
+    yield call(AuthService.resetPassword, payload, `token=${token}`);
+    infoNotification("Success", "Your password has been changed successfully");
+    if (callback) callback();
+    Router.replace("/account/login");
+  } catch (error) {
+    errorNotification("Failed", error);
+    if (callback) callback(true);
+  } finally {
+    yield cancel();
+  }
+}
 
 export default function* rootSaga() {
   yield all([takeEvery(actionTypes.USER_SIGNUP_REQUEST, userSignUpSaga)]);
+  yield all([takeEvery(actionTypes.NGO_SIGNUP_REQUEST, ngoSignUpSaga)]);
   yield all([takeEvery(actionTypes.LOGIN_REQUEST, loginSaga)]);
-  // yield all([takeEvery(actionTypes.LOGOUT, logOutSaga)]);
-  // yield all([
-  //   takeLatest(actionTypes.FORGOTPASSWORD_REQUEST, forgotpasswordSaga),
-  // ]);
+  yield all([takeEvery(actionTypes.LOGOUT, logOutSaga)]);
+  yield all([
+    takeLatest(actionTypes.FORGOTPASSWORD_REQUEST, forgotpasswordSaga),
+  ]);
+  yield all([takeLatest(actionTypes.RESETPASSWORD_REQUEST, resetPasswordSaga)]);
 }

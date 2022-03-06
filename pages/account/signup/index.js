@@ -57,7 +57,7 @@ export default function SignUp() {
             <div className={styles.footer}>
               <span style={{ color: "#6b7280" }}>
                 Already have account? Go to
-                <Link href="/authentication/login" passHref>
+                <Link href="/account/login" passHref>
                   <a style={{ color: "#15803d", marginLeft: "0.5rem" }}>
                     Login Page
                   </a>
