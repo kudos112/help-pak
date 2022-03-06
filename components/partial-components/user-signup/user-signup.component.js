@@ -1,24 +1,57 @@
+import { Spinner } from "@chakra-ui/react";
 import { useState } from "react";
+import styles from "./user-signup.module.scss";
 import CustomButton from "~/components/custom-button/custom-button.component";
 import FileUploader from "~/components/custom-fileuploader/file-upload.component";
 import CustomInput from "~/components/custom-input/custom-input.component";
-import { warningNotification } from "~/components/notification/notification";
+import {
+  errorNotification,
+  warningNotification,
+} from "~/components/notification/notification";
 import { uploadImage } from "~/utils/image-uploader/upload-images.util";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
+import { useDispatch } from "react-redux";
+import { userSignUpRequest } from "~/redux/auth/auth.actions";
 
 const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [images, setImages] = useState(["123", "123"]);
   const [data, setData] = useState({
-    name: "",
-    frontSideImage: "",
-    backSideImage: "",
-    phoneNo: "",
-    email: "",
-    password: "",
-    imagesUrl: [],
+    name: "Abdul Quddous",
+    frontSideImage: "123",
+    backSideImage: "123",
+    phoneNo: "123456789",
+    email: "quddoux112@gmail.com",
+    password: "helpak@test123",
   });
 
   const handleData = (key, value) => {
     setData({ ...data, [key]: value });
+  };
+
+  const handleLoading = () => {
+    setLoading(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (images.length < 2) {
+      console.log(images);
+      errorNotification("Error", "Please Upload both images");
+    } else {
+      const payload = {
+        userType,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        images,
+        phoneNo: data.phoneNo,
+      };
+      console.log(payload);
+      setLoading(true);
+    }
+    dispatch(userSignUpRequest(payload, handleLoading));
   };
 
   const onDrop = (acceptedFiles, rejectedFiles, imgName) => {
@@ -33,8 +66,7 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
         if (success) {
           uploadImage(result, (url, success) => {
             if (success) {
-              console.log("url: ", url);
-              setData({ ...data, imagesUrl: [...data.imagesUrl, url] });
+              setImages([...images, `${url}`]);
               setData({ ...data, [imgName]: acceptedFiles[0].name });
             }
           });
@@ -44,65 +76,83 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
   };
 
   return (
-    <div className="signup">
-      <CustomInput
-        title="Enter Your Name"
-        placeholder="name"
-        type="name"
-        name="name"
-        onChange={(e) => handleData("name", e.target.value)}
-      />
+    <div className={styles.signup}>
+      {loading ? (
+        <div className={styles.spinner}>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="lightGreen"
+            color="green"
+            size="xl"
+          />
+        </div>
+      ) : (
+        <form style={{ width: "100%" }} onSubmit={(e) => handleSubmit(e)}>
+          <CustomInput
+            title="Enter Your Name"
+            placeholder="name"
+            type="name"
+            name="name"
+            value={data.name}
+            required
+            onChange={(e) => handleData("name", e.target.value)}
+          />
 
-      <FileUploader
-        title={"Attach Image of Front Side of CNIC"}
-        placeholder={
-          data.frontSideImage ? data.frontSideImage : "Click here to upload"
-        }
-        accept={["image/jpeg", "image/png", "image/bmp"]}
-        maxFiles={1}
-        maxSize={1000000}
-        onDrop={(acceptedFiles, rejectedFiles) =>
-          onDrop(acceptedFiles, rejectedFiles, "frontSideImage")
-        }
-      />
-      <FileUploader
-        title="Attach Image of Back Side of CNIC"
-        placeholder={
-          data.backSideImage ? data.backSideImage : "Click here to upload"
-        }
-        accept={["image/jpeg", "image/png", "image/bmp"]}
-        maxFiles={1}
-        maxSize={1000000}
-        onDrop={(acceptedFiles, rejectedFiles) =>
-          onDrop(acceptedFiles, rejectedFiles, "backSideImage")
-        }
-      />
-      <CustomInput
-        title="Enter Your PhoneNo"
-        placeholder="phone number"
-        onChange={(e) => handleData("phoneNo", e.target.value)}
-      />
-      <CustomInput
-        title="Enter Your Email"
-        placeholder="email"
-        type="email"
-        name="email"
-        onChange={(e) => handleData("email", e.target.value)}
-      />
-      <CustomInput
-        title="Enter Your password"
-        placeholder="password"
-        name="password"
-        type="password"
-        onChange={(e) => handleData("password", e.target.value)}
-      />
-      <CustomButton
-        onClick={() => {
-          // dispatch( register() );
-          console.log(data);
-        }}
-        title="Create Account"
-      />
+          <FileUploader
+            title={"Attach Image of Front Side of CNIC"}
+            placeholder={
+              data.frontSideImage ? data.frontSideImage : "Click here to upload"
+            }
+            image={true}
+            accept={["image/jpeg", "image/png", "image/bmp"]}
+            maxFiles={1}
+            maxSize={1000000}
+            onDrop={(acceptedFiles, rejectedFiles) =>
+              onDrop(acceptedFiles, rejectedFiles, "frontSideImage")
+            }
+          />
+          <FileUploader
+            title="Attach Image of Back Side of CNIC"
+            placeholder={
+              data.backSideImage ? data.backSideImage : "Click here to upload"
+            }
+            image={true}
+            accept={["image/jpeg", "image/png", "image/bmp"]}
+            maxFiles={1}
+            maxSize={1000000}
+            onDrop={(acceptedFiles, rejectedFiles) =>
+              onDrop(acceptedFiles, rejectedFiles, "backSideImage")
+            }
+          />
+          <CustomInput
+            title="Enter Your PhoneNo"
+            value={data.phoneNo}
+            placeholder="phone number"
+            required
+            onChange={(e) => handleData("phoneNo", e.target.value)}
+          />
+          <CustomInput
+            title="Enter Your Email"
+            placeholder="email"
+            type="email"
+            value={data.email}
+            required
+            name="email"
+            onChange={(e) => handleData("email", e.target.value)}
+          />
+          <CustomInput
+            title="Enter Your password"
+            placeholder="password"
+            name="password"
+            value={data.password}
+            required
+            type="password"
+            onChange={(e) => handleData("password", e.target.value)}
+          />
+          <CustomButton type="submit" title="Create Account" />
+        </form>
+      )}
     </div>
   );
 };

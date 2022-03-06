@@ -15,6 +15,12 @@ import {
   useColorModeValue,
   useDisclosure,
   Avatar,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Center,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -30,6 +36,7 @@ import Link from "next/link";
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
   const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
+  const user = useSelector(({ auth }) => auth.user);
 
   return (
     <Box>
@@ -88,7 +95,26 @@ export default function NavBar() {
               </Button>
             </Link>
           ) : (
-            <Avatar bg="gray" />
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                minW={0}
+              >
+                <Avatar size={"sm"} bg={"gray"} />
+              </MenuButton>
+              <MenuList alignItems={"center"}>
+                <br />
+                <Center>
+                  <p>{user.name}</p>
+                </Center>
+                <br />
+                <MenuDivider />
+                <MenuItem>Logout</MenuItem>
+              </MenuList>
+            </Menu>
           )}
         </Stack>
       </Flex>

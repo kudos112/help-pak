@@ -23,7 +23,4 @@ export const theme = extendTheme({
       Button: "",
     },
   },
-  component: {
-    Button: {},
-  },
 });

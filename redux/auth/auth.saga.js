@@ -13,31 +13,34 @@ import actionTypes from "./auth.actionTypes";
 import {
   successNotification,
   errorNotification,
+  infoNotification,
 } from "~/components/notification/notification";
 import { loginSuccess, logOutSuccess } from "./auth.actions";
 import { appName } from "~/repositories/genericRepository";
 
-function* signUpSaga(action) {
+function* userSignUpSaga(action) {
   try {
-    console.log("Sign Up saga auth here");
-    console.log(action);
-    const response = yield call(AuthService.register, action.payload);
+    const { user, tokens } = yield call(
+      AuthService.userRegister,
+      action.payload
+    );
+    let _tokens = {
+      accessToken: tokens.access.accessToken,
+      refreshToken: tokens.refresh.refreshToken,
+    };
 
-    console.log("Response ", response);
-
-    // for (const key of Object.keys(tokens))
-    //   localStorage.setItem(`${appName}_${key}`, tokens[key]);
-    // modalSuccess("success");
-
-    yield put(loginSuccess(payload.user));
-
-    // const notAuthCart = JSON.parse(localStorage.getItem("not-auth-cart"));
-  } catch (err) {
-    notification.error({
-      message: "Failed",
-      description: err + "",
-    });
-    throw err;
+    successNotification("Welcome Back", "logged In successfully");
+    yield put(loginSuccess(user));
+    for (const key of Object.keys(_tokens))
+      localStorage.setItem(`${appName}_${key}`, _tokens[key]);
+    Router.push("/");
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      console.log("Error: ", error);
+      action.callback();
+      errorNotification("Error", error);
+    }
   } finally {
     yield cancel();
   }
@@ -51,29 +54,24 @@ function* loginSaga(action) {
       _tokens = action.payload.tokens;
     } else {
       const { user, tokens } = yield call(AuthService.login, action.payload);
-      _tokens = tokens;
+      _tokens = {
+        accessToken: tokens.access.accessToken,
+        refreshToken: tokens.refresh.refreshToken,
+      };
       _user = user;
     }
     successNotification("Welcome Back", "logged In successfully");
     console.log("logged in called");
     yield put(loginSuccess(_user));
+    for (const key of Object.keys(_tokens))
+      localStorage.setItem(`${appName}_${key}`, _tokens[key]);
     Router.push("/");
     action.callback();
-
-    // for (const key of Object.keys(_tokens))
-    //   localStorage.setItem(`${appName}_${key}`, _tokens[key]);
-
-    // if (action.payload.tokens) {
-    //   yield put(getUserDetails());
-    // } else {
-
-    // }
   } catch (error) {
     if (action && action.callback) {
       action.callback();
-      errorNotification("Error", "Incorrect username or password");
+      errorNotification("Error", error);
     }
-    console.log(error);
   } finally {
     yield cancel();
   }
@@ -130,7 +128,7 @@ function* loginSaga(action) {
 // }
 
 export default function* rootSaga() {
-  yield all([takeEvery(actionTypes.SIGNUP_REQUEST, signUpSaga)]);
+  yield all([takeEvery(actionTypes.USER_SIGNUP_REQUEST, userSignUpSaga)]);
   yield all([takeEvery(actionTypes.LOGIN_REQUEST, loginSaga)]);
   // yield all([takeEvery(actionTypes.LOGOUT, logOutSaga)]);
   // yield all([

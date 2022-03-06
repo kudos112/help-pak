@@ -9,12 +9,13 @@ const CustomButton = ({ title, onClick, ...props }) => {
           backgroundColor: "transparent",
           border: "none",
           color: "white",
+          curser: "pointer",
+          width: "100%",
         }}
         _hover={{ backgroundColor: "transparent" }}
         _focus={{ backgroundColor: "transparent", border: "none" }}
         role="button"
         tabIndex={0}
-        onClick={onClick}
         {...props}
       >
         {title}

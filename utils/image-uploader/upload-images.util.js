@@ -1,5 +1,6 @@
 import {
   errorNotification,
+  infoNotification,
   successNotification,
 } from "~/components/notification/notification";
 
@@ -10,7 +11,7 @@ export const uploadImage = (img, cb) => {
     data.append("file", img);
     data.append("upload_preset", "helpPak-users");
     data.append("cloud_name", "helppak");
-
+    infoNotification("Wait", "Please wait, image is uploading");
     return fetch("https://api.cloudinary.com/v1_1/helppak/upload", {
       method: "post",
       body: data,
@@ -19,7 +20,7 @@ export const uploadImage = (img, cb) => {
       .then((data) => {
         successNotification(
           "Upload successfully",
-          "Your Image Uploaded Successfully\nPlease complete next steps"
+          "Your Image Uploaded Successfully"
         );
         cb(data.url, true);
       })

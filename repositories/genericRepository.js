@@ -2,7 +2,8 @@ import axios from "axios";
 
 // // const xAppToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBOYW1lIjoiRENHUyIsImlhdCI6MTYwNzg2NDcwMX0.F_3ZTAs_7MbboyzrNCkg0oOyV3yIacP81wee8LPTHJw`;
 
-const baseDomain = "http://localhost:5000";
+// const baseDomain = "http://localhost:5000";
+const baseDomain = "https://backend-helpak.herokuapp.com";
 
 export const appName = "helpak_client";
 
@@ -42,18 +43,18 @@ export default instance;
 //     .join("&");
 // };
 
-// export const getError = (error) => {
-//   if (error.response) {
-//     if (error?.response?.data?.data?.errorMessage) {
-//       return `${error.response.data.data.errorMessage}`;
-//     } else if (error?.response?.data?.message) {
-//       return `${error.response.data.message}`;
-//     } else {
-//       return error.response;
-//     }
-//   } else if (error.request) {
-//     return error.request;
-//   } else {
-//     return `${error}`;
-//   }
-// };
+export const getError = (error) => {
+  if (error.response) {
+    if (error?.response?.data?.data?.errorMessage) {
+      return `${error.response.data.data.errorMessage}`;
+    } else if (error?.response?.data?.message) {
+      return `${error.response.data.message}`;
+    } else {
+      return error.response;
+    }
+  } else if (error.request) {
+    return error.request;
+  } else {
+    return `${error}`;
+  }
+};

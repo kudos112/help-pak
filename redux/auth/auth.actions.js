@@ -4,16 +4,8 @@ export function loginRequest(payload, callback) {
   return { type: actionTypes.LOGIN_REQUEST, payload, callback };
 }
 
-export function register() {
-  const payload = {
-    userType: "NGO",
-    name: "Abdul Quddous",
-    email: "quddoux112@gmail.com",
-    password: "1q2w3e4r",
-  };
-
-  console.log("Register new user ", payload);
-  return { type: actionTypes.SIGNUP_REQUEST, payload };
+export function userSignUpRequest(payload, callback) {
+  return { type: actionTypes.USER_SIGNUP_REQUEST, payload, callback };
 }
 
 export function loginSuccess(user) {

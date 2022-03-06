@@ -1,8 +1,9 @@
 import { AttachmentIcon } from "@chakra-ui/icons";
 import Dropzone from "react-dropzone";
 import styles from "./file-upload.module.scss";
+import { AiOutlineCamera } from "react-icons/ai";
 
-const FileUploader = ({ title, placeholder, ...props }) => {
+const FileUploader = ({ title, placeholder, image, ...props }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputContainer}>
@@ -16,7 +17,7 @@ const FileUploader = ({ title, placeholder, ...props }) => {
                   <input {...getInputProps()} />
                   <p className={styles.placeholder}>
                     {placeholder}
-                    <AttachmentIcon />
+                    {image ? <AiOutlineCamera /> : <AttachmentIcon />}
                   </p>
                 </div>
               </section>

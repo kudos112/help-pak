@@ -1,9 +1,10 @@
-import Repository, { baseUrl } from "./genericRepository";
+import Repository, { baseUrl, getError } from "./genericRepository";
 // import { getOsType } from "./utils";
 // const randomstring = require("randomstring");
 
 const routes = {
-  register: "v1/auth/register",
+  userRegister: "v1/auth/user/register",
+  ngoRegister: "v1/auth/ngo/register",
   login: "/v1/auth/login",
   logout: "/v1/auth/logout",
   refreshTokens: "/v1/auth/refresh-tokens",
@@ -16,26 +17,19 @@ const routes = {
 // const deviceToken = randomstring.generate();
 
 class AuthenticationRepository {
-  async register(payload) {
+  async userRegister(payload) {
     try {
-      console.log("going to hit register end point", payload);
-      const postObject = { ...payload };
       const request = await Repository.post(
-        `${baseUrl}/${routes.register}`,
-        postObject
+        `${baseUrl}/${routes.userRegister}`,
+        payload
       );
-      //   console.log("Query registered");
-      //   console.log(request);
-      //     const xAuthToken = request.data.tokens["x-auth-token"];
-      //     const refreshToken = request.data.["x-refresh-token"];
-
-      //      return {
-      //       tokens: { xAuthToken, refreshToken },
-      //       payload: request.data,
-      //     };
+      const { data } = request;
+      return {
+        tokens: data.tokens,
+        user: data.user,
+      };
     } catch (error) {
-      console.log("Query not error registered");
-      // throw getError(error);
+      throw getError(error);
     }
   }
   async login(payload) {
@@ -51,9 +45,10 @@ class AuthenticationRepository {
         user: data.user,
       };
     } catch (error) {
-      throw error;
+      throw getError(error);
     }
   }
+
   //   async logout() {
   //     try {
   //       const val = await Repository.post(`${baseUrl}${routes.logout}`, {

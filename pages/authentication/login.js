@@ -23,8 +23,8 @@ export default function Login() {
 
   const [data, setData] = useState({
     userType: "INDIVIDUAL",
-    email: "",
-    password: "",
+    email: "quddoux112@gmail.com",
+    password: "helpak@test123",
   });
 
   const handleData = (key, value) => {
@@ -89,6 +89,7 @@ export default function Login() {
                     placeholder="email"
                     type="email"
                     name="email"
+                    value={data.email}
                     onChange={(e) => handleData("email", e.target.value)}
                     required
                   />
@@ -97,6 +98,7 @@ export default function Login() {
                     placeholder="password"
                     name="password"
                     type="password"
+                    value={data.password}
                     onChange={(e) => handleData("password", e.target.value)}
                     required
                   />
