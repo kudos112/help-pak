@@ -1,33 +1,33 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import {useState} from "react";
+import {useDispatch} from "react-redux";
 import CustomButton from "~/components/custom-button/custom-button.component";
 import FileUploader from "~/components/custom-fileuploader/file-upload.component";
 import styles from "./ngo-signup.module.scss";
 import CustomInput from "~/components/custom-input/custom-input.component";
-import { Spinner } from "@chakra-ui/react";
+import {Spinner} from "@chakra-ui/react";
 import {
   errorNotification,
   warningNotification,
 } from "~/components/notification/notification";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
-import { uploadImage } from "~/utils/image-uploader/upload-images.util";
-import { ngoSignUpRequest } from "~/redux/auth/auth.actions";
+import {uploadImage} from "~/utils/image-uploader/upload-images.util";
+import {ngoSignUpRequest} from "~/redux/auth/auth.actions";
 
-const NgoSignUp = ({ userType = "NGO" }) => {
+const NgoSignUp = ({userType = "NGO"}) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [images, setImages] = useState(["123"]);
   const [data, setData] = useState({
     name: "Abdul Quddous",
-    certImg: "123",
+    certImg: "",
     phoneNo: "123456789",
-    email: "quddoux112@gmail.com",
+    email: "quddoux119@gmail.com",
     password: "helpak@test123",
     regNo: "12345678",
   });
 
   const handleData = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData({...data, [key]: value});
   };
 
   const handleLoading = () => {
@@ -68,7 +68,7 @@ const NgoSignUp = ({ userType = "NGO" }) => {
           uploadImage(result, (url, success) => {
             if (success) {
               setImages([url]);
-              setData({ ...data, [imgName]: acceptedFiles[0].name });
+              setData({...data, [imgName]: acceptedFiles[0].name});
             }
           });
         }
@@ -89,7 +89,7 @@ const NgoSignUp = ({ userType = "NGO" }) => {
           />
         </div>
       ) : (
-        <form style={{ width: "100%" }} onSubmit={(e) => handleSubmit(e)}>
+        <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
           <CustomInput
             title="Enter NGO Name"
             placeholder="ngo name"

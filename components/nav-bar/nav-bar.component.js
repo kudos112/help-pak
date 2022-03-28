@@ -45,6 +45,7 @@ export default function NavBar() {
   const handleLoading = () => {
     setLoading(false);
   };
+
   return (
     <Box>
       <Flex
@@ -356,16 +357,17 @@ const NAV_ITEMS = [
   },
   {
     label: "Medical Assistance",
+    href: "/medical-assistance",
     children: [
       {
         label: "Add Medical Assistance",
-        subLabel: "Find your dream design job",
-        href: "#",
+        subLabel: "Request to list your medical assistance service",
+        href: "/medical-assistance/request",
       },
       {
-        label: "Medical Assistance",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
+        label: "Medical Services",
+        subLabel: "Checkout free medical services available",
+        href: "/medical-assistance",
       },
     ],
   },

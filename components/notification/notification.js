@@ -1,17 +1,18 @@
-import { createStandaloneToast } from "@chakra-ui/react";
+import {createStandaloneToast} from "@chakra-ui/react";
 
 const toast = createStandaloneToast();
 
 export const errorNotification = (
   title,
   description,
-  position = "bottom-right"
+  position = "top",
+  duration = 3000
 ) =>
   toast({
     title: title,
     description: description,
     status: "error",
-    duration: 3000,
+    duration,
     isClosable: true,
     position,
   });
@@ -19,26 +20,28 @@ export const errorNotification = (
 export const successNotification = (
   title,
   description,
-  position = "bottom-right"
+  position = "top",
+  duration = 3000
 ) =>
   toast({
     title: title,
     description: description,
     status: "success",
-    duration: 3000,
+    duration,
     position,
     isClosable: true,
   });
 export const warningNotification = (
   title,
   description,
-  position = "bottom-right"
+  position = "top",
+  duration = 3000
 ) =>
   toast({
     title: title,
     description: description,
     status: "warning",
-    duration: 3000,
+    duration,
     position,
     isClosable: true,
   });
@@ -46,13 +49,14 @@ export const warningNotification = (
 export const infoNotification = (
   title,
   description,
-  position = "bottom-right"
+  position = "top",
+  duration = 3000
 ) =>
   toast({
     title: title,
     description: description,
     status: "info",
-    duration: 3000,
+    duration,
     position,
     isClosable: true,
   });

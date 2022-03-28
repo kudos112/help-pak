@@ -4,7 +4,7 @@ import { createWrapper } from "next-redux-wrapper";
 import rootReducer from "./root-reducer";
 import rootSaga from "./root-sagas";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "./asyncStorage";
 
 const persistConfig = {
   key: "root",

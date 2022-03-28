@@ -15,24 +15,16 @@ import {
   errorNotification,
   infoNotification,
 } from "~/components/notification/notification";
-import { loginSuccess, logOutSuccess } from "./auth.actions";
-import { appName } from "~/repositories/genericRepository";
+import {loginSuccess, logOutSuccess} from "./auth.actions";
+import {appName} from "~/repositories/genericRepository";
 
 function* userSignUpSaga(action) {
   try {
-    const { user, tokens } = yield call(
+    const {message, description} = yield call(
       AuthService.userRegister,
       action.payload
     );
-    let _tokens = {
-      accessToken: tokens.access.accessToken,
-      refreshToken: tokens.refresh.refreshToken,
-    };
-
-    successNotification("Welcome Back", "logged In successfully");
-    yield put(loginSuccess(user));
-    for (const key of Object.keys(_tokens))
-      localStorage.setItem(`${appName}_${key}`, _tokens[key]);
+    successNotification(message, description, "top", 8000);
     Router.push("/");
     action.callback();
   } catch (error) {
@@ -48,25 +40,12 @@ function* userSignUpSaga(action) {
 
 function* ngoSignUpSaga(action) {
   try {
-    const { user, tokens } = yield call(
+    const {message, description} = yield call(
       AuthService.ngoRegister,
       action.payload
     );
-
-    let _tokens = {
-      accessToken: tokens.access.accessToken,
-      refreshToken: tokens.refresh.refreshToken,
-    };
-
-    successNotification("Welcome Back", "logged In successfully");
-
-    yield put(loginSuccess(user));
-
-    for (const key of Object.keys(_tokens))
-      localStorage.setItem(`${appName}_${key}`, _tokens[key]);
-
+    successNotification(message, description, "top", 8000);
     Router.push("/");
-
     action.callback();
   } catch (error) {
     if (action && action.callback) {
@@ -85,7 +64,7 @@ function* loginSaga(action) {
     if (action.payload.tokens) {
       _tokens = action.payload.tokens;
     } else {
-      const { user, tokens } = yield call(AuthService.login, action.payload);
+      const {user, tokens} = yield call(AuthService.login, action.payload);
       _tokens = {
         accessToken: tokens.access.accessToken,
         refreshToken: tokens.refresh.refreshToken,
@@ -127,7 +106,7 @@ function* logOutSaga(action) {
   }
 }
 
-function* forgotpasswordSaga({ payload, callback }) {
+function* forgotpasswordSaga({payload, callback}) {
   try {
     yield call(AuthService.forgetPassword, payload);
     infoNotification(
@@ -143,7 +122,7 @@ function* forgotpasswordSaga({ payload, callback }) {
   }
 }
 
-function* resetPasswordSaga({ payload, callback }) {
+function* resetPasswordSaga({payload, callback}) {
   try {
     const token = Router.query.token;
     yield call(AuthService.resetPassword, payload, `token=${token}`);

@@ -1,5 +1,5 @@
-import { Spinner } from "@chakra-ui/react";
-import { useState } from "react";
+import {Spinner} from "@chakra-ui/react";
+import {useState} from "react";
 import styles from "./user-signup.module.scss";
 import CustomButton from "~/components/custom-button/custom-button.component";
 import FileUploader from "~/components/custom-fileuploader/file-upload.component";
@@ -8,26 +8,26 @@ import {
   errorNotification,
   warningNotification,
 } from "~/components/notification/notification";
-import { uploadImage } from "~/utils/image-uploader/upload-images.util";
+import {uploadImage} from "~/utils/image-uploader/upload-images.util";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
-import { useDispatch } from "react-redux";
-import { userSignUpRequest } from "~/redux/auth/auth.actions";
+import {useDispatch} from "react-redux";
+import {userSignUpRequest} from "~/redux/auth/auth.actions";
 
-const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
+const UserSignUp = ({userType = "INDIVIDUAL"}) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const [images, setImages] = useState(["123", "123"]);
+  const [images, setImages] = useState([]);
   const [data, setData] = useState({
     name: "Abdul Quddous",
-    frontSideImage: "123",
-    backSideImage: "123",
+    frontSideImage: "",
+    backSideImage: "",
     phoneNo: "123456789",
     email: "quddoux112@gmail.com",
     password: "helpak@test123",
   });
 
   const handleData = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData({...data, [key]: value});
   };
 
   const deleteImage = () => {};
@@ -38,9 +38,10 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (images.length < 2) {
+    if (images.length > 2 || images.length < 2) {
       console.log(images);
       errorNotification("Error", "Please Upload both images");
+      return;
     } else {
       const payload = {
         userType,
@@ -69,7 +70,7 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
           uploadImage(result, (url, success) => {
             if (success) {
               setImages([...images, `${url}`]);
-              setData({ ...data, [imgName]: acceptedFiles[0].name });
+              setData({...data, [imgName]: acceptedFiles[0].name});
             }
           });
         }
@@ -90,7 +91,7 @@ const UserSignUp = ({ userType = "INDIVIDUAL" }) => {
           />
         </div>
       ) : (
-        <form style={{ width: "100%" }} onSubmit={(e) => handleSubmit(e)}>
+        <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
           <CustomInput
             title="Enter Your Name"
             placeholder="name"

@@ -1,4 +1,4 @@
-import Repository, { baseUrl, getError } from "./genericRepository";
+import Repository, {baseUrl, getError} from "./genericRepository";
 // import { getOsType } from "./utils";
 // const randomstring = require("randomstring");
 
@@ -23,10 +23,11 @@ class AuthenticationRepository {
         `${baseUrl}/${routes.userRegister}`,
         payload
       );
-      const { data } = request;
+      const {data} = request;
+      console.log(data);
       return {
-        tokens: data.tokens,
-        user: data.user,
+        message: data.message,
+        description: data.description,
       };
     } catch (error) {
       throw getError(error);
@@ -39,10 +40,11 @@ class AuthenticationRepository {
         `${baseUrl}/${routes.ngoRegister}`,
         payload
       );
-      const { data } = request;
+      const {data} = request;
+      console.log(data);
       return {
-        tokens: data.tokens,
-        user: data.ngo,
+        message: data.message,
+        description: data.description,
       };
     } catch (error) {
       throw getError(error);
@@ -51,12 +53,12 @@ class AuthenticationRepository {
 
   async login(payload) {
     try {
-      const postObject = { ...payload };
+      const postObject = {...payload};
       const request = await Repository.post(
         `${baseUrl}${routes.login}`,
         postObject
       );
-      const { data } = request;
+      const {data} = request;
       return {
         tokens: data.tokens,
         user: data.user,
