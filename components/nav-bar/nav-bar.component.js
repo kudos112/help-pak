@@ -28,19 +28,17 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  AiOutlineUser,
 } from "@chakra-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
+import {connect, useDispatch} from "react-redux";
 
 import Link from "next/link";
-import { logOutRequest } from "~/redux/auth/auth.actions";
-import { useState } from "react";
+import {logOutRequest} from "~/redux/auth/auth.actions";
+import {useState} from "react";
+import {selectIsLoggedIn, selectUser} from "~/redux/auth/auth.selector";
 
-export default function NavBar() {
-  const { isOpen, onToggle } = useDisclosure();
+const NavBar = ({user, isLoggedIn}) => {
+  const {isOpen, onToggle} = useDisclosure();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(({ auth }) => auth.isLoggedIn);
-  const user = useSelector(({ auth }) => auth.user);
   const [loading, setLoading] = useState(false);
   const handleLoading = () => {
     setLoading(false);
@@ -52,15 +50,15 @@ export default function NavBar() {
         bg={useColorModeValue("white")}
         color={useColorModeValue("gray.600")}
         minH={"70px"}
-        py={{ base: 2 }}
-        px={{ base: 8 }}
+        py={{base: 2}}
+        px={{base: 8}}
         borderBottom={1}
         align={"center"}
       >
         <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
+          flex={{base: 1, md: "auto"}}
+          ml={{base: -2}}
+          display={{base: "flex", md: "none"}}
         >
           <IconButton
             onClick={onToggle}
@@ -71,19 +69,19 @@ export default function NavBar() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+        <Flex flex={{base: 1}} justify={{base: "center", md: "start"}}>
           <Link href="/" passHref>
-            <div style={{ cursor: "pointer" }}>
+            <div style={{cursor: "pointer"}}>
               <span className={styles.help}>Help</span>
               <span className={styles.pak}>Pak</span>
             </div>
           </Link>
-          <Flex display={{ base: "none", md: "flex" }} align={"center"} ml={10}>
+          <Flex display={{base: "none", md: "flex"}} align={"center"} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
         <Stack
-          flex={{ base: 1, md: 0 }}
+          flex={{base: 1, md: 0}}
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
@@ -148,7 +146,7 @@ export default function NavBar() {
       </Collapse>
     </Box>
   );
-}
+};
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("#6B7280");
@@ -200,7 +198,7 @@ const DesktopNav = () => {
   );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }) => {
+const DesktopSubNav = ({label, href, subLabel}) => {
   return (
     <Link href={href} passHref>
       <ChakraLink
@@ -208,13 +206,13 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
         display={"block"}
         p={2}
         rounded={"md"}
-        _hover={{ bg: useColorModeValue("#F6F9FA", "gray.900") }}
+        _hover={{bg: useColorModeValue("#F6F9FA", "gray.900")}}
       >
         <Stack direction={"row"} align={"center"}>
           <Box>
             <Text
               transition={"all .3s ease"}
-              _groupHover={{ color: "#15803D" }}
+              _groupHover={{color: "#15803D"}}
               fontWeight={500}
             >
               {label}
@@ -227,7 +225,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
             transition={"all .3s ease"}
             transform={"translateX(-10px)"}
             opacity={0}
-            _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
+            _groupHover={{opacity: "100%", transform: "translateX(0)"}}
             justify={"flex-end"}
             align={"center"}
             flex={1}
@@ -245,7 +243,7 @@ const MobileNav = () => {
     <Stack
       bg={useColorModeValue("white", "gray.800")}
       p={4}
-      display={{ md: "none" }}
+      display={{md: "none"}}
     >
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
@@ -254,8 +252,8 @@ const MobileNav = () => {
   );
 };
 
-const MobileNavItem = ({ label, children, href }) => {
-  const { isOpen, onToggle } = useDisclosure();
+const MobileNavItem = ({label, children, href}) => {
+  const {isOpen, onToggle} = useDisclosure();
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -286,7 +284,7 @@ const MobileNavItem = ({ label, children, href }) => {
         )}
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
+      <Collapse in={isOpen} animateOpacity style={{marginTop: "0!important"}}>
         <Stack
           mt={2}
           pl={4}
@@ -380,3 +378,12 @@ const NAV_ITEMS = [
     href: "#",
   },
 ];
+
+const mapStateToProps = (state) => {
+  return {
+    user: selectUser(state),
+    isLoggedIn: selectIsLoggedIn(state),
+  };
+};
+
+export default connect(mapStateToProps)(NavBar);

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import { isUserAuthenticated, getUserInfo } from "~/store/auth/selectors";
-// import { getUserDetails } from "~/store/userInfo/action";
-// import { getUserInfoLoading } from "~/store/userInfo/selectors";
+import React from "react";
 import Router from "next/router";
+import {useSelector} from "react-redux";
+import {selectIsLoggedIn} from "~/redux/auth/auth.selector";
+
 const Wrapper = (WrappedComponent) => {
   return (props) => {
     const [isAuthenticated] = checkUserAuthentication();
@@ -15,14 +14,12 @@ const Wrapper = (WrappedComponent) => {
 export default Wrapper;
 
 const checkUserAuthentication = () => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useState(false);
+  // const dispatch = useDispatch();
+  // const isLoggedIn = useState(false);
+  const isLoggedIn = useSelector((state) => selectIsLoggedIn(state));
   React.useEffect(() => {
     // dispatch(getUserDetails());
   }, []);
-  //   const isAuthenticated = useSelector(isUserAuthenticated);
-  //   const userInfoLoading = useSelector(getUserInfoLoading);
-
   return [isLoggedIn];
 };
 

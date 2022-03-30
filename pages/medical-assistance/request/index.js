@@ -3,28 +3,48 @@ import CustomInput from "~/components/custom-input/custom-input.component";
 import CustomTextArea from "~/components/custom-textarea/custom-textarea.component";
 import CustomButton from "~/components/custom-button/custom-button.component";
 import FileUploader from "~/components/custom-fileuploader/file-upload.component";
-import { useState } from "react";
-import { Heading } from "@chakra-ui/react";
+import {useState} from "react";
+import {Heading} from "@chakra-ui/react";
 import Authenticated from "~/repositories/AuthHoc";
 
 const MedicalAssistanceRequest = () => {
   const [data, setData] = useState({
-    donationRequired: "",
-    reason: "",
-    frontSideCNIC: "",
-    backSideCNIC: "",
-    paymentMethods: [],
+    name: "",
+    email: "",
+    contactNo: "",
+    city: "",
+    streetAddress: "",
     description: "",
+    tags: [],
+    images: ["qwertyuioplasdfghjk", "1234567890qwertyuioasdfghjkzxcvbnm"],
   });
 
   const handleData = async (key, value) => {
-    setData({ ...data, [key]: value });
+    setData({...data, [key]: value});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     //  setLoading(true);
     //  dispatch(loginRequest(data, handleLoading));
+  };
+
+  const onDrop = (acceptedFiles, rejectedFiles, imgName) => {
+    if (rejectedFiles) {
+      warningNotification("warning", "upload files under 2 mb size");
+      return;
+    } else if (acceptedFiles) {
+      convertImageToBase64(acceptedFiles[0], (result, success) => {
+        if (success) {
+          uploadImage(result, (url, success) => {
+            if (success) {
+              setImages([url]);
+              setData({...data, [imgName]: acceptedFiles[0].name});
+            }
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -35,7 +55,7 @@ const MedicalAssistanceRequest = () => {
       <div className={styles.container}>
         <form
           className={styles.container}
-          style={{ width: "100%" }}
+          style={{width: "100%"}}
           onSubmit={(e) => handleSubmit(e)}
         >
           <div className={styles.inputContainer}>
@@ -46,31 +66,31 @@ const MedicalAssistanceRequest = () => {
                 type="name"
                 required
                 placeholder="name"
-                //   onChange={(e) => handleData("donationRequired", e.target.value)}
+                onChange={(e) => handleData("name", e.target.value)}
               />
               <CustomInput
                 title="Email"
                 required
                 placeholder="Email"
-                // onChange={(e) => handleData("reason", e.target.value)}
+                onChange={(e) => handleData("email", e.target.value)}
               />
               <CustomInput
                 title="Contact No"
                 required
-                placeholder="phone no"
-                // onChange={(e) => handleData("reason", e.target.value)}
+                placeholder="03099091509"
+                onChange={(e) => handleData("contactNo", e.target.value)}
               />
               <CustomInput
                 required
-                title="Location"
-                placeholder="full address"
-                // onChange={(e) => handleData("reason", e.target.value)}
+                title="City"
+                placeholder="city name"
+                onChange={(e) => handleData("city", e.target.value)}
               />
               <CustomInput
                 required
-                title="Location"
-                placeholder="full address"
-                // onChange={(e) => handleData("reason", e.target.value)}
+                title="Full Address"
+                placeholder="full address plus nearest landmark"
+                onChange={(e) => handleData("streetAddress", e.target.value)}
               />
             </div>
             <div className={styles.rightDiv}>
@@ -78,14 +98,16 @@ const MedicalAssistanceRequest = () => {
                 required
                 title="Description"
                 placeholder="Write Description here"
-                // onChange={(e) => handleData("description", e.target.value)}
+                onChange={(e) => handleData("description", e.target.value)}
               />
 
               <FileUploader
                 title="Attach Images"
-                placeholder="Drag or click to add"
+                placeholder={data.images.toString() || "click to add images"}
+                accept={["image/jpeg", "image/png"]}
                 image={true}
-                onDrop={(selectedFiles) => console.log(selectedFiles)}
+                maxSize={2000000}
+                onDrop={(selectedFiles) => alert(JSON.stringify(selectedFiles))}
               />
             </div>
           </div>
@@ -96,4 +118,4 @@ const MedicalAssistanceRequest = () => {
   );
 };
 
-export default MedicalAssistanceRequest;
+export default Authenticated(MedicalAssistanceRequest);

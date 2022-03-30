@@ -2,8 +2,8 @@ import axios from "axios";
 
 // const xAppToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBOYW1lIjoiRENHUyIsImlhdCI6MTYwNzg2NDcwMX0.F_3ZTAs_7MbboyzrNCkg0oOyV3yIacP81wee8LPTHJw`;
 
-// const baseDomain = "http://localhost:5000";
-const baseDomain = "https://backend-helpak.herokuapp.com";
+const baseDomain = "http://localhost:5000";
+// const baseDomain = "https://backend-helpak.herokuapp.com";
 
 export const appName = "helpak_client";
 

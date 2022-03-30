@@ -1,5 +1,10 @@
-// const getData = (state) => state?.auth || {};
+import {createSelector} from "reselect";
 
-// export const isUserAuthenticated = (state) => getData(state).isLoggedIn;
+const selectAuth = (state) => state?.auth || {};
 
-// export const getUserInfo = (state) => getData(state).user;
+export const selectUser = createSelector([selectAuth], (auth) => auth.user);
+
+export const selectIsLoggedIn = createSelector(
+  [selectAuth],
+  (auth) => auth.isLoggedIn
+);

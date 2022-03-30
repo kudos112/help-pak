@@ -1,20 +1,13 @@
 import CustomInput from "@/components/custom-input/custom-input.component";
 import CustomButton from "@/components/custom-button/custom-button.component";
-import {
-  Divider,
-  FormControl,
-  FormLabel,
-  Select,
-  Spinner,
-  useToast,
-} from "@chakra-ui/react";
+import {Divider, Select, Spinner} from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import donation from "@/public/donation.jpg";
 import styles from "./styles.module.scss";
-import { loginRequest } from "~/redux/auth/auth.actions";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import {loginRequest} from "~/redux/auth/auth.actions";
+import {useDispatch} from "react-redux";
+import {useState} from "react";
 import Colors from "~/public/colors";
 
 export default function Login() {
@@ -28,7 +21,7 @@ export default function Login() {
   });
 
   const handleData = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData({...data, [key]: value});
   };
 
   const handleLoading = () => {
@@ -42,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.page} style={{ height: "90vh" }}>
+    <div className={styles.page} style={{height: "90vh"}}>
       <div className={styles.img}>
         <Image src={donation} width={1100} height={660} alt="donation.jpg" />
       </div>
@@ -65,11 +58,8 @@ export default function Login() {
             </div>
             <div className={styles.inputContent}>
               <div className={styles.fields}>
-                <form
-                  style={{ width: "100%" }}
-                  onSubmit={(e) => handleSubmit(e)}
-                >
-                  <div style={{ width: "100%", marginBottom: 10 }}>
+                <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
+                  <div style={{width: "100%", marginBottom: 10}}>
                     <p className={styles.title}>Choose your type</p>
                     <Select
                       className="mt-1"
