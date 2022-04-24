@@ -260,19 +260,20 @@ const MobileNavItem = ({label, children, href}) => {
       <Flex
         py={2}
         as={ChakraLink}
-        href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
         _hover={{
           textDecoration: "none",
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text>
+        <Link href={`${href}`} passHref>
+          <Text
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+          >
+            {label}
+          </Text>
+        </Link>
         {children && (
           <Icon
             as={ChevronDownIcon}

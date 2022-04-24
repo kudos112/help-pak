@@ -1,51 +1,119 @@
-import styles from "./request.module.scss";
-import CustomInput from "~/components/custom-input/custom-input.component";
-import CustomTextArea from "~/components/custom-textarea/custom-textarea.component";
-import CustomButton from "~/components/custom-button/custom-button.component";
-import FileUploader from "~/components/custom-fileuploader/file-upload.component";
-import {useState} from "react";
 import {Heading} from "@chakra-ui/react";
-import Authenticated from "~/repositories/AuthHoc";
+import {useState} from "react";
+import Stepper from "~/components/common/stepper/stepper";
+import ContactInfo from "~/components/medical-assistance/forms/contact-info.component";
+import Imagesinfo from "~/components/medical-assistance/forms/images.component";
+import Introduction from "~/components/medical-assistance/forms/intoduction.component";
+import Timings from "~/components/medical-assistance/forms/timings.component";
+import ShowData from "~/components/medical-assistance/show-data.component";
+import {validatePropery} from "~/validations/medical-assistance.validation";
+import styles from "./request.module.scss";
 
 const MedicalAssistanceRequest = () => {
   const [data, setData] = useState({
+    name: "Kudos Pharmacy",
+    email: "quddoux112@gmail.com",
+    serviceType: "pharmaceutical",
+    phoneNo: "123456789",
+    city: "Lahore",
+    fullAddress: "CUI, Lahore Campus",
+    description:
+      "Any student can get free first aid treatment and medicines from here",
+    startTime: "null",
+    endTime: "null",
+    fullDay: false,
+    workingDays: [1, 2],
+    tags: [],
+    images: [],
+  });
+  const [images, setImages] = useState([]);
+  const [errors, setErrors] = useState({
     name: "",
     email: "",
+    serviceType: "",
     contactNo: "",
     city: "",
     streetAddress: "",
     description: "",
-    tags: [],
-    images: ["qwertyuioplasdfghjk", "1234567890qwertyuioasdfghjkzxcvbnm"],
+    startTime: "",
+    endTime: "",
+    workingDays: "",
+    tags: "",
+    images: "",
   });
 
-  const handleData = async (key, value) => {
+  const handleError = (key, value) => {
+    setErrors({...errors, [key]: value});
+  };
+
+  const handleData = (key, value) => {
+    validatePropery(key, value, handleError);
     setData({...data, [key]: value});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //  setLoading(true);
-    //  dispatch(loginRequest(data, handleLoading));
   };
 
-  const onDrop = (acceptedFiles, rejectedFiles, imgName) => {
-    if (rejectedFiles) {
-      warningNotification("warning", "upload files under 2 mb size");
-      return;
-    } else if (acceptedFiles) {
-      convertImageToBase64(acceptedFiles[0], (result, success) => {
-        if (success) {
-          uploadImage(result, (url, success) => {
-            if (success) {
-              setImages([url]);
-              setData({...data, [imgName]: acceptedFiles[0].name});
-            }
-          });
-        }
-      });
-    }
-  };
+  const introduction = (
+    <Introduction
+      data={data}
+      handleData={handleData}
+      setImages={setImages}
+      images={images}
+      setData={setData}
+      errors={errors}
+    />
+  );
+  const timing = (
+    <Timings
+      data={data}
+      handleData={handleData}
+      setImages={setImages}
+      images={images}
+      setData={setData}
+      errors={errors}
+    />
+  );
+  const contactInfo = (
+    <ContactInfo
+      data={data}
+      handleData={handleData}
+      setImages={setImages}
+      images={images}
+      setData={setData}
+      errors={errors}
+    />
+  );
+  const imagesInfo = (
+    <Imagesinfo
+      data={data}
+      handleData={handleData}
+      setImages={setImages}
+      images={images}
+      setData={setData}
+      errors={errors}
+    />
+  );
+
+  const showData = (
+    <ShowData
+      data={data}
+      handleData={handleData}
+      setImages={setImages}
+      images={images}
+      setData={setData}
+      errors={errors}
+    />
+  );
+
+  const steps = [
+    {label: "Introduction", content: introduction},
+    {label: "Images", content: imagesInfo},
+    {label: "Timings", content: timing},
+    {label: "Contact Information", content: contactInfo},
+    {label: "Confirmation", content: showData},
+  ];
 
   return (
     <div className={styles.page}>
@@ -53,69 +121,12 @@ const MedicalAssistanceRequest = () => {
         Want to add your publish your medical assistance service
       </Heading>
       <div className={styles.container}>
-        <form
-          className={styles.container}
-          style={{width: "100%"}}
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <div className={styles.inputContainer}>
-            <div className={styles.leftDiv}>
-              <CustomInput
-                title="Service Name"
-                name="name"
-                type="name"
-                required
-                placeholder="name"
-                onChange={(e) => handleData("name", e.target.value)}
-              />
-              <CustomInput
-                title="Email"
-                required
-                placeholder="Email"
-                onChange={(e) => handleData("email", e.target.value)}
-              />
-              <CustomInput
-                title="Contact No"
-                required
-                placeholder="03099091509"
-                onChange={(e) => handleData("contactNo", e.target.value)}
-              />
-              <CustomInput
-                required
-                title="City"
-                placeholder="city name"
-                onChange={(e) => handleData("city", e.target.value)}
-              />
-              <CustomInput
-                required
-                title="Full Address"
-                placeholder="full address plus nearest landmark"
-                onChange={(e) => handleData("streetAddress", e.target.value)}
-              />
-            </div>
-            <div className={styles.rightDiv}>
-              <CustomTextArea
-                required
-                title="Description"
-                placeholder="Write Description here"
-                onChange={(e) => handleData("description", e.target.value)}
-              />
-
-              <FileUploader
-                title="Attach Images"
-                placeholder={data.images.toString() || "click to add images"}
-                accept={["image/jpeg", "image/png"]}
-                image={true}
-                maxSize={2000000}
-                onDrop={(selectedFiles) => alert(JSON.stringify(selectedFiles))}
-              />
-            </div>
-          </div>
-          <CustomButton title="Request to Add Medical Service" type="submit" />;
+        <form className={styles.container} onSubmit={(e) => handleSubmit(e)}>
+          <Stepper className={styles.stepper} steps={steps} />
         </form>
       </div>
     </div>
   );
 };
 
-export default Authenticated(MedicalAssistanceRequest);
+export default MedicalAssistanceRequest;

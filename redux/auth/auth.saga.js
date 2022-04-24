@@ -14,7 +14,7 @@ import {
   successNotification,
   errorNotification,
   infoNotification,
-} from "~/components/notification/notification";
+} from "~/components/fundamentals/notification/notification";
 import {loginSuccess, logOutSuccess} from "./auth.actions";
 import {appName} from "~/repositories/genericRepository";
 

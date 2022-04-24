@@ -1,14 +1,14 @@
-import CustomInput from "../../components/custom-input/custom-input.component";
+import CustomInput from "../../components/fundamentals/custom-input/custom-input.component";
 import styles from "./styles.module.scss";
-import { Divider, Spinner } from "@chakra-ui/react";
+import {Divider, Spinner} from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import donation from "../../public/donation.jpg";
-import CustomButton from "../../components/custom-button/custom-button.component";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { errorNotification } from "~/components/notification/notification";
-import { resetPasswordRequests } from "~/redux/auth/auth.actions";
+import CustomButton from "../../components/fundamentals/custom-button/custom-button.component";
+import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {errorNotification} from "~/components/fundamentals/notification/notification";
+import {resetPasswordRequests} from "~/redux/auth/auth.actions";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function Login() {
   });
 
   const handleData = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData({...data, [key]: value});
   };
 
   const handleLoading = () => {
@@ -40,7 +40,7 @@ export default function Login() {
     dispatch(resetPasswordRequests(payload, handleLoading));
   };
   return (
-    <div className={styles.page} style={{ height: "90vh" }}>
+    <div className={styles.page} style={{height: "90vh"}}>
       <div className={styles.img}>
         <Image src={donation} width={1100} height={660} alt="donation.jpg" />
       </div>
@@ -64,10 +64,7 @@ export default function Login() {
             </div>
             <div className={styles.inputContent}>
               <div className={styles.fields}>
-                <form
-                  style={{ width: "100%" }}
-                  onSubmit={(e) => handleSubmit(e)}
-                >
+                <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
                   <CustomInput
                     title="Enter New Password"
                     placeholder="password"
@@ -94,10 +91,10 @@ export default function Login() {
                 <Divider className="mt-7" />
 
                 <div className={styles.footer}>
-                  <span style={{ color: "#6b7280" }}>
+                  <span style={{color: "#6b7280"}}>
                     Go to
                     <Link href="/account/login" passHref>
-                      <a style={{ color: "#15803d", marginLeft: "0.5rem" }}>
+                      <a style={{color: "#15803d", marginLeft: "0.5rem"}}>
                         Login Page
                       </a>
                     </Link>

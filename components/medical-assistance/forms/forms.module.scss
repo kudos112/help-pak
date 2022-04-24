@@ -1,0 +1,98 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.button {
+  width: 60%;
+  @include FlexCenter();
+  margin: 0 auto;
+}
+
+.inputContainer {
+  @include FlexCenter();
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 40px;
+
+  @include respond(medium) {
+    flex-direction: column;
+    margin: 30px;
+  }
+
+  @include respond(small) {
+    margin: 10px;
+  }
+
+  .leftDiv {
+    @include FlexCenter();
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+    gap: 5px;
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+
+  .rightDiv {
+    @include FlexCenter();
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    width: 400px;
+
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+}
+
+.showData {
+  @include FlexCenter();
+  flex-direction: row;
+  align-items: flex-start;
+  margin: 40px;
+
+  @include respond(medium) {
+    flex-direction: column;
+    margin: 30px;
+  }
+
+  @include respond(small) {
+    margin: 10px;
+  }
+
+  .leftDiv {
+    @include FlexCenter();
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+    gap: 5px;
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+
+  .rightDiv {
+    @include FlexCenter();
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    width: 400px;
+
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+}

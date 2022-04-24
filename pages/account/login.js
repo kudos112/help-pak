@@ -1,5 +1,5 @@
-import CustomInput from "@/components/custom-input/custom-input.component";
-import CustomButton from "@/components/custom-button/custom-button.component";
+import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
+import CustomButton from "@/components/fundamentals/custom-button/custom-button.component";
 import {Divider, Select, Spinner} from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";

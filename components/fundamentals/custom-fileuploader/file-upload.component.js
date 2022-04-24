@@ -1,10 +1,10 @@
-import { AttachmentIcon } from "@chakra-ui/icons";
+import {AttachmentIcon} from "@chakra-ui/icons";
 import Dropzone from "react-dropzone";
 import styles from "./file-upload.module.scss";
-import { AiOutlineCamera, AiOutlineDelete } from "react-icons/ai";
-import { IconButton } from "@chakra-ui/react";
+import {AiOutlineCamera, AiOutlineDelete} from "react-icons/ai";
+import {IconButton} from "@chakra-ui/react";
 
-const FileUploader = ({ title, placeholder, image, ...props }) => {
+const FileUploader = ({title, placeholder, error, image, ...props}) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputContainer}>
@@ -12,14 +12,14 @@ const FileUploader = ({ title, placeholder, image, ...props }) => {
         <div className={styles.dropzoneWrapper}>
           <div className={styles.dropzone}>
             <Dropzone {...props}>
-              {({ getRootProps, getInputProps }) => (
+              {({getRootProps, getInputProps}) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p className={styles.placeholder}>
-                      {placeholder}
+                    <div className={styles.placeholder}>
+                      <p className={styles.truncated}>{placeholder}</p>
                       {image ? <AiOutlineCamera /> : <AttachmentIcon />}
-                    </p>
+                    </div>
                   </div>
                 </section>
               )}
@@ -34,6 +34,7 @@ const FileUploader = ({ title, placeholder, image, ...props }) => {
             />
           </div>
         </div>
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </div>
   );

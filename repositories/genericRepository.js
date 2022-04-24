@@ -1,9 +1,11 @@
 import axios from "axios";
+import {errorNotification} from "~/components/fundamentals/notification/notification";
 
 // const xAppToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBOYW1lIjoiRENHUyIsImlhdCI6MTYwNzg2NDcwMX0.F_3ZTAs_7MbboyzrNCkg0oOyV3yIacP81wee8LPTHJw`;
 
-const baseDomain = "http://localhost:5000";
-// const baseDomain = "https://backend-helpak.herokuapp.com";
+let baseDomain = "https://backend-helpak.herokuapp.com";
+if (process.env.NODE_ENV === "development")
+  baseDomain = "http://localhost:5000";
 
 export const appName = "helpak_client";
 
@@ -19,28 +21,63 @@ const instance = axios.create({
   headers: customHeaders,
 });
 
-// instance.interceptors.request.use(
-//   (config) => {
-//     if (!config.doNotUseAuth) {
-//       const _xAuthToken = localStorage.getItem(`${appName}_xAuthToken`) || null;
-//       if (_xAuthToken) config.headers["x-auth-token"] = _xAuthToken;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+instance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem(`${appName}_accessToken`) || null;
+    if (accessToken) config.headers["Authorization"] = "bearer " + accessToken;
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      originalRequest.url === `${baseUrl}/v1/auth/refresh-tokens`
+    ) {
+      errorNotification(" Log in again", "Your session has expired");
+      router.push("/login");
+      return Promise.reject(error);
+    }
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refreshToken =
+        localStorage.getItem(`${appName}_refreshToken`) || null;
+      return axios
+        .post(`${baseUrl}/v1/auth/refresh-tokens`, {
+          refreshToken: refreshToken,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+            let tokens = res.data;
+            let _tokens = {
+              accessToken: tokens.access.accessToken,
+              refreshToken: tokens.refresh.refreshToken,
+            };
+            localStorage.removeItem(`${appName}_accessToken`);
+            localStorage.removeItem(`${appName}_refreshToken`);
+            for (const key of Object.keys(_tokens))
+              localStorage.setItem(`${appName}_${key}`, _tokens[key]);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + localStorage.getItem(`${appName}_accessToken`) ||
+              null;
+            return axios(originalRequest);
+          }
+        });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default instance;
-
-// export const serializeQuery = (query) => {
-//   return Object.keys(query)
-//     .map(
-//       (key) => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`
-//     )
-//     .join("&");
-// };
 
 export const getError = (error) => {
   if (error.response) {

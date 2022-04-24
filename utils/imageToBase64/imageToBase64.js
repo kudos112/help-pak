@@ -1,4 +1,6 @@
-const { errorNotification } = require("~/components/notification/notification");
+const {
+  errorNotification,
+} = require("~/components/fundamentals/notification/notification");
 
 const convertImageToBase64 = (img, cb) => {
   let reader = new FileReader();

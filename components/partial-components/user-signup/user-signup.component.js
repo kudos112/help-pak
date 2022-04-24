@@ -1,13 +1,13 @@
 import {Spinner} from "@chakra-ui/react";
 import {useState} from "react";
 import styles from "./user-signup.module.scss";
-import CustomButton from "~/components/custom-button/custom-button.component";
-import FileUploader from "~/components/custom-fileuploader/file-upload.component";
-import CustomInput from "~/components/custom-input/custom-input.component";
+import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
+import FileUploader from "~/components/fundamentals/custom-fileuploader/file-upload.component";
+import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import {
   errorNotification,
   warningNotification,
-} from "~/components/notification/notification";
+} from "~/components/fundamentals/notification/notification";
 import {uploadImage} from "~/utils/image-uploader/upload-images.util";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
 import {useDispatch} from "react-redux";

@@ -1,14 +1,14 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import CustomButton from "~/components/custom-button/custom-button.component";
-import FileUploader from "~/components/custom-fileuploader/file-upload.component";
+import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
+import FileUploader from "~/components/fundamentals/custom-fileuploader/file-upload.component";
 import styles from "./ngo-signup.module.scss";
-import CustomInput from "~/components/custom-input/custom-input.component";
+import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import {Spinner} from "@chakra-ui/react";
 import {
   errorNotification,
   warningNotification,
-} from "~/components/notification/notification";
+} from "~/components/fundamentals/notification/notification";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
 import {uploadImage} from "~/utils/image-uploader/upload-images.util";
 import {ngoSignUpRequest} from "~/redux/auth/auth.actions";

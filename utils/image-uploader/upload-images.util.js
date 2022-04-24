@@ -2,7 +2,7 @@ import {
   errorNotification,
   infoNotification,
   successNotification,
-} from "~/components/notification/notification";
+} from "~/components/fundamentals/notification/notification";
 
 export const uploadImage = (img, cb) => {
   if (img != null) {

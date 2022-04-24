@@ -1,6 +1,10 @@
-import { extendTheme } from "@chakra-ui/react";
+import {extendTheme} from "@chakra-ui/react";
+import {StepsStyleConfig as Steps} from "chakra-ui-steps";
 
 export const theme = extendTheme({
+  components: {
+    Steps,
+  },
   colors: {
     transparent: "transparent",
     customGreen: "#15803D",

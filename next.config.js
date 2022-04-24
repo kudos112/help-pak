@@ -5,6 +5,8 @@ module.exports = {
       "alkhidmat.org",
       "www.fauji.org.pk",
       "darulsukun.com",
+      "res.cloudinary.com",
+      "images.unsplash.com",
     ],
   },
   reactStrictMode: true,
