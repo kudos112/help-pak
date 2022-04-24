@@ -56,7 +56,6 @@ instance.interceptors.response.use(
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
             let tokens = res.data;
             let _tokens = {
               accessToken: tokens.access.accessToken,
