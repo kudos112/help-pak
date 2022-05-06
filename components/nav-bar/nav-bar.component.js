@@ -22,6 +22,7 @@ import {
   MenuDivider,
   Center,
   Spinner,
+  Portal,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -176,20 +177,22 @@ const DesktopNav = () => {
             </PopoverTrigger>
 
             {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
+              <Portal>
+                <PopoverContent
+                  border={0}
+                  boxShadow={"xl"}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                >
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              </Portal>
             )}
           </Popover>
         </Box>
@@ -359,14 +362,14 @@ const NAV_ITEMS = [
     href: "/medical-assistance",
     children: [
       {
-        label: "Add Medical Assistance",
-        subLabel: "Request to list your medical assistance service",
-        href: "/medical-assistance/request",
-      },
-      {
         label: "Medical Services",
         subLabel: "Checkout free medical services available",
         href: "/medical-assistance",
+      },
+      {
+        label: "Add Medical Assistance",
+        subLabel: "Request to list your medical assistance service",
+        href: "/medical-assistance/request",
       },
     ],
   },

@@ -27,9 +27,21 @@ class MedicalServiceRepository {
     }
   }
 
-  async getMedicalAssistances() {
+  async getMedicalAssistanceById(id) {
     try {
-      const request = await Repository.get(`${baseUrl}/${routes.get}`);
+      const request = await Repository.get(`${baseUrl}/${routes.get}/${id}`);
+      console.log("In service", request);
+      return request.data;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
+  async getMedicalAssistances(name, city, serviceType) {
+    try {
+      const request = await Repository.get(
+        `${baseUrl}/${routes.get}?name=${name}&city=${city}&serviceType=${serviceType}`
+      );
       if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;
       return data;

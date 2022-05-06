@@ -35,7 +35,6 @@ const NgoSignUp = ({userType = "NGO"}) => {
   };
 
   const handleSubmit = (e) => {
-    console.log("handle submit button pressed");
     e.preventDefault();
     if (images.length < 1) {
       errorNotification("Error", "Please Upload certificate image");
@@ -49,7 +48,6 @@ const NgoSignUp = ({userType = "NGO"}) => {
         regNo: data.regNo,
         phoneNo: data.phoneNo,
       };
-      console.log(payload);
       setLoading(true);
       dispatch(ngoSignUpRequest(payload, handleLoading));
     }

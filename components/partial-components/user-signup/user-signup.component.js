@@ -39,7 +39,6 @@ const UserSignUp = ({userType = "INDIVIDUAL"}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (images.length > 2 || images.length < 2) {
-      console.log(images);
       errorNotification("Error", "Please Upload both images");
       return;
     } else {
@@ -51,7 +50,6 @@ const UserSignUp = ({userType = "INDIVIDUAL"}) => {
         images,
         phoneNo: data.phoneNo,
       };
-      console.log(payload);
       setLoading(true);
       dispatch(userSignUpRequest(payload, handleLoading));
     }

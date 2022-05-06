@@ -26,7 +26,6 @@ export default function Login() {
   };
 
   const handleSubmit = (e) => {
-    console.log("going to forget password");
     e.preventDefault();
     setLoading(true);
     dispatch(forgotpasswordrequests(data, handleLoading));

@@ -24,7 +24,6 @@ class AuthenticationRepository {
         payload
       );
       const {data} = request;
-      console.log(data);
       return {
         message: data.message,
         description: data.description,
@@ -41,7 +40,6 @@ class AuthenticationRepository {
         payload
       );
       const {data} = request;
-      console.log(data);
       return {
         message: data.message,
         description: data.description,

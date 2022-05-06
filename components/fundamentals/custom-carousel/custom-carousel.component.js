@@ -1,7 +1,11 @@
 import Slider from "react-slick";
 import {useRef, useState} from "react";
-
 import styles from "./custom-carousel.module.scss";
+
+import dynamic from "next/dynamic";
+
+const Zmage = dynamic(import("react-zmage"), {ssr: false});
+
 import {
   AspectRatio,
   Center,
@@ -42,7 +46,6 @@ export default function ImageCarousel({images}) {
       );
     },
   };
-  console.log(images);
   return (
     <div className={styles.wrapper}>
       <Slider {...settings} ref={carousel}>

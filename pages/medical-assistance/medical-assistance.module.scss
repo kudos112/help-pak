@@ -1,0 +1,40 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.main {
+  display: flex;
+  flex-direction: row;
+
+  @include respond(medium) {
+    flex-direction: column;
+  }
+  .filter {
+    width: 30%;
+    border-right: 1px solid $gray;
+    height: 79vh;
+    @include respond(medium) {
+      width: 100%;
+      border: none;
+      height: auto;
+    }
+  }
+
+  .cards {
+    width: 100%;
+    height: 79vh;
+    overflow-y: scroll;
+    @include respond(medium) {
+      height: auto;
+      overflow-y: none;
+    }
+  }
+}
+
+.midDesc {
+  display: flex;
+  flex-direction: row;
+
+  @include respond(small) {
+    flex-direction: column;
+  }
+}

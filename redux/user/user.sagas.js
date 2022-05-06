@@ -9,9 +9,7 @@ import {
 } from "redux-saga/effects";
 import * as actionTypes from "./user.types";
 
-function* signInStart(action) {
-  console.log("user signed in");
-}
+function* signInStart(action) {}
 
 export default function* rootSagas() {
   yield all([takeEvery(actionTypes.SIGN_IN_START, signInStart)]);

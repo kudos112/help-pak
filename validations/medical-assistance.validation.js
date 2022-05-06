@@ -40,7 +40,6 @@ export const validatePropery = (name, value, handleError) => {
 export const verifyPayload = (payload) => {
   const result = Joi.validate(payload, schema);
   if (result.error) {
-    console.log(result.error);
 
     errorNotification("Failed", "Fill up the all the details correctly");
     return false;

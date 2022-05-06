@@ -1,7 +1,8 @@
 import actionTypes from "./medical-service.actionTypes";
 
 export const initState = {
-  medicalAssistances: {},
+  medicalAssistances: null,
+  selectedMedicalAssistance: {},
 };
 
 function MedicalAssistanceReducer(state = initState, action) {
@@ -10,6 +11,11 @@ function MedicalAssistanceReducer(state = initState, action) {
       return {
         ...state,
         ...{medicalAssistances: action.medicalAssistances},
+      };
+    case actionTypes.SUCCESS_GET_SELECTED_MEDICAL_ASSISTANCE:
+      return {
+        ...state,
+        ...{selectedMedicalAssistance: action.medicalAssistance},
       };
     default:
       return state;

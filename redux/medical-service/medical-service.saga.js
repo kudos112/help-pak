@@ -5,7 +5,10 @@ import {
   errorNotification,
   successNotification,
 } from "~/components/fundamentals/notification/notification";
-import {getMedicalAssistancesSuccess} from "./medical-service.actions";
+import {
+  getMedicalAssistancesSuccess,
+  getSelectedMedicalAssistanceSuccess,
+} from "./medical-service.actions";
 import actionTypes from "./medical-service.actionTypes";
 
 function* createMedicalAssistanceSaga(action) {
@@ -28,11 +31,38 @@ function* createMedicalAssistanceSaga(action) {
 }
 
 function* getMedicalAssistancesSaga(action) {
+  console.log(action);
   try {
-    const data = yield call(MedicalAssistanceService.getMedicalAssistances);
+    const data = yield call(
+      MedicalAssistanceService.getMedicalAssistances,
+      action.name,
+      action.city,
+      action.serviceType
+    );
     yield put(getMedicalAssistancesSuccess(data));
     if (action && action.callback) action.callback();
   } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
+function* getSelectedMedicalAssistanceSaga(action) {
+  console.log("in sagas");
+  try {
+    const medicalAssistance = yield call(
+      MedicalAssistanceService.getMedicalAssistanceById,
+      action.id
+    );
+    console.log(medicalAssistance);
+    yield put(getSelectedMedicalAssistanceSuccess(medicalAssistance));
+    action.callback();
+  } catch (error) {
+    console.log(error);
     if (action && action.callback) {
       action.callback();
       errorNotification("Error", error);
@@ -48,6 +78,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_MEDICAL_ASSISTANCES_REQUEST,
       getMedicalAssistancesSaga
+    ),
+    takeEvery(
+      actionTypes.GET_SELECTED_MEDICAL_ASSISTANCE,
+      getSelectedMedicalAssistanceSaga
     ),
   ]);
 }

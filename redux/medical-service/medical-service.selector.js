@@ -7,7 +7,7 @@ export const selectMedicalAssistances = createSelector(
   (data) => data.medicalAssistances
 );
 
-// export const selectIsLoggedIn = createSelector(
-//   [selectAuth],
-//   (auth) => auth.isLoggedIn
-// );
+export const selectSelectedMedicalAssistance = createSelector(
+  [selectMedicalAssistance],
+  (medicalAssistance) => medicalAssistance.selectedMedicalAssistance
+);

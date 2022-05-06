@@ -29,7 +29,6 @@ function* userSignUpSaga(action) {
     action.callback();
   } catch (error) {
     if (action && action.callback) {
-      console.log("Error: ", error);
       action.callback();
       errorNotification("Error", error);
     }
@@ -92,7 +91,6 @@ function* logOutSaga(action) {
     const payload = {
       refreshToken: localStorage.getItem(`${appName}_refreshToken`),
     };
-    console.log(payload);
     yield call(AuthService.logout, payload);
     localStorage.removeItem(`${appName}_accessToken`);
     localStorage.removeItem(`${appName}_refreshToken`);
@@ -101,7 +99,6 @@ function* logOutSaga(action) {
     Router.push("/");
     yield put(logOutSuccess());
   } catch (err) {
-    console.log(err);
     errorNotification("Error", err);
   }
 }

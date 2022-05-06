@@ -25,7 +25,6 @@ export const uploadImage = (img, cb) => {
         cb(data.url, true);
       })
       .catch((err) => {
-        console.log(err);
         errorNotification(
           "error",
           "Error occured while uploading your image\nTry again"
