@@ -112,31 +112,34 @@ const NavBar = ({user, isLoggedIn}) => {
               >
                 <Avatar size={"sm"} bg={"customGray"} />
               </MenuButton>
-              <MenuList alignItems={"center"}>
-                <br />
-                <Center>
-                  <p>{user.name}</p>
-                </Center>
-                <br />
-                <MenuDivider />
-                <MenuItem
-                  onClick={() => {
-                    setLoading(true);
-                    dispatch(logOutRequest(handleLoading));
-                  }}
-                >
-                  Logout
-                  {loading && (
-                    <Spinner
-                      size="sm"
-                      speed="0.65s"
-                      emptyColor="lightGreen"
-                      color="green"
-                      ml={3}
-                    />
-                  )}
-                </MenuItem>
-              </MenuList>
+
+              <Portal>
+                <MenuList alignItems={"center"}>
+                  <br />
+                  <Center>
+                    <p>{user.name}</p>
+                  </Center>
+                  <br />
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => {
+                      setLoading(true);
+                      dispatch(logOutRequest(handleLoading));
+                    }}
+                  >
+                    Logout
+                    {loading && (
+                      <Spinner
+                        size="sm"
+                        speed="0.65s"
+                        emptyColor="lightGreen"
+                        color="green"
+                        ml={3}
+                      />
+                    )}
+                  </MenuItem>
+                </MenuList>
+              </Portal>
             </Menu>
           )}
         </Stack>

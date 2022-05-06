@@ -1,21 +1,20 @@
-import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import CustomButton from "@/components/fundamentals/custom-button/custom-button.component";
-import {Divider, Select, Spinner} from "@chakra-ui/react";
-import Link from "next/link";
-import Image from "next/image";
 import donation from "@/public/donation.jpg";
-import styles from "./styles.module.scss";
-import {loginRequest} from "~/redux/auth/auth.actions";
-import {useDispatch} from "react-redux";
+import {Divider, Spinner} from "@chakra-ui/react";
+import Image from "next/image";
+import Link from "next/link";
 import {useState} from "react";
-import Colors from "~/public/colors";
+import {useDispatch} from "react-redux";
+import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
+import {loginRequest} from "~/redux/auth/auth.actions";
+import styles from "./styles.module.scss";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const [data, setData] = useState({
-    userType: "INDIVIDUAL",
+    // userType: "INDIVIDUAL",
     email: "quddoux112@gmail.com",
     password: "helpak@test123",
   });
@@ -59,7 +58,7 @@ export default function Login() {
             <div className={styles.inputContent}>
               <div className={styles.fields}>
                 <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
-                  <div style={{width: "100%", marginBottom: 10}}>
+                  {/* <div style={{width: "100%", marginBottom: 10}}>
                     <p className={styles.title}>Choose your type</p>
                     <Select
                       className="mt-1"
@@ -73,7 +72,7 @@ export default function Login() {
                       <option value="NGO">NGO</option>
                       <option value="INDIVIDUAL">Individual</option>
                     </Select>
-                  </div>
+                  </div> */}
                   <CustomInput
                     title="Enter Your Email"
                     placeholder="email"

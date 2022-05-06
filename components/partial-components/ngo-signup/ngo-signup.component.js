@@ -11,7 +11,7 @@ import {
 } from "~/components/fundamentals/notification/notification";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
 import {uploadImage} from "~/utils/image-uploader/upload-images.util";
-import {ngoSignUpRequest} from "~/redux/auth/auth.actions";
+import {ngoSignUpRequest, userSignUpRequest} from "~/redux/auth/auth.actions";
 
 const NgoSignUp = ({userType = "NGO"}) => {
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ const NgoSignUp = ({userType = "NGO"}) => {
         phoneNo: data.phoneNo,
       };
       setLoading(true);
-      dispatch(ngoSignUpRequest(payload, handleLoading));
+      dispatch(userSignUpRequest(payload, handleLoading));
     }
   };
 
