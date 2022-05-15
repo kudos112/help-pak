@@ -119,29 +119,30 @@ const MedicalAssistanceDetailedPage = ({medicalCamp}) => {
                   </Text>
                 </Tooltip>
               </Box>
-              {Array.isArray(medicalCamp?.doctors?.data) && (
-                <Flex direction="column">
-                  <Heading size="md" color="red.500">
-                    Doctors
-                  </Heading>
-                  {medicalCamp?.doctors.data.map((doctor, index) => {
-                    return (
-                      <div key={index}>
-                        {doctor.name !== "" && (
-                          <>
-                            <Text mt={3} fontSize={"md"} color={"gray.500"}>
-                              <strong>Name:</strong> {doctor.name}
-                            </Text>
-                            <Text mt={1} fontSize={"md"} color={"gray.500"}>
-                              <strong>Speciality:</strong> {doctor.speciality}
-                            </Text>
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </Flex>
-              )}
+              {Array.isArray(medicalCamp?.doctors?.data) &&
+                medicalCamp?.doctors?.data.length > 1 && (
+                  <Flex direction="column">
+                    <Heading size="md" color="red.500">
+                      Doctors
+                    </Heading>
+                    {medicalCamp?.doctors.data.map((doctor, index) => {
+                      return (
+                        <div key={index}>
+                          {doctor.name !== "" && (
+                            <>
+                              <Text mt={3} fontSize={"md"} color={"gray.500"}>
+                                <strong>Name:</strong> {doctor.name}
+                              </Text>
+                              <Text mt={1} fontSize={"md"} color={"gray.500"}>
+                                <strong>Speciality:</strong> {doctor.speciality}
+                              </Text>
+                            </>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </Flex>
+                )}
               <div className={styles.midDesc}>
                 <Tooltip label="Email">
                   <HStack mt={2} w={"300px"}>
