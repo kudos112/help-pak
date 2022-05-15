@@ -1,12 +1,12 @@
 import {SimpleGrid} from "@chakra-ui/react";
-import CarouselCard from "~/components/data/card/card-carousel.component";
+import CarouselCard from "~/components/data/medical-assistance/card-carousel.component";
 
 const Cards = ({medicalAssistances}) => {
   return (
     <SimpleGrid
       columns={6}
-      minChildWidth={{base: "200px", md: "280px", lg: "280px", sm: "200px"}}
-      spacing={1}
+      minChildWidth={{base: "200px", md: "250px", lg: "250px", sm: "200px"}}
+      spacing={3}
     >
       {medicalAssistances.data.map((data, index) => {
         return <CarouselCard data={data} key={index} />;
@@ -16,3 +16,13 @@ const Cards = ({medicalAssistances}) => {
 };
 
 export default Cards;
+
+// <Wrap spacing={"30px"}>
+//   <WrapItem>
+//     <Center w="180px" h="80px" bg="red.200">
+//       {medicalAssistances.data.map((data, index) => {
+//         return <CarouselCard data={data} key={index} />;
+//       })}
+//     </Center>
+//   </WrapItem>
+// </Wrap>;

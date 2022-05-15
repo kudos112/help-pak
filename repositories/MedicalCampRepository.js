@@ -3,20 +3,20 @@ import Repository, {baseUrl, getError} from "./genericRepository";
 // const randomstring = require("randomstring");
 
 const routes = {
-  create: "v1/medicalassistance/",
-  get: "v1/medicalassistance",
-  patch: "/v1/medicalassistance",
-  delete: "/v1/medicalassistance",
+  create: "v1/medical-camp/",
+  get: "v1/medical-camp",
+  patch: "/v1/medical-camp",
+  delete: "/v1/medical-camp",
 };
 
 class MedicalServiceRepository {
-  async createMedicalAssistance(payload) {
+  async createMedicalCamp(payload) {
     try {
       const request = await Repository.post(
         `${baseUrl}/${routes.create}`,
         payload
       );
-      if (request == undefined) throw new Error("Your session is expired");
+      // if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;
       return {
         message: data.message,
@@ -27,7 +27,7 @@ class MedicalServiceRepository {
     }
   }
 
-  async getMedicalAssistanceById(id) {
+  async getMedicalCampById(id) {
     try {
       const request = await Repository.get(`${baseUrl}/${routes.get}/${id}`);
       return request.data;
@@ -36,12 +36,12 @@ class MedicalServiceRepository {
     }
   }
 
-  async getMedicalAssistances(name, city, serviceType) {
+  async getMedicalCamps(name, city, campType) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.get}?name=${name}&city=${city}&serviceType=${serviceType}&enabled=true&deleted=false`
+        `${baseUrl}/${routes.get}?enabled=true&deleted=false&name=${name}&city=${city}&campType=${campType}`
       );
-      if (request == undefined) throw new Error("Your session is expired");
+      // if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;
       return data;
     } catch (error) {

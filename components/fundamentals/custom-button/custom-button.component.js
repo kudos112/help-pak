@@ -1,7 +1,7 @@
 import {Button} from "@chakra-ui/react";
 import styles from "./custom-button.module.scss";
 
-const CustomButton = ({title, onClick, loading, ...props}) => {
+const CustomButton = ({title, onClick, loading, disable, ...props}) => {
   return (
     <div className={styles.btn}>
       <Button
@@ -18,7 +18,9 @@ const CustomButton = ({title, onClick, loading, ...props}) => {
         _focus={{backgroundColor: "transparent", border: "none"}}
         role="button"
         tabIndex={0}
+        p={2}
         onClick={onClick}
+        disable={disable || false}
         {...props}
       >
         {title}

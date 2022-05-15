@@ -2,13 +2,13 @@ import {Flex, Heading} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {connect, useDispatch} from "react-redux";
 import {useMediaQuery} from "@chakra-ui/react";
-import Cards from "~/components/medical-assistance/medical-assistance-cards";
-import FilterMedicalAssistance from "~/components/medical-assistance/search-bar/filter.assistance.component";
-import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
-import styles from "./medical-assistance.module.scss";
-import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
+import Cards from "~/components/medical-camp/medical-camp-cards";
+import FilterMedicalCamp from "~/components/medical-camp/search-bar/filter.camp.component";
+// import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
+import styles from "./medical-camp.module.scss";
+import {selectMedicalCamps} from "~/redux/medical-camp/medical-camp.selector";
 
-const MedicalAssistance = ({medicalAssistances}) => {
+const MedicalCamp = ({medicalCamps}) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
@@ -17,19 +17,19 @@ const MedicalAssistance = ({medicalAssistances}) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(getMedicalAssistances(handleLoading));
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   // dispatch(getMedicalCamps(handleLoading));
+  // }, []);
   return (
     <Flex direction="column">
       <Heading m={6} color={"customGreen"}>
-        Medical Assistance Services
+        Medical Camps
       </Heading>
-
+      {/* {JSON.stringify(medicalCamps)} */}
       <div className={styles.main}>
         <div className={styles.filter}>
-          <FilterMedicalAssistance handleLoading={handleLoading} />
+          <FilterMedicalCamp handleLoading={handleLoading} />
         </div>
 
         <div className={styles.cards}>
@@ -37,16 +37,18 @@ const MedicalAssistance = ({medicalAssistances}) => {
             <Flex m={8}>loading...</Flex>
           ) : (
             <div>
-              {medicalAssistances == null && (
-                <Flex m={3}>We are Working on updates</Flex>
+              {medicalCamps == null && (
+                <Flex m={3}>
+                  We are Working on updates... Just wait for more content
+                </Flex>
               )}
-              {medicalAssistances?.data && (
+              {medicalCamps?.data && (
                 <Flex
                   ml={mediumSized ? 8 : 8}
                   mr={mediumSized ? 8 : 8}
                   direction="column"
                 >
-                  <Cards medicalAssistances={medicalAssistances} />
+                  <Cards medicalCamps={medicalCamps} />
                 </Flex>
               )}
             </div>
@@ -59,8 +61,8 @@ const MedicalAssistance = ({medicalAssistances}) => {
 
 const mapStateToProps = (state) => {
   return {
-    medicalAssistances: selectMedicalAssistances(state),
+    medicalCamps: selectMedicalCamps(state),
   };
 };
 
-export default connect(mapStateToProps)(MedicalAssistance);
+export default connect(mapStateToProps)(MedicalCamp);

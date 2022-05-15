@@ -14,7 +14,7 @@ const Layout = ({children}) => {
       >
         <NavBar />
       </div>
-      <div style={{width: "100%", marginTop: "50px"}}>{children}</div>
+      <div style={{width: "100%", marginTop: "60px"}}>{children}</div>
     </div>
   );
 };

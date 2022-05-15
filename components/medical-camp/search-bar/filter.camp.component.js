@@ -11,24 +11,27 @@ import {
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import Select from "react-select";
-import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
+import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
 import {cities} from "~/utils/data/cities";
-import options from "~/utils/data/serviceType.options";
+import options from "~/utils/data/campTypes.options";
 
-const FilterMedicalAssistance = ({handleLoading}) => {
+const FilterMedicalCamp = ({handleLoading}) => {
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState({
     name: "",
     city: "",
-    serviceType: "",
+    campType: "",
   });
+  // const [name, setName] = useState("")
+  // const [city, setCity] = useState("")
+  // const [campType, setCampType] = useState("");
 
   const resetFilter = () => {
     setFilter({
       name: "",
       city: "",
-      serviceType: "",
+      campType: "",
     });
   };
 
@@ -38,12 +41,7 @@ const FilterMedicalAssistance = ({handleLoading}) => {
 
   useEffect(() => {
     dispatch(
-      getMedicalAssistances(
-        handleLoading,
-        filter.name,
-        filter.city,
-        filter.serviceType
-      )
+      getMedicalCamps(handleLoading, filter.name, filter.city, filter.campType)
     );
   }, [filter]);
 
@@ -79,12 +77,12 @@ const FilterMedicalAssistance = ({handleLoading}) => {
           Select or Type Service Type
         </Heading>
         <Select
-          instanceId="123"
+          instanceId="1"
           options={options}
-          placeholder="Select or Type service"
-          value={{value: filter.serviceType, label: filter.serviceType}}
+          placeholder="Select or Type Camp Type"
+          value={{value: filter.campType, label: filter.campType}}
           onChange={(item) => {
-            handleData("serviceType", item.value);
+            handleData("campType", item.value);
           }}
         />
       </FormControl>
@@ -93,6 +91,7 @@ const FilterMedicalAssistance = ({handleLoading}) => {
           Select or Type City
         </Heading>
         <Select
+          instanceId="2"
           options={cities}
           placeholder="Select or Type nearest city"
           value={{value: filter.city, label: filter.city}}
@@ -105,4 +104,4 @@ const FilterMedicalAssistance = ({handleLoading}) => {
   );
 };
 
-export default FilterMedicalAssistance;
+export default FilterMedicalCamp;

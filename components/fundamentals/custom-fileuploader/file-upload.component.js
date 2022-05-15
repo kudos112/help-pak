@@ -4,7 +4,14 @@ import styles from "./file-upload.module.scss";
 import {AiOutlineCamera, AiOutlineDelete} from "react-icons/ai";
 import {IconButton} from "@chakra-ui/react";
 
-const FileUploader = ({title, placeholder, error, image, ...props}) => {
+const FileUploader = ({
+  title,
+  placeholder,
+  error,
+  image,
+  removeFile,
+  ...props
+}) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputContainer}>
@@ -25,7 +32,7 @@ const FileUploader = ({title, placeholder, error, image, ...props}) => {
               )}
             </Dropzone>
           </div>
-          <div className={styles.deleteIcon}>
+          <div className={styles.deleteIcon} onClick={removeFile}>
             <IconButton
               variant="outline"
               colorScheme="red"

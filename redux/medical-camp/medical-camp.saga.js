@@ -1,4 +1,4 @@
-import MedicalAssistanceService from "@/repositories/MedicalServiceRepository";
+import MedicalCampService from "@/repositories/MedicalCampRepository";
 import Router from "next/router";
 import {all, call, cancel, takeEvery, put} from "redux-saga/effects";
 import {
@@ -6,15 +6,15 @@ import {
   successNotification,
 } from "~/components/fundamentals/notification/notification";
 import {
-  getMedicalAssistancesSuccess,
-  getSelectedMedicalAssistanceSuccess,
-} from "./medical-service.actions";
-import actionTypes from "./medical-service.actionTypes";
+  getMedicalCampsSuccess,
+  getSelectedMedicalCampSuccess,
+} from "./medical-camp.actions";
+import actionTypes from "./medical-camp.actionTypes";
 
-function* createMedicalAssistanceSaga(action) {
+function* createMedicalCampSaga(action) {
   try {
     const {message, description} = yield call(
-      MedicalAssistanceService.createMedicalAssistance,
+      MedicalCampService.createMedicalCamp,
       action.payload
     );
     successNotification(message, description, "top", 8000);
@@ -30,33 +30,38 @@ function* createMedicalAssistanceSaga(action) {
   }
 }
 
-function* getMedicalAssistancesSaga(action) {
+function* getMedicalCampsSaga(action) {
   try {
     const data = yield call(
-      MedicalAssistanceService.getMedicalAssistances,
+      MedicalCampService.getMedicalCamps,
       action.name,
       action.city,
-      action.serviceType
+      action.campType
     );
-    yield put(getMedicalAssistancesSuccess(data));
+    yield put(getMedicalCampsSuccess(data));
     if (action && action.callback) action.callback();
   } catch (error) {
     if (action && action.callback) {
       action.callback();
-      errorNotification("Error", error);
+      errorNotification(
+        "Error",
+        typeof error === "string"
+          ? error
+          : "Working on this minor update, try again soon"
+      );
     }
   } finally {
     yield cancel();
   }
 }
 
-function* getSelectedMedicalAssistanceSaga(action) {
+function* getSelectedMedicalCampSaga(action) {
   try {
-    const medicalAssistance = yield call(
-      MedicalAssistanceService.getMedicalAssistanceById,
+    const medicalCamp = yield call(
+      MedicalCampService.getMedicalCampById,
       action.id
     );
-    yield put(getSelectedMedicalAssistanceSuccess(medicalAssistance));
+    yield put(getSelectedMedicalCampSuccess(medicalCamp));
     action.callback();
   } catch (error) {
     if (action && action.callback) {
@@ -70,14 +75,11 @@ function* getSelectedMedicalAssistanceSaga(action) {
 
 export default function* rootSaga() {
   yield all([
-    takeEvery(actionTypes.CREATE_MEDICAL_SERIVCE, createMedicalAssistanceSaga),
+    takeEvery(actionTypes.CREATE_MEDICAL_CAMP, createMedicalCampSaga),
+    takeEvery(actionTypes.GET_MEDICAL_CAMPS_REQUEST, getMedicalCampsSaga),
     takeEvery(
-      actionTypes.GET_MEDICAL_ASSISTANCES_REQUEST,
-      getMedicalAssistancesSaga
-    ),
-    takeEvery(
-      actionTypes.GET_SELECTED_MEDICAL_ASSISTANCE,
-      getSelectedMedicalAssistanceSaga
+      actionTypes.GET_SELECTED_MEDICAL_CAMP,
+      getSelectedMedicalCampSaga
     ),
   ]);
 }

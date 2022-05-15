@@ -45,6 +45,7 @@ const Timings = ({handleData, data, errors}) => {
       <FormControl mt={4}>
         <FormLabel>Select days</FormLabel>
         <Select
+          instanceId="12345"
           isMulti
           options={days}
           onChange={(items) => {

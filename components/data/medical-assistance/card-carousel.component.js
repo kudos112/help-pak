@@ -22,7 +22,7 @@ export default function CarouselCard({data}) {
       passHref
     >
       <Flex
-        py={{base: 2, md: 4, lg: 4, sm: 2}}
+        py={{base: 2, md: 3, lg: 4, sm: 2}}
         justify="center"
         css={{
           curser: "pointer",
@@ -30,7 +30,7 @@ export default function CarouselCard({data}) {
       >
         <div style={{cursor: "pointer"}}>
           <Box
-            w={"250px"}
+            w="250px"
             minW={"100px"}
             bg={useColorModeValue("white", "gray.900")}
             boxShadow={"2xl"}

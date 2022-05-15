@@ -27,7 +27,6 @@ export function getMedicalAssistancesSuccess(medicalAssistances) {
 }
 
 export function getSelectedMedicalAssistance(id, callback) {
-  console.log("in action");
   return {type: actionTypes.GET_SELECTED_MEDICAL_ASSISTANCE, id, callback};
 }
 

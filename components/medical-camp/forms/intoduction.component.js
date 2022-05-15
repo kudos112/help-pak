@@ -3,23 +3,25 @@ import Select from "react-select";
 import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import CustomTextArea from "~/components/fundamentals/custom-textarea/custom-textarea.component";
 import styles from "./forms.module.scss";
-import options from "~/utils/data/serviceType.options";
+import options from "~/utils/data/campTypes.options";
 
 const Introduction = ({data, handleData, errors}) => {
   return (
     <div className={styles.inputContainer}>
       <FormControl mt={4} mb={4}>
-        <FormLabel>Select Service Type</FormLabel>
+        <FormLabel size="sm">Select Camp Type</FormLabel>
         <Select
           instanceId="123"
           options={options}
+          selectedValue={data.campType}
           onChange={(item) => {
-            handleData("serviceType", item.value);
+            handleData("campType", item.value);
           }}
         />
+        {data.campType}
       </FormControl>
       <CustomInput
-        title="Service Name"
+        title="Name"
         value={data.name}
         name="name"
         type="name"
@@ -27,14 +29,6 @@ const Introduction = ({data, handleData, errors}) => {
         required
         placeholder="name"
         onChange={(e) => handleData("name", e.target.value)}
-      />
-      <CustomInput
-        title="Email"
-        required
-        value={data.email}
-        error={errors.email}
-        placeholder="Email"
-        onChange={(e) => handleData("email", e.target.value)}
       />
       <CustomTextArea
         required

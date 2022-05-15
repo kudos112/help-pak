@@ -1,0 +1,162 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.button {
+  width: 80%;
+  @include FlexCenter();
+  margin: 0 auto;
+  @include respond(small) {
+    width: 100%;
+  }
+}
+
+.doctorsContainer {
+  @include FlexCenter();
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0px 40px 0px 40px;
+  width: 100%;
+
+  @include respond(medium) {
+    flex-direction: column;
+    margin: 30px;
+  }
+
+  @include respond(small) {
+    margin: 10px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .heading {
+    width: 100%;
+    display: flex;
+    justify-content: "flex-start";
+
+    .title {
+      font-size: 1.2rem;
+      @include respond(medium) {
+        font-size: 1rem;
+      }
+
+      @include respond(small) {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .rightDiv {
+    @include FlexCenter();
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    @include respond(medium) {
+      gap: 0px;
+      width: 400px;
+      flex-direction: column;
+    }
+    @include respond(small) {
+      gap: 0px;
+      width: 250px;
+      flex-direction: column;
+    }
+  }
+}
+
+.inputContainer {
+  @include FlexCenter();
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 40px;
+
+  @include respond(medium) {
+    flex-direction: column;
+    margin: 30px;
+  }
+
+  @include respond(small) {
+    margin: 10px;
+  }
+
+  .leftDiv {
+    @include FlexCenter();
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+    gap: 5px;
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+
+  .rightDiv {
+    @include FlexCenter();
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    width: 400px;
+
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+}
+
+.showData {
+  @include FlexCenter();
+  flex-direction: row;
+  align-items: flex-start;
+  margin: 40px;
+
+  @include respond(medium) {
+    flex-direction: column;
+    margin: 30px;
+  }
+
+  @include respond(small) {
+    margin: 10px;
+  }
+
+  .leftDiv {
+    @include FlexCenter();
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+    gap: 5px;
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+
+  .rightDiv {
+    @include FlexCenter();
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    width: 400px;
+
+    @include respond(medium) {
+      width: 400px;
+    }
+    @include respond(small) {
+      width: 300px;
+    }
+  }
+}

@@ -6,6 +6,7 @@ module.exports = {
       "www.fauji.org.pk",
       "darulsukun.com",
       "res.cloudinary.com",
+      "www.yesprograms.org",
       "images.unsplash.com",
     ],
   },

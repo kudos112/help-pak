@@ -1,4 +1,5 @@
-import {Button, Flex} from "@chakra-ui/react";
+import {ArrowBackIcon, ArrowForwardIcon} from "@chakra-ui/icons";
+import {Button, Flex, TagLeftIcon} from "@chakra-ui/react";
 import {Step, Steps, useSteps} from "chakra-ui-steps";
 
 const StepsExample = ({steps}) => {
@@ -30,10 +31,12 @@ const StepsExample = ({steps}) => {
             size="sm"
             variant="ghost"
           >
-            Prev
+            <ArrowBackIcon />
+            {" Prev"}
           </Button>
           <Button size="sm" onClick={nextStep}>
-            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            {activeStep === steps.length - 1 ? "Finish " : "Next "}
+            <ArrowForwardIcon />
           </Button>
         </Flex>
       )}

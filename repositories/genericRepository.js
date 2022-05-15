@@ -21,8 +21,15 @@ const instance = axios.create({
   headers: customHeaders,
 });
 
+instance.defaults.timeout = 2000;
+
 instance.interceptors.request.use(
   (config) => {
+    if (!navigator.onLine) {
+      alert(
+        "You're offline, Check your connection to use this application further"
+      );
+    }
     const accessToken = localStorage.getItem(`${appName}_accessToken`) || null;
     if (accessToken) config.headers["Authorization"] = "bearer " + accessToken;
     return config;
@@ -37,9 +44,9 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    const originalRequest = error.config;
+    const originalRequest = error?.config;
     if (
-      error.response.status === 401 &&
+      error?.response?.status === 401 &&
       originalRequest.url === `${baseUrl}/v1/auth/refresh-tokens`
     ) {
       errorNotification(" Log in again", "Your session has expired");
@@ -51,7 +58,7 @@ instance.interceptors.response.use(
       originalRequest.url !== `${baseUrl}/v1/auth/login` ||
       originalRequest.url !== `${baseUrl}/v1/auth/logout`
     )
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (error?.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         const refreshToken =
           localStorage.getItem(`${appName}_refreshToken`) || null;
@@ -84,17 +91,21 @@ instance.interceptors.response.use(
 export default instance;
 
 export const getError = (error) => {
-  if (error.response) {
+  if (error?.response) {
     if (error?.response?.data?.data?.errorMessage) {
       return `${error.response.data.data.errorMessage}`;
     } else if (error?.response?.data?.message) {
       return `${error.response.data.message}`;
     } else {
-      return error.response;
+      return error?.response;
     }
-  } else if (error.request) {
-    return error.request;
-  } else {
-    return `${error}`;
   }
+  if (error?.message) {
+    return error.message;
+  } else if (error?.request) {
+    if (typeof error?.request === "string") return error.request;
+    return `Error occured, try again soon`;
+  }
+
+  return `Error occured, try again soon`;
 };

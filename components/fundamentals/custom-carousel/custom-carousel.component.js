@@ -1,10 +1,7 @@
 import Slider from "react-slick";
 import {useRef, useState} from "react";
 import styles from "./custom-carousel.module.scss";
-
-import dynamic from "next/dynamic";
-
-const Zmage = dynamic(import("react-zmage"), {ssr: false});
+import ZoomImage from "~/components/common/zoom-image/zoom-image.component";
 
 import {
   AspectRatio,
@@ -49,8 +46,8 @@ export default function ImageCarousel({images}) {
   return (
     <div className={styles.wrapper}>
       <Slider {...settings} ref={carousel}>
-        {images.map((item) => (
-          <div key={item.id}>
+        {images.map((item, index) => (
+          <div key={index}>
             {/* <img className={styles.image} src={item.src} alt={item.alt} /> */}
             <AspectRatio maxW="100%" ratio={6 / 2}>
               <Image
@@ -60,15 +57,20 @@ export default function ImageCarousel({images}) {
                 }}
                 src={item.src}
                 alt={item.alt}
-                objectFit="cover"
               />
+              {/* <ZoomImage
+                key={index}
+                src={item.src}
+                alt={item.alt}
+                objectFit="cover"
+              /> */}
             </AspectRatio>
           </div>
         ))}
       </Slider>
       <Modal
         onClose={onClose}
-        size={"lg"}
+        size={"3xl"}
         isOpen={isOpen}
         allowPinchZoom={true}
         closeOnOverlayClick
@@ -81,11 +83,11 @@ export default function ImageCarousel({images}) {
           backdropFilter="blur(10px) hue-rotate(90deg)"
         />
         <ModalContent>
-          <ModalHeader></ModalHeader>
+          <ModalHeader>Click to zoom</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Center color="white">
-              <Image src={image} alt={"image"} />
+              <ZoomImage src={image} />
             </Center>
           </ModalBody>
         </ModalContent>

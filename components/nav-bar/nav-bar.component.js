@@ -163,7 +163,7 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <ChakraLink
+              <Text
                 p={2}
                 fontSize={"md"}
                 fontWeight={600}
@@ -176,7 +176,7 @@ const DesktopNav = () => {
                 <Link href={navItem.href ?? "#"} passHref>
                   {navItem.label}
                 </Link>
-              </ChakraLink>
+              </Text>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -252,7 +252,7 @@ const MobileNav = () => {
       display={{md: "none"}}
     >
       {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+        <MobileNavItem key={navItem.label || "#"} {...navItem} />
       ))}
     </Stack>
   );
@@ -317,6 +317,7 @@ const MobileNavItem = ({label, children, href}) => {
 const NAV_ITEMS = [
   {
     label: "Fundraising",
+    href: "#",
     children: [
       {
         label: "Create Fundraising Post",
@@ -332,21 +333,23 @@ const NAV_ITEMS = [
   },
   {
     label: "Medical Camps",
+    href: "/medical-camp",
     children: [
-      {
-        label: "Create Medical Camps",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
       {
         label: "Medical Camps",
         subLabel: "An exclusive list for contract work",
-        href: "#",
+        href: "/medical-camp",
+      },
+      {
+        label: "Create Medical Camps",
+        subLabel: "Find your dream design job",
+        href: "/medical-camp/request",
       },
     ],
   },
   {
     label: "Old Item Donation",
+    href: "#",
     children: [
       {
         label: "Create donation request",
