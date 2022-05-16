@@ -1,5 +1,5 @@
 import {SimpleGrid} from "@chakra-ui/react";
-import CarouselCard from "~/components/data/medical-assistance/card-carousel.component";
+import CarouselCard from "~/components/partial-components/medical-assistance/card-carousel.component";
 
 const Cards = ({medicalAssistances}) => {
   return (

@@ -14,9 +14,13 @@ import {
 import Link from "next/link";
 
 export default function CarouselCard({data}) {
-  const {name, images, campType, organizerName, city} = data;
+  const {name, images, serviceType, providerName, city} = data;
   return (
-    <Link href={"/medical-camp/[mid]"} as={`/medical-camp/${data.id}`} passHref>
+    <Link
+      href={"/medical-assistance/[mid]"}
+      as={`/medical-assistance/${data.id}`}
+      passHref
+    >
       <Flex
         py={{base: 2, md: 3, lg: 4, sm: 2}}
         justify="center"
@@ -26,7 +30,7 @@ export default function CarouselCard({data}) {
       >
         <div style={{cursor: "pointer"}}>
           <Box
-            w={{md: "250px", lg: "250px", sm: "300px", base: "300px"}}
+            w={{md: "250px", lg: "250px", base: "300px"}}
             minW={"100px"}
             bg={useColorModeValue("white", "gray.900")}
             boxShadow={"2xl"}
@@ -47,7 +51,7 @@ export default function CarouselCard({data}) {
               <Image src={images[0]} layout={"fill"} />
             </Box>
             <Stack spacing={3}>
-              <Tooltip label={campType}>
+              <Tooltip label={serviceType}>
                 <Text isTruncated>
                   <Tag
                     color={"green.500"}
@@ -56,7 +60,7 @@ export default function CarouselCard({data}) {
                     fontSize={"11px"}
                     letterSpacing={0.7}
                   >
-                    {campType || ""}
+                    {serviceType || ""}
                   </Tag>
                 </Text>
               </Tooltip>
@@ -67,12 +71,31 @@ export default function CarouselCard({data}) {
               >
                 {name || ""}
               </Heading>
+              {/* <Text
+                fontSize={"14px"}
+                color={"gray.500"}
+                overflow={"scroll"}
+                css={{
+                  "&::-webkit-scrollbar": {
+                    width: "4px",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    width: "6px",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    background: Colors.lightGreen,
+                    borderRadius: "24px",
+                  },
+                }}
+              >
+                {description || ""}
+              </Text> */}
             </Stack>
             <Stack mt={2} direction={"row"} spacing={4} align={"center"}>
               <Avatar alt={"Provider"} size={"sm"} />
               <Stack direction={"column"} spacing={0} fontSize={"sm"}>
                 <Text fontSize={"14px"} fontWeight={600}>
-                  {organizerName}
+                  {providerName}
                 </Text>
                 <Text fontSize={"12px"} color={"gray.500"}>
                   {city}
