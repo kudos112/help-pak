@@ -30,7 +30,7 @@ export default function CarouselCard({data}) {
       >
         <div style={{cursor: "pointer"}}>
           <Box
-            w={{md: "250px", lg: "250px", sm: "300px"}}
+            w={{md: "250px", lg: "250px", sm: "300px", base: "300px"}}
             minW={"100px"}
             bg={useColorModeValue("white", "gray.900")}
             boxShadow={"2xl"}
