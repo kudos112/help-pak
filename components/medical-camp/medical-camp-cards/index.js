@@ -5,8 +5,8 @@ const Cards = ({medicalCamps}) => {
   return (
     <SimpleGrid
       columns={6}
-      minChildWidth={{base: "200px", md: "280px", lg: "280px", sm: "200px"}}
-      spacing={1}
+      minChildWidth={{base: "200px", md: "250px", lg: "250px", sm: "200px"}}
+      spacing={3}
     >
       {medicalCamps.data.map((data, index) => {
         return <CarouselCard data={data} key={index} />;
