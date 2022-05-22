@@ -31,6 +31,7 @@ const ShowData = ({data, images}) => {
     workingDays: data.workingDays,
     images: images,
   };
+
   useEffect(() => {
     setDisabled(verifyPayload(payload));
   }, []);

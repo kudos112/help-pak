@@ -75,6 +75,22 @@ const MedicalAssistanceDetailedPage = ({medicalCamp}) => {
         <SimpleGrid columns={{base: 1, md: 1}} spacing={10}>
           <Stack spacing={4}>
             <Box>
+              <Tooltip label={medicalCamp?.name}>
+                <Heading p={5} size={"lg"} color={"gray.600"}>
+                  {medicalCamp?.name}
+                </Heading>
+              </Tooltip>
+              <Tooltip label={`${medicalCamp.city}, Pakistan` || ""}>
+                <Text
+                  pl={5}
+                  mt={-4}
+                  fontSize={"sm"}
+                  letterSpacing={1.1}
+                  width={"auto"}
+                >
+                  {`${medicalCamp.city}, Pakistan` || ""}
+                </Text>
+              </Tooltip>
               {medicalCamp?.images && (
                 <ImageCarousel images={getImages(medicalCamp.images)} />
               )}

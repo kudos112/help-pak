@@ -117,14 +117,12 @@ const MedicalAssistanceRequest = () => {
 
   return (
     <div className={styles.page}>
-      <Heading className={styles.heading}>
+      <Heading m={8} className={styles.heading}>
         Want to add your publish your medical assistance service
       </Heading>
-      <div className={styles.container}>
-        <form className={styles.container} onSubmit={(e) => handleSubmit(e)}>
-          <Stepper className={styles.stepper} steps={steps} />
-        </form>
-      </div>
+      <form className={styles.container} onSubmit={(e) => handleSubmit(e)}>
+        <Stepper className={styles.stepper} steps={steps} />
+      </form>
     </div>
   );
 };

@@ -77,6 +77,22 @@ const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
           <Stack spacing={4}>
             <GoBackButton />
             <Box>
+              <Tooltip label={medicalAssistance?.name}>
+                <Heading p={5} size={"lg"} color={"gray.600"}>
+                  {medicalAssistance?.name}
+                </Heading>
+              </Tooltip>
+              <Tooltip label={`${medicalAssistance.city}, Pakistan` || ""}>
+                <Text
+                  pl={5}
+                  mt={-4}
+                  fontSize={"sm"}
+                  letterSpacing={1.1}
+                  width={"auto"}
+                >
+                  {`${medicalAssistance.city}, Pakistan` || ""}
+                </Text>
+              </Tooltip>
               {medicalAssistance?.images && (
                 <ImageCarousel images={getImages(medicalAssistance.images)} />
               )}

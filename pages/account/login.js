@@ -58,21 +58,6 @@ export default function Login() {
             <div className={styles.inputContent}>
               <div className={styles.fields}>
                 <form style={{width: "100%"}} onSubmit={(e) => handleSubmit(e)}>
-                  {/* <div style={{width: "100%", marginBottom: 10}}>
-                    <p className={styles.title}>Choose your type</p>
-                    <Select
-                      className="mt-1"
-                      focusBorderColor={Colors.darkGreen}
-                      iconColor={Colors.gray}
-                      backgroundColor="#E5E7EB"
-                      value={data.userType}
-                      placeholder="Select option"
-                      onChange={(e) => handleData("userType", e.target.value)}
-                    >
-                      <option value="NGO">NGO</option>
-                      <option value="INDIVIDUAL">Individual</option>
-                    </Select>
-                  </div> */}
                   <CustomInput
                     title="Enter Your Email"
                     placeholder="email"

@@ -16,11 +16,12 @@ const CustomButton = ({title, onClick, loading, disable, ...props}) => {
         }}
         _hover={{backgroundColor: "transparent"}}
         _focus={{backgroundColor: "transparent", border: "none"}}
+        _active={{backgroundColor: "white", color: "black"}}
         role="button"
         tabIndex={0}
         p={2}
         onClick={onClick}
-        disable={disable || false}
+        isDisabled={disable || false}
         {...props}
       >
         {title}

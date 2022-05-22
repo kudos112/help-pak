@@ -29,7 +29,6 @@ export default function ImageCarousel({images}) {
     slidesToScroll: 1,
     lazyLoad: true,
     autoplay: true,
-    arrows: true,
     customPaging: function (i) {
       return (
         <a>
@@ -49,7 +48,7 @@ export default function ImageCarousel({images}) {
         {images.map((item, index) => (
           <div key={index}>
             {/* <img className={styles.image} src={item.src} alt={item.alt} /> */}
-            <AspectRatio maxW="100%" ratio={6 / 2}>
+            <AspectRatio maxW="100%" ratio={4 / 2}>
               <Image
                 onClick={() => {
                   setImage(item.src);
@@ -83,12 +82,12 @@ export default function ImageCarousel({images}) {
           backdropFilter="blur(10px) hue-rotate(90deg)"
         />
         <ModalContent>
-          <ModalHeader>Click to zoom</ModalHeader>
+          <ModalHeader>Click to View in full screen mode</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Center color="white">
+            <AspectRatio maxW="100%" ratio={9 / 8}>
               <ZoomImage src={image} />
-            </Center>
+            </AspectRatio>
           </ModalBody>
         </ModalContent>
       </Modal>

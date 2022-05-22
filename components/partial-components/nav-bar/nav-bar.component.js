@@ -332,6 +332,22 @@ const NAV_ITEMS = [
     ],
   },
   {
+    label: "Old Item Donation",
+    href: "/donation-items",
+    children: [
+      {
+        label: "Available Old Items",
+        subLabel: "An exclusive list for contract work",
+        href: "/donation-items",
+      },
+      {
+        label: "Create donation request",
+        subLabel: "Find your dream design job",
+        href: "/donation-items/request",
+      },
+    ],
+  },
+  {
     label: "Medical Camps",
     href: "/medical-camp",
     children: [
@@ -344,22 +360,6 @@ const NAV_ITEMS = [
         label: "Create Medical Camps",
         subLabel: "Find your dream design job",
         href: "/medical-camp/request",
-      },
-    ],
-  },
-  {
-    label: "Old Item Donation",
-    href: "#",
-    children: [
-      {
-        label: "Create donation request",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Available Old Items",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
       },
     ],
   },

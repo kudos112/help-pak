@@ -1,23 +1,10 @@
-import CustomInput from "../../../components/fundamentals/custom-input/custom-input.component";
-import CustomButton from "../../../components/fundamentals/custom-button/custom-button.component";
+import Colors from "@/public/colors";
 import {Divider, Select} from "@chakra-ui/react";
 import Link from "next/link";
-import Image from "next/image";
-import donation from "@/public/donation.jpg";
-import Colors from "@/public/colors";
-import styles from "./signup.module.scss";
 import {useState} from "react";
-import {register} from "@/redux/auth/auth.actions";
-import {useDispatch} from "react-redux";
-import FileUploader from "~/components/fundamentals/custom-fileuploader/file-upload.component";
-import {
-  errorNotification,
-  infoNotification,
-  successNotification,
-  warningNotification,
-} from "~/components/fundamentals/notification/notification";
-import UserSignUp from "~/components/partial-components/user-signup/user-signup.component";
 import NgoSignUp from "~/components/partial-components/ngo-signup/ngo-signup.component";
+import UserSignUp from "~/components/partial-components/user-signup/user-signup.component";
+import styles from "./signup.module.scss";
 
 export default function SignUp() {
   const [userType, setUserType] = useState("INDIVIDUAL");

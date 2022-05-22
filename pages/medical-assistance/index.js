@@ -4,26 +4,26 @@ import {connect, useDispatch} from "react-redux";
 import {useMediaQuery} from "@chakra-ui/react";
 import Cards from "~/components/medical-assistance/medical-assistance-cards";
 import FilterMedicalAssistance from "~/components/medical-assistance/search-bar/filter.assistance.component";
-import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
+// import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
 import styles from "./medical-assistance.module.scss";
 import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
 
 const MedicalAssistance = ({medicalAssistances}) => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
 
   const handleLoading = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(getMedicalAssistances(handleLoading));
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   dispatch(getMedicalAssistances(handleLoading));
+  // }, []);
   return (
     <Flex direction="column">
-      <Heading m={6} color={"customGreen"}>
+      <Heading m={4} ml={8} color={"customGreen"}>
         Medical Assistance Services
       </Heading>
 

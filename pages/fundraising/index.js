@@ -1,14 +1,13 @@
-import {Flex, Heading} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import {Flex, Heading, useMediaQuery} from "@chakra-ui/react";
+import {useState} from "react";
 import {connect, useDispatch} from "react-redux";
-import {useMediaQuery} from "@chakra-ui/react";
-import Cards from "~/components/medical-camp/medical-camp-cards";
-import FilterMedicalCamp from "~/components/medical-camp/search-bar/filter.camp.component";
-// import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
-import styles from "./medical-camp.module.scss";
-import {selectMedicalCamps} from "~/redux/medical-camp/medical-camp.selector";
+import Cards from "~/components/donation-items/donation-items-cards";
+import FilterDonationItem from "~/components/donation-items/search-bar/filter.camp.component";
+import {selectDonationItems} from "~/redux/donation-items/donation-items.selector";
+// import {getDonationItems} from "~/redux/donation-items/donation-items.actions";
+import styles from "./donation-item.module.scss";
 
-const MedicalCamp = ({medicalCamps}) => {
+const DonationItem = ({donationItems}) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
@@ -19,17 +18,17 @@ const MedicalCamp = ({medicalCamps}) => {
 
   // useEffect(() => {
   //   setLoading(true);
-  //   // dispatch(getMedicalCamps(handleLoading));
+  //   // dispatch(getDonationItems(handleLoading));
   // }, []);
   return (
     <Flex direction="column">
       <Heading m={4} ml={8} color={"customGreen"}>
-        Medical Camps
+        Donation Items
       </Heading>
-      {/* {JSON.stringify(medicalCamps)} */}
+      {/* {JSON.stringify(donationItems)} */}
       <div className={styles.main}>
         <div className={styles.filter}>
-          <FilterMedicalCamp handleLoading={handleLoading} />
+          <FilterDonationItem handleLoading={handleLoading} />
         </div>
 
         <div className={styles.cards}>
@@ -37,18 +36,18 @@ const MedicalCamp = ({medicalCamps}) => {
             <Flex m={8}>loading...</Flex>
           ) : (
             <div>
-              {medicalCamps == null && (
+              {donationItems == null && (
                 <Flex m={3}>
                   We are Working on updates... Just wait for more content
                 </Flex>
               )}
-              {medicalCamps?.data && (
+              {donationItems?.data && (
                 <Flex
                   ml={mediumSized ? 8 : 8}
                   mr={mediumSized ? 8 : 8}
                   direction="column"
                 >
-                  <Cards medicalCamps={medicalCamps} />
+                  <Cards donationItems={donationItems} />
                 </Flex>
               )}
             </div>
@@ -61,8 +60,8 @@ const MedicalCamp = ({medicalCamps}) => {
 
 const mapStateToProps = (state) => {
   return {
-    medicalCamps: selectMedicalCamps(state),
+    donationItems: selectDonationItems(state),
   };
 };
 
-export default connect(mapStateToProps)(MedicalCamp);
+export default connect(mapStateToProps)(DonationItem);

@@ -190,7 +190,7 @@ const MedicalCampRequest = () => {
   const steps = [
     {label: "Camp Info", content: introduction},
     {label: "Images", content: imagesInfo},
-    {label: "Extra Info", content: timing},
+    {label: "Additional Info", content: timing},
     {label: "Contact", content: contactInfo},
     // {label: "Doctors", content: doctorsInfo},
     {label: "Confirmation", content: showData},
@@ -198,14 +198,12 @@ const MedicalCampRequest = () => {
 
   return (
     <div className={styles.page}>
-      <Heading className={styles.heading}>
+      <Heading m={8} className={styles.heading}>
         Want to advertise your medical camp
       </Heading>
-      <div className={styles.container}>
-        <form className={styles.container} onSubmit={(e) => handleSubmit(e)}>
-          <Stepper className={styles.stepper} steps={steps} />
-        </form>
-      </div>
+      <form className={styles.container} onSubmit={(e) => handleSubmit(e)}>
+        <Stepper className={styles.stepper} steps={steps} />
+      </form>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const instance = axios.create({
   headers: customHeaders,
 });
 
-instance.defaults.timeout = 4000;
+instance.defaults.timeout = 5000;
 
 instance.interceptors.request.use(
   (config) => {

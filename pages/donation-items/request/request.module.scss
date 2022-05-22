@@ -8,9 +8,6 @@
   .heading {
     color: $gray;
     font-size: 35px;
-    // margin-left: 4%;
-    // margin-right: 4%;
-    // margin: 1%;
     text-align: center;
     @include respond(medium) {
       font-size: 25px;
@@ -35,7 +32,8 @@
     .inputContainer {
       @include FlexCenter();
       align-items: flex-start;
-      gap: 10rem;
+      width: 100%;
+      gap: 2rem;
 
       @include respond(medium) {
         gap: 0rem;
@@ -46,8 +44,9 @@
 
       .leftDiv {
         @include FlexCenter();
+        flex-wrap: wrap;
         flex-direction: column;
-        width: 400px;
+        width: 40%;
         @include respond(medium) {
           width: 400px;
         }
@@ -59,7 +58,7 @@
       .rightDiv {
         @include FlexCenter();
         flex-direction: column;
-        width: 400px;
+        width: 40%;
 
         @include respond(medium) {
           width: 400px;
