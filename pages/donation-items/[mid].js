@@ -90,11 +90,9 @@ const DonationItemDetailedPage = ({donationItem}) => {
                   {`${donationItem.city}, Pakistan` || ""}
                 </Text>
               </Tooltip>
-              <Tooltip label={"click to open it"}>
-                {donationItem?.images && (
-                  <ImageCarousel images={getImages(donationItem.images)} />
-                )}
-              </Tooltip>
+              {donationItem?.images && (
+                <ImageCarousel images={getImages(donationItem.images)} />
+              )}
             </Box>
 
             <VStack
