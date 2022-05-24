@@ -1,16 +1,17 @@
-import { Avatar, Box, Flex, Tag, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineSend } from "react-icons/ai";
-import { connect } from "react-redux";
-import { io } from "socket.io-client";
+import {RepeatIcon} from "@chakra-ui/icons";
+import {Avatar, Box, Button, Flex, Text} from "@chakra-ui/react";
+import {useRouter} from "next/router";
+import React, {useEffect, useRef, useState} from "react";
+import {AiOutlineSend} from "react-icons/ai";
+import {connect} from "react-redux";
 import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
-import { errorNotification } from "~/components/fundamentals/notification/notification";
-import { selectUser } from "~/redux/auth/auth.selector";
-import { selectSelectedConversation } from "~/redux/chat/chat.selector";
+import {errorNotification} from "~/components/fundamentals/notification/notification";
+import {selectUser} from "~/redux/auth/auth.selector";
+import {selectSelectedConversation} from "~/redux/chat/chat.selector";
 import ChatRepository from "~/repositories/ChatRepository";
-import { baseUrl } from "~/repositories/genericRepository";
 import UserRepository from "~/repositories/UserRepository";
+// import { io } from "socket.io-client";
+import socket from "~/sockets";
 import Message from "./Message.component";
 
 const MessageBox = ({conversation, currentUser}) => {
@@ -18,11 +19,11 @@ const MessageBox = ({conversation, currentUser}) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState();
-  const [online, setOnline] = useState();
   const {query = {}} = useRouter();
   const [sent, setSent] = useState(null);
-  const socket = useRef();
+  // const socket = useRef();
   const scrollRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     arrivalMessage &&
@@ -31,65 +32,53 @@ const MessageBox = ({conversation, currentUser}) => {
   }, [arrivalMessage, conversation]);
 
   useEffect(() => {
-    
     fetchFriend();
-
-     socket?.current = io(baseUrl);
-    socket?.current.on("getMessage", (data) => {
+    // socket?.current = io(baseUrl);
+    socket?.on("getMessage", (data) => {
+      console.log(data);
       setArrivalMessage({
         sender: {senderId: data.senderId},
         text: data.text,
       });
     });
-  }, [] );
-  
-  const fetchFriend = async () =>
-  {
-   if (query.uid) {
+  }, []);
+
+  const fetchFriend = async () => {
+    if (query.uid) {
       const response = await UserRepository.getUserById(query.uid);
       if (response.status === 200) setFriend(response.data);
-    } 
-  }
+    }
+  };
 
   useEffect(() => {
     scrollRef?.current?.scrollIntoView({behavior: "smooth"});
   }, [messages]);
 
   useEffect(() => {
-    if ( currentUser == null || friend == null )
-    { }
-  else
-    {
-      if ( socket != null )
-      {
-        socket?.current?.emit( "addUser", currentUser?.id )
-        socket?.current?.on( "getUsers", ( users ) =>
-        {
-          users.forEach( ( user ) =>
-          {
-            if ( user.userId === friend?.id ) setOnline( true );
-            else setOnline(false)
-          } );
-        } );
-      }
+    if (socket != null) {
+      socket?.emit("addUser", currentUser?.id);
+      socket?.on("getUsers", (users) => {
+        console.log(users);
+      });
     }
   }, [currentUser, friend]);
 
   useEffect(async () => {
     if (friend) {
-      fetchConversations()
+      fetchConversations();
     }
-  }, [ friend ] );
-  
-  const fetchConversations = async () =>
-  {
-   if (conversation) {
-        const response = await ChatRepository.getMessagesByCoversationId(
-          conversation.id
-        );
-        if (response.status === 200) setMessages(response.data);
-      } else errorNotification("Failed", "unable to fetch your chat"); 
-  }
+  }, [friend]);
+
+  const fetchConversations = async () => {
+    if (conversation) {
+      setLoading(true);
+      const response = await ChatRepository.getMessagesByCoversationId(
+        conversation.id
+      );
+      if (response.status === 200) setMessages(response.data);
+      setLoading(false);
+    } else errorNotification("Failed", "unable to fetch your chat");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +91,7 @@ const MessageBox = ({conversation, currentUser}) => {
       conversationId: conversation.id,
     };
 
-    socket.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       senderId: currentUser.id,
       receiverId: friend.id,
       text: newMessage,
@@ -130,14 +119,29 @@ const MessageBox = ({conversation, currentUser}) => {
         direction="row"
         borderBottom={"1px"}
         align="center"
+        justify={"space-between"}
         p="1"
         pb={2}
       >
-        <Avatar size="md" />
-        <Text ml="10px" fontSize={20}>
-          {friend?.name || "Loading..."}
-          {/* {online ? <Tag>Online</Tag>:<Tag>Offline</Tag>} */}
-        </Text>
+        <Flex direction="row" align="center">
+          <Avatar size="md" />
+          <Text ml="10px" fontSize={20}>
+            {friend?.name || "Loading..."}
+          </Text>
+        </Flex>
+        <Box w={"100px"}>
+          <Button
+            leftIcon={<RepeatIcon />}
+            bg={"customGreen"}
+            isLoading={loading}
+            loadingText={"loading..."}
+            color="white"
+            _hover={{color: "customGray", backgroundColor: "lightGreen"}}
+            onClick={() => fetchConversations()}
+          >
+            Refresh
+          </Button>
+        </Box>
       </Flex>
       <Flex
         flex="1"

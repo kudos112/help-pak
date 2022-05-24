@@ -26,6 +26,7 @@ const index = ({conversations, currentUser}) => {
         p={3}
         align="center"
         justify="center"
+        direction="column"
         flex={2}
         gap="20px"
         h="100%"
