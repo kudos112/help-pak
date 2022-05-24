@@ -18,12 +18,12 @@ const UserSignUp = ({userType = "INDIVIDUAL"}) => {
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
   const [data, setData] = useState({
-    name: "Abdul Quddous",
+    name: "",
     frontSideImage: "",
     backSideImage: "",
-    phoneNo: "123456789",
-    email: "quddoux112@gmail.com",
-    password: "helpak@test123",
+    phoneNo: "",
+    email: "",
+    password: "",
   });
 
   const handleData = (key, value) => {

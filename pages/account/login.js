@@ -15,8 +15,8 @@ export default function Login() {
 
   const [data, setData] = useState({
     // userType: "INDIVIDUAL",
-    email: "quddoux112@gmail.com",
-    password: "helpak@test123",
+    email: "",
+    password: "",
   });
 
   const handleData = (key, value) => {
@@ -66,6 +66,7 @@ export default function Login() {
                     value={data.email}
                     onChange={(e) => handleData("email", e.target.value)}
                     required
+                    id="loginemail"
                   />
                   <CustomInput
                     title="Enter Your password"
@@ -75,6 +76,7 @@ export default function Login() {
                     value={data.password}
                     onChange={(e) => handleData("password", e.target.value)}
                     required
+                    id="loginpassword"
                   />
                   <CustomButton title="Lets Help Pakistan" type="submit" />
                 </form>

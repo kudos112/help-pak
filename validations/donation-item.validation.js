@@ -21,7 +21,6 @@ export const validatePropery = (name, value, handleError) => {
   //return result
   const result = Joi.validate(obj, fieldSchema);
   if (result.error) {
-    console.log(result?.error?.details[0].message);
     handleError(`${name}`, result?.error?.details[0].message);
   } else handleError(name, "");
 };

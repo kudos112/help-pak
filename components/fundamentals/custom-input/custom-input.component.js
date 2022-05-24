@@ -19,7 +19,6 @@ const CustomInput = ({title, placeholder, required, error, ...props}) => {
             fontSize={"1rem"}
             borderColor="gray.300"
             bg="white"
-            // borderRadius={"10px"}
             boxSizing="border"
             placeholder={placeholder}
             _focus={{

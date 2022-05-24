@@ -11,18 +11,17 @@ import styles from "./request.module.scss";
 
 const MedicalAssistanceRequest = () => {
   const [data, setData] = useState({
-    name: "Kudos Pharmacy",
-    email: "quddoux112@gmail.com",
-    serviceType: "pharmaceutical",
-    phoneNo: "123456789",
-    city: "Lahore",
-    fullAddress: "CUI, Lahore Campus",
-    description:
-      "Any student can get free first aid treatment and medicines from here",
-    startTime: "null",
-    endTime: "null",
+    name: "",
+    email: "",
+    serviceType: "",
+    phoneNo: "",
+    city: "",
+    fullAddress: "",
+    description: "",
+    startTime: "",
+    endTime: "",
     fullDay: false,
-    workingDays: [1, 2],
+    workingDays: [],
     tags: [],
     images: [],
   });

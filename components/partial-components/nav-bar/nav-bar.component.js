@@ -385,7 +385,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Messages",
-    href: "#",
+    href: "/messages",
   },
 ];
 

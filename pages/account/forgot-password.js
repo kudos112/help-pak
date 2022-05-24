@@ -14,7 +14,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const [data, setData] = useState({
-    email: "quddoux112@gmail.com",
+    email: "",
   });
 
   const handleData = (key, value) => {

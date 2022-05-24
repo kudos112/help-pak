@@ -55,13 +55,14 @@ instance.interceptors.response.use(
     }
 
     if (
-      originalRequest.url !== `${baseUrl}/v1/auth/login` ||
-      originalRequest.url !== `${baseUrl}/v1/auth/logout`
+      originalRequest.url != `${baseUrl}/v1/auth/login` &&
+      originalRequest.url != `${baseUrl}/v1/auth/logout`
     )
       if (error?.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         const refreshToken =
-          localStorage.getItem(`${appName}_refreshToken`) || null;
+          localStorage.getItem(`${appName}_refreshToken`) ||
+          "empty refresh token";
         return axios
           .post(`${baseUrl}/v1/auth/refresh-tokens`, {
             refreshToken: refreshToken,

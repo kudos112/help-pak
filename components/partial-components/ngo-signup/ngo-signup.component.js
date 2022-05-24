@@ -18,12 +18,12 @@ const NgoSignUp = ({userType = "NGO"}) => {
   const dispatch = useDispatch();
   const [images, setImages] = useState(["123"]);
   const [data, setData] = useState({
-    name: "Abdul Quddous",
+    name: "",
     certImg: "",
-    phoneNo: "123456789",
-    email: "quddoux119@gmail.com",
-    password: "helpak@test123",
-    regNo: "12345678",
+    phoneNo: "",
+    email: "",
+    password: "",
+    regNo: "",
   });
 
   const handleData = (key, value) => {

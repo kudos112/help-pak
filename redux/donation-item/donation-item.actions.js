@@ -1,7 +1,6 @@
 import actionTypes from "./donation-item.actionTypes";
 
 export function createDonationItem(payload, callback) {
-  console.log("in actions", payload);
   return {type: actionTypes.CREATE_DONATION_ITEM, payload, callback};
 }
 

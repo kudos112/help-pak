@@ -70,7 +70,6 @@ export const uploadTwoOrMoreImages = (files, callback) => {
           if (success) {
             uploadOneImage(result, (url, success) => {
               if (success) urls.push(url);
-              console.log(url);
               if (files.length === urls.length) {
                 resolve(urls);
               }
@@ -80,7 +79,6 @@ export const uploadTwoOrMoreImages = (files, callback) => {
       });
     });
     promise.then((urls) => {
-      console.log(urls);
       callback(true, urls);
     });
   } catch (err) {

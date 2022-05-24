@@ -15,23 +15,19 @@ import {validatePropery} from "~/validations/medical-camp.validation";
 const MedicalCampRequest = () => {
   const [data, setData] = useState({
     name: "Medical Camp",
-    email: "quddoux112@gmail.com",
-    campType: "Awarness camp",
-    phoneNo: "123456789",
-    city: "Lahore",
-    fullAddress: "CUI, Lahore Campus",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." +
-      " Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    startDate: "07/10/2022",
+    email: "",
+    campType: "",
+    phoneNo: "",
+    city: "",
+    fullAddress: "",
+    description: "",
+    startDate: "",
     endDate: "",
-    startTime: "08:00",
-    endTime: "17:00",
-    images: ["first image"],
+    startTime: "",
+    endTime: "",
+    images: [""],
   });
-  const [images, setImages] = useState([
-    "https://www.yesprograms.org/assets/archive/2%20-%20YES%20Pakistan%20Alumni%20News%20%26%20Events%2010.17.13.jpg",
-  ]);
+  const [images, setImages] = useState([]);
   const [doctors, setDoctors] = useState([]);
 
   const [errors, setErrors] = useState({

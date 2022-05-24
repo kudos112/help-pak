@@ -14,11 +14,12 @@ const Wrapper = (WrappedComponent) => {
 export default Wrapper;
 
 const checkUserAuthentication = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const isLoggedIn = useState(false);
-  const isLoggedIn = useSelector((state) => selectIsLoggedIn(state));
+  let isLoggedIn = false;
+  isLoggedIn = useSelector((state) => selectIsLoggedIn(state));
   React.useEffect(() => {
-    // dispatch(getUserDetails());
+    if (!isLoggedIn) dispatch(getUserDetails());
   }, []);
   return [isLoggedIn];
 };

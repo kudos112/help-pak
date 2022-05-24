@@ -1,6 +1,7 @@
 import {Heading} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import LeftDiv from "~/components/donation-item/left-div";
 import RightDiv from "~/components/donation-item/right-div";
 import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
@@ -15,18 +16,19 @@ import {
   validatePropery,
   verifyPayload,
 } from "~/validations/donation-item.validation";
+// import AuthenticationWrapper from "~/repositories/AuthHoc";
 import styles from "./request.module.scss";
 
 const RequestDonationItem = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState({
-    name: "Wooden bed",
-    category: "Furniture",
-    condition: "8",
-    description: "Wooden bed 2 years used in lush condition",
-    phoneNo: "03099091509",
-    city: "lahore",
-    fullAddress: "lahore",
+    name: "",
+    category: "",
+    condition: "",
+    description: "",
+    phoneNo: "",
+    city: "",
+    fullAddress: "",
     images: "",
   });
 
