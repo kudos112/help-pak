@@ -10,7 +10,7 @@ function AuthReducer(state = initState, action) {
     case actionTypes.LOGIN_SUCCESS:
       return {
         ...state,
-        ...{ isLoggedIn: true, user: action.user },
+        ...{isLoggedIn: true, user: action.user},
       };
     case actionTypes.LOGOUT_SUCCESS:
       return initState;

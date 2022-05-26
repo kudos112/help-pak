@@ -3,14 +3,17 @@ import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {createMedicalAssistance} from "~/redux/medical-service/medical-service.actions";
 import {days, getDayNames} from "~/utils/days/days";
+import {uploadTwoOrMoreImages} from "~/utils/image-uploader/upload-images.util";
 import {verifyPayload} from "~/validations/medical-assistance.validation";
 import CustomButton from "../fundamentals/custom-button/custom-button.component";
+import {successNotification} from "../fundamentals/notification/notification";
 import styles from "./forms/forms.module.scss";
 
-const ShowData = ({data, images}) => {
+const ShowData = ({data, files}) => {
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const [images, setImages] = useState([]);
 
   const handleLoading = () => {
     setLoading(false);
@@ -29,22 +32,55 @@ const ShowData = ({data, images}) => {
     endTime: data.endTime,
     fullDay: data.fullDay,
     workingDays: data.workingDays,
-    images: images,
+    images: data.images,
   };
 
   useEffect(() => {
     setDisabled(verifyPayload(payload));
   }, []);
 
+  useEffect(() => {
+    if (files.length === images.length && disabled) {
+      setLoading(true);
+      setDisabled(false);
+      let newPayload = {...payload, images: images};
+      dispatch(createMedicalAssistance(newPayload, () => setLoading(false)));
+    }
+  }, [images]);
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setDisabled(false);
+  //   dispatch(createMedicalAssistance(payload, handleLoading));
+  // };
   const onSubmit = (e) => {
     e.preventDefault();
+    // let errors = verifyPayload(payload);
+    // alert(JSON.stringify(errors));
+    // if (errors) return;
+    if (files.length <= 0) {
+      errorNotification("Error", "Please upload at least one image");
+      return;
+    }
     setLoading(true);
-    setDisabled(false);
-    dispatch(createMedicalAssistance(payload, handleLoading));
+
+    if (files.length === images.length) {
+      let newPayload = {...payload, images: images};
+      dispatch(createMedicalAssistance(newPayload, () => setLoading(false)));
+    }
+    uploadTwoOrMoreImages(files, (success, urls) => {
+      if (success) {
+        setImages(urls);
+        // setLoading(false);
+        successNotification("Success", "Images Uploaded Successfully");
+      } else setLoading(false);
+    });
   };
 
   return (
     <div>
+      {JSON.stringify(payload)}
       <div className={styles.showData}>
         <div className={styles.leftDiv}>
           <p>Service Type: {data.serviceType}</p>
@@ -68,8 +104,15 @@ const ShowData = ({data, images}) => {
         false, workingDays: [], tags: [], images: [], */}
         </div>
         <div className={styles.rightDiv}>
-          {images.map((image, index) => {
-            return <Image key={index} src={image} width={150} height={150} />;
+          {files.map((image, index) => {
+            return (
+              <Image
+                key={index}
+                src={URL.createObjectURL(image)}
+                width={150}
+                height={150}
+              />
+            );
           })}
         </div>
       </div>

@@ -18,10 +18,6 @@ const DonationItem = ({donationItems}) => {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   // dispatch(getDonationItems(handleLoading));
-  // }, []);
   return (
     <>
       <Flex direction="column">

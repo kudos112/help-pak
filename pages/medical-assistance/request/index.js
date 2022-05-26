@@ -12,20 +12,22 @@ import AuthenticationWrapper from "~/repositories/AuthHoc";
 
 const MedicalAssistanceRequest = () => {
   const [data, setData] = useState({
-    name: "",
-    email: "",
+    name: "ABdul Quddous",
+    email: "quddoux112@gmail.com",
     serviceType: "",
-    phoneNo: "",
-    city: "",
-    fullAddress: "",
-    description: "",
+    phoneNo: "3121213456",
+    city: "Lahore",
+    fullAddress: "kjkdfkdjfkjd",
+    description: "kjdfksjfdkj",
     startTime: "",
     endTime: "",
     fullDay: false,
     workingDays: [],
     tags: [],
-    images: [],
+    images: "",
   });
+
+  const [files, setFiles] = useState([]);
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({
     name: "",
@@ -55,12 +57,17 @@ const MedicalAssistanceRequest = () => {
     e.preventDefault();
   };
 
+  const handleDeleteImages = () => {
+    setFiles([]);
+    setData({...data, images: ""});
+  };
+
   const introduction = (
     <Introduction
       data={data}
       handleData={handleData}
-      setImages={setImages}
-      images={images}
+      setFiles={setFiles}
+      // images={images}
       setData={setData}
       errors={errors}
     />
@@ -69,7 +76,7 @@ const MedicalAssistanceRequest = () => {
     <Timings
       data={data}
       handleData={handleData}
-      setImages={setImages}
+      // setImages={setImages}
       images={images}
       setData={setData}
       errors={errors}
@@ -79,19 +86,35 @@ const MedicalAssistanceRequest = () => {
     <ContactInfo
       data={data}
       handleData={handleData}
-      setImages={setImages}
-      images={images}
+      // setImages={setImages}
+      // images={images}
       setData={setData}
       errors={errors}
     />
   );
+  const onDrop = (acceptedFiles, rejectedFiles) => {
+    if (rejectedFiles.length > 0) {
+      warningNotification(
+        "warning",
+        "you can upload upto four images and size limit of each upto 1 MB"
+      );
+      return;
+    } else if (acceptedFiles) {
+      setFiles(acceptedFiles);
+      const imagesName = acceptedFiles.map((file) => file.name).join(", ");
+      setData({...data, images: imagesName});
+    }
+  };
   const imagesInfo = (
     <Imagesinfo
       data={data}
       handleData={handleData}
-      setImages={setImages}
-      images={images}
+      setFiles={setFiles}
+      files={files}
+      // images={images}
+      handleDeleteImages={handleDeleteImages}
       setData={setData}
+      onDrop={onDrop}
       errors={errors}
     />
   );
@@ -100,8 +123,8 @@ const MedicalAssistanceRequest = () => {
     <ShowData
       data={data}
       handleData={handleData}
-      setImages={setImages}
-      images={images}
+      setFiles={setFiles}
+      files={files}
       setData={setData}
       errors={errors}
     />

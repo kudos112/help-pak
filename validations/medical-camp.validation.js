@@ -38,8 +38,15 @@ export const validatePropery = (name, value, handleError) => {
 export const verifyPayload = (payload) => {
   const result = Joi.validate(payload, schema);
   if (result.error) {
-    errorNotification("Failed", result?.error?.details[0].message);
+    let error = getError(result.error);
+    errorNotification("Failed", error);
     return false;
   }
   return true;
+};
+
+const getError = (error) => {
+  if (Array.isArray(error.default) && error?.default[0] != undefined)
+    return error.default[0];
+  else return error.message;
 };

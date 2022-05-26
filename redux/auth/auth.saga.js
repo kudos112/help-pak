@@ -87,13 +87,16 @@ function* loginSaga(action) {
 }
 
 function* logOutSaga(action) {
+  let refresh =
+    localStorage.getItem(`${appName}_refreshToken`) || "refresh token";
   try {
     const payload = {
-      refreshToken: localStorage.getItem(`${appName}_refreshToken`),
+      refreshToken: refresh,
     };
     yield call(AuthService.logout, payload);
     localStorage.removeItem(`${appName}_accessToken`);
     localStorage.removeItem(`${appName}_refreshToken`);
+
     successNotification("Information", "logout successfully");
     action.callback();
     Router.push("/");

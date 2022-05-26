@@ -1,5 +1,7 @@
 import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import styles from "./forms.module.scss";
+import {cities} from "~/utils/data/cities";
+import CustomSelect from "~/components/fundamentals/custom-select";
 
 const ContactInfo = ({data, handleData, errors}) => {
   return (
@@ -14,13 +16,17 @@ const ContactInfo = ({data, handleData, errors}) => {
         placeholder="03xx-xxxxxxx"
         onChange={(e) => handleData("phoneNo", e.target.value)}
       />
-      <CustomInput
-        title="City"
+      <CustomSelect
+        label="City"
+        options={cities}
         value={data.city}
-        error={errors.city}
+        onChange={(item) => {
+          handleData("city", item?.value || "");
+        }}
         required
-        placeholder="City"
-        onChange={(e) => handleData("city", e.target.value)}
+        error={errors.city}
+        placeholder="type or select city"
+        instanceId="123"
       />
       <CustomInput
         title="Full Address"

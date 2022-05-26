@@ -9,17 +9,14 @@ const schema = {
   phoneNo: Joi.number().required().label("Phone Number"),
   city: Joi.string().required().label("City"),
   fullAddress: Joi.string().required().label("Full Address"),
-  images: Joi.array()
-    .min(1)
-    .required()
-    .error(new Error("Attach at least one image")),
+  images: Joi.string().required().error(new Error("Attach at least one image")),
   workingDays: Joi.array()
     .min(1)
     .required()
     .error(new Error("Add at least one working day")),
   fullDay: Joi.boolean().required().label("24 hours Service"),
-  endTime: Joi.string().optional().label("endTime"),
-  startTime: Joi.string().optional().label("startTime"),
+  endTime: Joi.string().optional().label("endTime").allow(null).allow(""),
+  startTime: Joi.string().optional().label("startTime").allow(null).allow(""),
 };
 
 export const validatePropery = (name, value, handleError) => {
@@ -40,9 +37,15 @@ export const validatePropery = (name, value, handleError) => {
 export const verifyPayload = (payload) => {
   const result = Joi.validate(payload, schema);
   if (result.error) {
-
-    errorNotification("Failed", "Fill up the all the details correctly");
+    let error = getError(result.error);
+    errorNotification("Failed", error || "Error occured");
     return false;
   }
   return true;
+};
+
+const getError = (error) => {
+  if (Array.isArray(error.default) && error?.default[0] != undefined)
+    return error.default[0];
+  else return error.message;
 };

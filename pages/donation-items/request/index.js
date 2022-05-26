@@ -79,7 +79,7 @@ const RequestDonationItem = () => {
 
   const handleDeleteImages = () => {
     setFiles([]);
-    handleData("images", "");
+    setData({...data, images: ""});
   };
 
   const onDrop = (acceptedFiles, rejectedFiles) => {

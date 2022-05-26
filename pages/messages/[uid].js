@@ -11,7 +11,7 @@ export default function index() {
         justify={"center"}
       >
         <Flex
-          flex="1 1 90vh"
+          flex="1 1 76vh"
           direction="column"
           justify="center"
           align="center"

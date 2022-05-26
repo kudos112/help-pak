@@ -113,7 +113,8 @@ const MessageBox = ({conversation, currentUser}) => {
   return (
     <Flex
       direction="column"
-      h={"85vh"}
+      // h={"85vh"}
+      h={"76vh"}
       gap="20px"
       // border="1px solid gray"
       mb={10}

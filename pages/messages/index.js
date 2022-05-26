@@ -20,7 +20,7 @@ const index = ({conversations, currentUser}) => {
 
   return (
     <>
-      <Flex m={4} ml={8} direction="column" height={"100vh"}>
+      <Flex m={4} ml={8} direction="column" height={"77vh"}>
         <Heading color={"customGreen"}>Chats</Heading>
         {(conversations == null || conversations.length === 0) && (
           <Flex align="center" justify={"center"}>
@@ -32,7 +32,7 @@ const index = ({conversations, currentUser}) => {
           mt={8}
           p={3}
           align="center"
-          justify="center"
+          // justify="center"
           direction="column"
           flex={2}
           gap="20px"

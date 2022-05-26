@@ -54,7 +54,7 @@ const RightDiv = ({data, handleData, errors, onDrop, handleDeleteImages}) => {
             onDrop(acceptedFiles, rejectedFiles)
           }
         />
-        <FormErrorMessage>{errors.images || "erere"}</FormErrorMessage>
+        <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
       </FormControl>{" "}
     </>
   );

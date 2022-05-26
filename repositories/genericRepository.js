@@ -58,33 +58,34 @@ instance.interceptors.response.use(
       originalRequest.url != `${baseUrl}/v1/auth/login` &&
       originalRequest.url != `${baseUrl}/v1/auth/logout`
     )
-      if (error?.response?.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        const refreshToken =
-          localStorage.getItem(`${appName}_refreshToken`) ||
-          "empty refresh token";
-        return axios
-          .post(`${baseUrl}/v1/auth/refresh-tokens`, {
-            refreshToken: refreshToken,
-          })
-          .then((res) => {
-            if (res.status === 200) {
-              let tokens = res.data;
-              let _tokens = {
-                accessToken: tokens.access.accessToken,
-                refreshToken: tokens.refresh.refreshToken,
-              };
-              localStorage.removeItem(`${appName}_accessToken`);
-              localStorage.removeItem(`${appName}_refreshToken`);
-              for (const key of Object.keys(_tokens))
-                localStorage.setItem(`${appName}_${key}`, _tokens[key]);
-              axios.defaults.headers.common["Authorization"] =
-                "Bearer " + localStorage.getItem(`${appName}_accessToken`) ||
-                null;
-              return axios(originalRequest);
-            }
-          });
-      }
+      alert("i am refresh");
+    if (error?.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refreshToken =
+        localStorage.getItem(`${appName}_refreshToken`) ||
+        "empty refresh token";
+      return axios
+        .post(`${baseUrl}/v1/auth/refresh-tokens`, {
+          refreshToken: refreshToken,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            let tokens = res.data;
+            let _tokens = {
+              accessToken: tokens.access.accessToken,
+              refreshToken: tokens.refresh.refreshToken,
+            };
+            localStorage.removeItem(`${appName}_accessToken`);
+            localStorage.removeItem(`${appName}_refreshToken`);
+            for (const key of Object.keys(_tokens))
+              localStorage.setItem(`${appName}_${key}`, _tokens[key]);
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + localStorage.getItem(`${appName}_accessToken`) ||
+              null;
+            return axios(originalRequest);
+          }
+        });
+    }
     return Promise.reject(error);
   }
 );

@@ -132,6 +132,9 @@ const NavBar = ({user, isLoggedIn}) => {
                   </Center>
                   <br />
                   <MenuDivider />
+                  <Link href="/profile">
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
                   <MenuItem
                     onClick={() => {
                       setLoading(true);
