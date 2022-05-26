@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import React, {useEffect, useRef, useState} from "react";
 import {AiOutlineSend} from "react-icons/ai";
 import {connect} from "react-redux";
+import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
 import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
 import {errorNotification} from "~/components/fundamentals/notification/notification";
 import {selectUser} from "~/redux/auth/auth.selector";
@@ -26,19 +27,24 @@ const MessageBox = ({conversation, currentUser}) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log("arrival Message: ", arrivalMessage);
+    console.log("conversation: ", conversation);
+    console.log(
+      conversation?.members?.some((m) => m.id === arrivalMessage?.senderId)
+    );
     arrivalMessage &&
-      conversation?.members.includes(arrivalMessage.sender.senderId) &&
+      conversation?.members?.some((m) => m.id === arrivalMessage?.senderId) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, conversation]);
 
   useEffect(() => {
     fetchFriend();
-    // socket?.current = io(baseUrl);
     socket?.on("getMessage", (data) => {
       console.log(data);
       setArrivalMessage({
-        sender: {senderId: data.senderId},
+        senderId: data.senderId,
         text: data.text,
+        deleted: false,
       });
     });
   }, []);
@@ -52,11 +58,13 @@ const MessageBox = ({conversation, currentUser}) => {
 
   useEffect(() => {
     scrollRef?.current?.scrollIntoView({behavior: "smooth"});
+    console.log(messages);
   }, [messages]);
 
   useEffect(() => {
     if (socket != null) {
       socket?.emit("addUser", currentUser?.id);
+      socket?.emit("removeNotification", currentUser?.id);
       socket?.on("getUsers", (users) => {
         console.log(users);
       });
@@ -83,16 +91,14 @@ const MessageBox = ({conversation, currentUser}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
-      sender: {
-        senderId: currentUser?.id,
-        senderName: currentUser?.name,
-      },
+      senderId: currentUser.id,
       text: newMessage,
       conversationId: conversation.id,
     };
 
     socket.emit("sendMessage", {
       senderId: currentUser.id,
+      senderName: currentUser.name,
       receiverId: friend.id,
       text: newMessage,
     });
@@ -160,12 +166,13 @@ const MessageBox = ({conversation, currentUser}) => {
           },
         }}
       >
+        {/* <CustomButton title="Load More" /> */}
         {messages.map((msg, index) => (
           <div key={index} ref={scrollRef}>
             <Message
               text={msg.text}
               key={index}
-              own={msg?.sender?.senderId === currentUser?.id}
+              own={msg?.senderId === currentUser?.id}
               status={sent}
             />
           </div>

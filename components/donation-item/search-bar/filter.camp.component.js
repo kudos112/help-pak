@@ -43,7 +43,15 @@ const FilterDonationItem = ({handleLoading}) => {
   };
 
   useEffect(() => {
-    dispatch(getDonationItems(handleLoading));
+    dispatch(
+      getDonationItems(
+        handleLoading,
+        filter.name,
+        filter.city,
+        filter.category,
+        filter.condition
+      )
+    );
   }, [filter]);
 
   return (

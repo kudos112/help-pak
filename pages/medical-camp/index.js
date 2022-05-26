@@ -37,9 +37,11 @@ const MedicalCamp = ({medicalCamps}) => {
             <Flex m={8}>loading...</Flex>
           ) : (
             <div>
-              {medicalCamps == null && (
-                <Flex m={3}>
-                  We are Working on updates... Just wait for more content
+              {(medicalCamps == null || medicalCamps.data.length === 0) && (
+                <Flex m={3} h="100%" align="center" justify={"center"}>
+                  <Heading color="gray.400">
+                    No Medical Camps Listed yet
+                  </Heading>
                 </Flex>
               )}
               {medicalCamps?.data && (

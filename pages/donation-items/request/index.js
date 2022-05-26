@@ -1,7 +1,6 @@
 import {Heading} from "@chakra-ui/react";
-import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import LeftDiv from "~/components/donation-item/left-div";
 import RightDiv from "~/components/donation-item/right-div";
 import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
@@ -11,15 +10,18 @@ import {
   warningNotification,
 } from "~/components/fundamentals/notification/notification";
 import {createDonationItem} from "~/redux/donation-item/donation-item.actions";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
 import {uploadTwoOrMoreImages} from "~/utils/image-uploader/upload-images.util";
 import {
   validatePropery,
   verifyPayload,
 } from "~/validations/donation-item.validation";
-// import AuthenticationWrapper from "~/repositories/AuthHoc";
 import styles from "./request.module.scss";
 
 const RequestDonationItem = () => {
+  // const user = useSelector(({auth}) => auth.isLoggedIn);
+  // const router = useRouter();
+
   const dispatch = useDispatch();
   const [data, setData] = useState({
     name: "",
@@ -156,4 +158,4 @@ const RequestDonationItem = () => {
   );
 };
 
-export default RequestDonationItem;
+export default AuthenticationWrapper(RequestDonationItem);

@@ -8,6 +8,7 @@ import Timings from "~/components/medical-assistance/forms/timings.component";
 import ShowData from "~/components/medical-assistance/show-data.component";
 import {validatePropery} from "~/validations/medical-assistance.validation";
 import styles from "./request.module.scss";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
 
 const MedicalAssistanceRequest = () => {
   const [data, setData] = useState({
@@ -126,4 +127,4 @@ const MedicalAssistanceRequest = () => {
   );
 };
 
-export default MedicalAssistanceRequest;
+export default AuthenticationWrapper(MedicalAssistanceRequest);

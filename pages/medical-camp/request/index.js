@@ -11,6 +11,7 @@ import ShowData from "~/components/medical-camp/forms/show-data.component";
 import styles from "./request.module.scss";
 import {warningNotification} from "~/components/fundamentals/notification/notification";
 import {validatePropery} from "~/validations/medical-camp.validation";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
 
 const MedicalCampRequest = () => {
   const [data, setData] = useState({
@@ -204,4 +205,4 @@ const MedicalCampRequest = () => {
   );
 };
 
-export default MedicalCampRequest;
+export default AuthenticationWrapper(MedicalCampRequest);

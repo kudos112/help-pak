@@ -6,7 +6,7 @@ import actionTypes from "./chat.actionTypes";
 
 function* getChatsSaga(action) {
   try {
-    const data = yield call(ChatService.getConversationsByUserId, action.id);
+    const data = yield call(ChatService.getConversationsByUserId);
     yield put(getChatsSuccess(data));
     if (action && action.callback) action.callback();
   } catch (error) {

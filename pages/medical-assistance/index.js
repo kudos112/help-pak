@@ -1,12 +1,11 @@
-import {Flex, Heading} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import {connect, useDispatch} from "react-redux";
-import {useMediaQuery} from "@chakra-ui/react";
+import {Flex, Heading, useMediaQuery} from "@chakra-ui/react";
+import {useState} from "react";
+import {connect} from "react-redux";
 import Cards from "~/components/medical-assistance/medical-assistance-cards";
 import FilterMedicalAssistance from "~/components/medical-assistance/search-bar/filter.assistance.component";
+import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
 // import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
 import styles from "./medical-assistance.module.scss";
-import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
 
 const MedicalAssistance = ({medicalAssistances}) => {
   const [loading, setLoading] = useState(true);
@@ -37,8 +36,11 @@ const MedicalAssistance = ({medicalAssistances}) => {
             <Flex m={8}>loading...</Flex>
           ) : (
             <div>
-              {medicalAssistances == null && (
-                <Flex m={3}>We are Working on updates</Flex>
+              {(medicalAssistances == null ||
+                medicalAssistances.data.length == 0) && (
+                <Flex m={3} h="100%" align="center" justify={"center"}>
+                  <Heading color="gray.400">No services Listed yet</Heading>
+                </Flex>
               )}
               {medicalAssistances?.data && (
                 <Flex

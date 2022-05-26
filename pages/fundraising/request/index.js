@@ -1,11 +1,10 @@
-import styles from "./request.module.scss";
+import {useState} from "react";
+import CustomButton from "../../../components/fundamentals/custom-button/custom-button.component";
+import FileUploader from "../../../components/fundamentals/custom-fileuploader/file-upload.component";
 import CustomInput from "../../../components/fundamentals/custom-input/custom-input.component";
 import CustomTextArea from "../../../components/fundamentals/custom-textarea/custom-textarea.component";
-import CustomButton from "../../../components/fundamentals/custom-button/custom-button.component";
-import {Textarea} from "@chakra-ui/react";
-import FileUploader from "../../../components/fundamentals/custom-fileuploader/file-upload.component";
-import Dropzone from "react-dropzone";
-import {useState} from "react";
+import styles from "./request.module.scss";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
 
 const FundraisingRequest = () => {
   const [data, setData] = useState({
@@ -70,4 +69,4 @@ const FundraisingRequest = () => {
   );
 };
 
-export default FundraisingRequest;
+export default AuthenticationWrapper(FundraisingRequest);

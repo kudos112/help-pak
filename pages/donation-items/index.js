@@ -31,15 +31,14 @@ const DonationItem = ({donationItems}) => {
         <div className={styles.filter}>
           <FilterDonationItem handleLoading={handleLoading} />
         </div>
-
         <div className={styles.cards}>
           {loading ? (
             <Flex m={8}>loading...</Flex>
           ) : (
             <div>
-              {donationItems == null && (
-                <Flex m={3}>
-                  We are Working on updates... Just wait for more content
+              {(donationItems == null || donationItems.data.length == 0) && (
+                <Flex m={3} h="100%" align="center" justify={"center"}>
+                  <Heading color="gray.400">No Items Listed yet</Heading>
                 </Flex>
               )}
               {donationItems?.data && (

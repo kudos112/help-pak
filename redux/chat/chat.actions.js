@@ -3,7 +3,6 @@ import actionTypes from "./chat.actionTypes";
 export function getChats(id) {
   return {
     type: actionTypes.GET_CHATS_REQUEST,
-    id,
   };
 }
 

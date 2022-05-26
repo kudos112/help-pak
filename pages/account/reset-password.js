@@ -28,11 +28,11 @@ export default function Login() {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (data.password !== data.confirmPassword) {
       errorNotification("Error", "Your passwords do not match");
       return;
     }
-    e.preventDefault();
     setLoading(true);
     const payload = {
       password: data.password,

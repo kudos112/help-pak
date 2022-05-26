@@ -4,24 +4,20 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {setSelectedConversation} from "~/redux/chat/chat.actions";
-import UserRepository from "~/repositories/UserRepository";
+// import UserRepository from "~/repositories/UserRepository";
 
 export default function index({conversation, currentUser}) {
   const [friend, setFriend] = useState({});
   const dispatch = useDispatch();
   useEffect(async () => {
-    const friendId = conversation.members.find((m) => m !== currentUser.id);
-    const response = await UserRepository.getUserById(friendId);
-    if (response.status === 200) setFriend(response.data);
+    setFriend(conversation.members.find((m) => m.id !== currentUser.id));
   }, []);
   return (
     <Link href={"/messages/[uid]"} as={`/messages/${friend.id}`} passHref>
       <Flex
         onClick={() => dispatch(setSelectedConversation(conversation))}
         direction="column"
-        // align={"center"}
         w={{base: "320px", md: "500px"}}
-        // flex="1 1 800px"
       >
         <Flex
           justifyContent="space-between"

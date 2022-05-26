@@ -5,6 +5,7 @@ import Users from "~/components/partial-components/messages/user";
 import {selectUser} from "~/redux/auth/auth.selector";
 import {getChats} from "~/redux/chat/chat.actions";
 import {selectConversations} from "~/redux/chat/chat.selector";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
 
 const index = ({conversations, currentUser}) => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const index = ({conversations, currentUser}) => {
   }, []);
 
   const fetchConservations = () => {
-    dispatch(getChats(currentUser?.id));
+    dispatch(getChats());
   };
 
   return (
@@ -51,4 +52,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(index);
+export default AuthenticationWrapper(connect(mapStateToProps)(index));

@@ -38,7 +38,7 @@ class ChatRepository {
   async getConversationsByUserId(id) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.getConversations}/${id}`
+        `${baseUrl}/${routes.getConversations}`
       );
       // if (request == undefined) throw new Error("Your session is expired");
       //   const {data} = request;

@@ -10,6 +10,7 @@ import {
   Icon,
   Link as ChakraLink,
   Popover,
+  Badge,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
@@ -31,19 +32,29 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import {connect, useDispatch} from "react-redux";
-
+import {BsDot} from "react-icons/bs";
 import Link from "next/link";
 import {logOutRequest} from "~/redux/auth/auth.actions";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {selectIsLoggedIn, selectUser} from "~/redux/auth/auth.selector";
+// import socket from "~/sockets";
 
 const NavBar = ({user, isLoggedIn}) => {
   const {isOpen, onToggle} = useDisclosure();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [newMessages, setNewMessages] = useState(false);
   const handleLoading = () => {
     setLoading(false);
   };
+
+  // useEffect(() => {
+  //   if (user)
+  //     socket.on("newNotifications", (data) => {
+  //       if (data.newMessageCount >= 0) setNewMessages(true);
+  //       else setNewMessages(false);
+  //     });
+  // }, [user]);
 
   return (
     <Box>
@@ -152,7 +163,7 @@ const NavBar = ({user, isLoggedIn}) => {
   );
 };
 
-const DesktopNav = () => {
+const DesktopNav = ({}) => {
   const linkColor = useColorModeValue("#6B7280");
   const linkHoverColor = useColorModeValue("#15803D", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
@@ -317,64 +328,60 @@ const MobileNavItem = ({label, children, href}) => {
 const NAV_ITEMS = [
   {
     label: "Fundraising",
-    href: "#",
     children: [
       {
-        label: "Create Fundraising Post",
-        subLabel: "Collect ",
-        href: "/fundraising/request",
+        label: "Fundraising Posts",
+        subLabel: "Donate to those who deserve",
+        href: "/fundraising",
       },
       {
-        label: "Fundraising Posts",
-        subLabel: "",
-        href: "/fundraising",
+        label: "Create Fundraising Post",
+        subLabel: "Collect fundraisings across the country",
+        href: "/fundraising/request",
       },
     ],
   },
   {
     label: "Old Item Donation",
-    href: "/donation-items",
     children: [
       {
         label: "Available Old Items",
-        subLabel: "An exclusive list for contract work",
+        subLabel: "Old Items listed for donation",
         href: "/donation-items",
       },
       {
         label: "Create donation request",
-        subLabel: "Find your dream design job",
+        subLabel: "List item you want to donate",
         href: "/donation-items/request",
       },
     ],
   },
   {
     label: "Medical Camps",
-    href: "/medical-camp",
     children: [
       {
         label: "Medical Camps",
-        subLabel: "An exclusive list for contract work",
+        subLabel: "Upcoming Medical Camps",
         href: "/medical-camp",
       },
       {
-        label: "Create Medical Camps",
-        subLabel: "Find your dream design job",
+        label: "Organize Medical Camps",
+        subLabel: "List your upcoming Medical Camp",
         href: "/medical-camp/request",
       },
     ],
   },
   {
     label: "Medical Assistance",
-    href: "/medical-assistance",
     children: [
       {
         label: "Medical Services",
-        subLabel: "Checkout free medical services available",
+        subLabel: "Free medical services across Pakistan",
         href: "/medical-assistance",
       },
       {
         label: "Add Medical Assistance",
-        subLabel: "Request to list your medical assistance service",
+        subLabel: "List your medical service",
         href: "/medical-assistance/request",
       },
     ],
@@ -386,6 +393,11 @@ const NAV_ITEMS = [
   {
     label: "Messages",
     href: "/messages",
+  },
+  ,
+  {
+    label: "Contact Us",
+    href: "/contact-us",
   },
 ];
 

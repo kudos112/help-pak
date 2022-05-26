@@ -2,18 +2,29 @@
 @import "/public/scss/variables";
 
 .page {
+  background-color: white;
   .hero {
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 0 5% 0 5%;
+    // height: 90vh;
     background-color: #1f1f21;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    @include respond(medium) {
+      flex-direction: column;
+      padding: 10%;
+      // height: 50vh;
+    }
+    @include respond(small) {
+      flex-direction: column;
+      // height: 50vh;
+    }
 
     .textSection {
       display: flex;
       justify-content: center;
       flex-direction: column;
+      gap: 20px;
       .heading {
         color: white;
         width: 70%;
@@ -21,16 +32,36 @@
         .dream {
           color: $green;
         }
+        @include respond(medium) {
+          font-size: 40px;
+          width: 70%;
+        }
+        @include respond(small) {
+          font-size: 30px;
+          width: 70%;
+        }
       }
       .subtitle {
         margin-top: 2%;
         color: white;
         width: 40%;
         font-size: 20px;
+        @include respond(medium) {
+          font-size: 15px;
+          width: 70%;
+        }
       }
       .button {
-        margin-top: 2%;
         width: 28%;
+        // height: 100px;
+        @include respond(medium) {
+          // font-size: 20px;
+          width: 30%;
+        }
+        @include respond(medium) {
+          // font-size: 20px;
+          width: 40%;
+        }
       }
     }
   }
@@ -42,6 +73,174 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+  }
+
+  .heaven {
+    padding: 3% 5% 0 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+    .heavenMain {
+      display: flex;
+      flex-direction: column;
+
+      .heavenHeading {
+        color: black;
+        width: 100%;
+        font-size: 30px;
+        font-weight: 500;
+        padding: 2%;
+        .green {
+          color: $green;
+        }
+        @include respond(medium) {
+          font-size: 20px;
+        }
+        @include respond(small) {
+          font-size: 20px;
+        }
+      }
+      .heavenImg1 {
+        width: 100%;
+        padding: 1%;
+        height: 300px;
+        object-fit: cover;
+        object-position: bottom;
+      }
+      .heavenImages {
+        display: flex;
+        flex-direction: row;
+        .heavenImg2 {
+          width: 50%;
+          padding: 1%;
+          height: 300px;
+          object-fit: cover;
+          object-position: bottom;
+        }
+        .heavenImg3 {
+          width: 50%;
+          padding: 1%;
+          height: 300px;
+          object-fit: cover;
+          object-position: bottom;
+        }
+      }
+    }
+    .payment {
+      width: 40%;
+      height: 100%;
+      object-fit: cover;
+      object-position: bottom;
+      @include respond(medium) {
+        display: none;
+      }
+    }
+  }
+
+  .itemDonation {
+    background-color: $lightGreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3% 5% 3% 5%;
+    .idheading {
+      color: black;
+      width: 100%;
+      font-size: 30px;
+      font-weight: 500;
+      .green {
+        color: $green;
+      }
+      @include respond(medium) {
+        font-size: 20px;
+      }
+      @include respond(small) {
+        font-size: 20px;
+      }
+    }
+    .idimages {
+      display: flex;
+      flex-direction: row;
+      @include respond(small) {
+        flex-direction: column;
+      }
+      .idsec1 {
+        padding: 1%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        @include respond(small) {
+          width: 100%;
+        }
+        .idheading2 {
+          .d {
+            font-size: 80px;
+          }
+          font-size: 30px;
+        }
+        .idheading3 {
+          font-size: 30px;
+        }
+        .img1 {
+          width: 100%;
+          object-fit: contain;
+          object-position: bottom;
+          padding: 1%;
+        }
+      }
+      .img2 {
+        width: 50%;
+        object-fit: contain;
+        object-position: bottom;
+        padding: 1%;
+        @include respond(small) {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .medicalCamps {
+    padding: 3% 5% 3% 5%;
+    .mcheading {
+      color: $green;
+      width: 100%;
+      font-size: 30px;
+      font-weight: 500;
+      .green {
+        color: $green;
+      }
+      @include respond(medium) {
+        padding: 5% 0 3% 0;
+        font-size: 30px;
+      }
+      @include respond(small) {
+        font-size: 30px;
+      }
+    }
+    .mcimg {
+      width: 100%;
+      object-fit: contain;
+      object-position: bottom;
+      padding: 1%;
+    }
+    .medicalCampBottom {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .link {
+        color: blue;
+        text-decoration: underline;
+      }
+      @include respond(small) {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
   }
 }
 .a {
