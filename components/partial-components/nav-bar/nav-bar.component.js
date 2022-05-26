@@ -331,6 +331,7 @@ const MobileNavItem = ({label, children, href}) => {
 const NAV_ITEMS = [
   {
     label: "Fundraising",
+    href: "#",
     children: [
       {
         label: "Fundraising Posts",
@@ -346,6 +347,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Old Item Donation",
+    href: "#",
     children: [
       {
         label: "Available Old Items",
@@ -361,6 +363,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Medical Camps",
+    href: "#",
     children: [
       {
         label: "Medical Camps",
@@ -376,6 +379,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Medical Assistance",
+    href: "#",
     children: [
       {
         label: "Medical Services",
