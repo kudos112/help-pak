@@ -178,7 +178,9 @@ const MedicalAssistanceDetailedPage = ({medicalCamp}) => {
                       <PhoneIcon />
                     </Circle>
                     <Text fontSize={"md"} color={"gray.500"}>
-                      {medicalCamp?.phoneNo}
+                      <a href={`tel:${medicalCamp?.phoneNo}o}`}>
+                        {medicalCamp?.phoneNo}
+                      </a>
                     </Text>
                   </HStack>
                 </Tooltip>

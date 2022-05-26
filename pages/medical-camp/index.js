@@ -7,6 +7,7 @@ import FilterMedicalCamp from "~/components/medical-camp/search-bar/filter.camp.
 // import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
 import styles from "./medical-camp.module.scss";
 import {selectMedicalCamps} from "~/redux/medical-camp/medical-camp.selector";
+import SmallFooter from "~/components/partial-components/small-footer";
 
 const MedicalCamp = ({medicalCamps}) => {
   const [loading, setLoading] = useState(true);
@@ -22,42 +23,45 @@ const MedicalCamp = ({medicalCamps}) => {
   //   // dispatch(getMedicalCamps(handleLoading));
   // }, []);
   return (
-    <Flex direction="column">
-      <Heading m={4} ml={8} color={"customGreen"}>
-        Medical Camps
-      </Heading>
-      {/* {JSON.stringify(medicalCamps)} */}
-      <div className={styles.main}>
-        <div className={styles.filter}>
-          <FilterMedicalCamp handleLoading={handleLoading} />
-        </div>
+    <>
+      <Flex direction="column">
+        <Heading m={4} ml={8} color={"customGreen"}>
+          Medical Camps
+        </Heading>
+        {/* {JSON.stringify(medicalCamps)} */}
+        <div className={styles.main}>
+          <div className={styles.filter}>
+            <FilterMedicalCamp handleLoading={handleLoading} />
+          </div>
 
-        <div className={styles.cards}>
-          {loading ? (
-            <Flex m={8}>loading...</Flex>
-          ) : (
-            <div>
-              {(medicalCamps == null || medicalCamps.data.length === 0) && (
-                <Flex m={3} h="100%" align="center" justify={"center"}>
-                  <Heading color="gray.400">
-                    No Medical Camps Listed yet
-                  </Heading>
-                </Flex>
-              )}
-              {medicalCamps?.data && (
-                <Flex
-                  ml={mediumSized ? 8 : 8}
-                  mr={mediumSized ? 8 : 8}
-                  direction="column"
-                >
-                  <Cards medicalCamps={medicalCamps} />
-                </Flex>
-              )}
-            </div>
-          )}
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(medicalCamps == null || medicalCamps.data.length === 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">
+                      No Medical Camps Listed yet
+                    </Heading>
+                  </Flex>
+                )}
+                {medicalCamps?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <Cards medicalCamps={medicalCamps} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Flex>
+      </Flex>
+      <SmallFooter />
+    </>
   );
 };
 
