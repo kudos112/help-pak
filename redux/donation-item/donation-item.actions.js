@@ -38,3 +38,14 @@ export function getSelectedDonationItemSuccess(donationItem) {
     donationItem,
   };
 }
+
+export function getUsersDonationItem(id, callback) {
+  return {type: actionTypes.GET_USERS_DONATION_ITEMS_REQUEST, id, callback};
+}
+
+export function getUsersDonationItemSuccess(donationItem) {
+  return {
+    type: actionTypes.GET_USERS_DONATION_ITEMS_SUCCESS,
+    donationItem,
+  };
+}

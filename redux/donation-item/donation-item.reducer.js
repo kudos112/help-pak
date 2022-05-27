@@ -3,6 +3,7 @@ import actionTypes from "./donation-item.actionTypes";
 export const initState = {
   donationItems: null,
   selectedDonationItem: {},
+  currentUserDonationItems: null,
 };
 
 function DonationItemReducer(state = initState, action) {
@@ -16,6 +17,11 @@ function DonationItemReducer(state = initState, action) {
       return {
         ...state,
         ...{selectedDonationItem: action.donationItem},
+      };
+    case actionTypes.GET_USERS_DONATION_ITEMS_SUCCESS:
+      return {
+        ...state,
+        ...{currentUserDonationItems: action.donationItem},
       };
     default:
       return state;

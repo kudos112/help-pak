@@ -31,3 +31,14 @@ export function getSelectedMedicalCampSuccess(medicalCamp) {
     medicalCamp,
   };
 }
+
+export function getUsersMedicalCamp(id, callback) {
+  return {type: actionTypes.GET_USER_MEDICAL_CAMPS_REQUEST, id, callback};
+}
+
+export function getUsersMedicalCampSuccess(medicalCamp) {
+  return {
+    type: actionTypes.GET_USER_MEDICAL_CAMPS_SUCCESS,
+    medicalCamp,
+  };
+}

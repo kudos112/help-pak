@@ -11,3 +11,8 @@ export const selectSelectedMedicalCamp = createSelector(
   [selectMedicalCamp],
   (medicalCamp) => medicalCamp.selectedMedicalCamp
 );
+
+export const selectUsersMedicalCamp = createSelector(
+  [selectMedicalCamp],
+  (medicalCamp) => medicalCamp.currentUserMedicalCamp
+);

@@ -7,6 +7,7 @@ const routes = {
   get: "v1/medicalassistance",
   patch: "/v1/medicalassistance",
   delete: "/v1/medicalassistance",
+  getByUserId: "v1/medicalassistance/user",
 };
 
 class MedicalServiceRepository {
@@ -30,6 +31,17 @@ class MedicalServiceRepository {
   async getMedicalAssistanceById(id) {
     try {
       const request = await Repository.get(`${baseUrl}/${routes.get}/${id}`);
+      return request.data;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
+  async getMedicalAssistanceByUserId(id) {
+    try {
+      const request = await Repository.get(
+        `${baseUrl}/${routes.getByUserId}/${id}`
+      );
       return request.data;
     } catch (error) {
       throw getError(error);

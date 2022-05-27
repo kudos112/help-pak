@@ -7,6 +7,7 @@ const routes = {
   get: "v1/donation-item",
   patch: "/v1/donation-item",
   delete: "/v1/donation-item",
+  getByUserId: "v1/donation-item/user",
 };
 
 class DonationRepository {
@@ -36,6 +37,17 @@ class DonationRepository {
     }
   }
 
+  async getDonationItemByUserId(id) {
+    try {
+      const request = await Repository.get(
+        `${baseUrl}/${routes.getByUserId}/${id}`
+      );
+      return request.data;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
   async getDonationItems(name, city, category, condition) {
     try {
       const request = await Repository.get(
@@ -48,6 +60,16 @@ class DonationRepository {
       throw getError(error);
     }
   }
+  // async getYourDonationItems() {
+  //   try {
+  //     const request = await Repository.get(`${baseUrl}/${routes.get}`);
+  //     // if (request == undefined) throw new Error("Your session is expired");
+  //     const {data} = request;
+  //     return data;
+  //   } catch (error) {
+  //     throw getError(error);
+  //   }
+  // }
 }
 
 export default new DonationRepository();

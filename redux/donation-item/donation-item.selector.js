@@ -11,3 +11,8 @@ export const selectSelectedDonationItem = createSelector(
   [selectDonationItem],
   (donationItem) => donationItem.selectedDonationItem
 );
+
+export const selectUsersDonationItems = createSelector(
+  [selectDonationItem],
+  (donationItem) => donationItem.currentUserDonationItems
+);

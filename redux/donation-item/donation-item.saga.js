@@ -8,6 +8,7 @@ import {
 import {
   getDonationItemsSuccess,
   getSelectedDonationItemSuccess,
+  getUsersDonationItemSuccess,
 } from "./donation-item.actions";
 import actionTypes from "./donation-item.actionTypes";
 
@@ -74,6 +75,24 @@ function* getSelectedDonationItemSaga(action) {
   }
 }
 
+function* getUsersDonationItemSaga(action) {
+  try {
+    const donationItem = yield call(
+      DonationItemService.getDonationItemByUserId,
+      action.id
+    );
+    yield put(getUsersDonationItemSuccess(donationItem));
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actionTypes.CREATE_DONATION_ITEM, createDonationItemSaga),
@@ -81,6 +100,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_SELECTED_DONATION_ITEM,
       getSelectedDonationItemSaga
+    ),
+    takeEvery(
+      actionTypes.GET_USERS_DONATION_ITEMS_REQUEST,
+      getUsersDonationItemSaga
     ),
   ]);
 }

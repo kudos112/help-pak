@@ -6,6 +6,7 @@ import {
   successNotification,
 } from "~/components/fundamentals/notification/notification";
 import {
+  getMedicalAssistanceByUserIdSucess,
   getMedicalAssistancesSuccess,
   getSelectedMedicalAssistanceSuccess,
 } from "./medical-service.actions";
@@ -68,6 +69,24 @@ function* getSelectedMedicalAssistanceSaga(action) {
   }
 }
 
+function* getMedicalAssistanceByUserIdSaga(action) {
+  try {
+    const medicalAssistance = yield call(
+      MedicalAssistanceService.getMedicalAssistanceByUserId,
+      action.id
+    );
+    yield put(getMedicalAssistanceByUserIdSucess(medicalAssistance));
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actionTypes.CREATE_MEDICAL_SERIVCE, createMedicalAssistanceSaga),
@@ -78,6 +97,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_SELECTED_MEDICAL_ASSISTANCE,
       getSelectedMedicalAssistanceSaga
+    ),
+    takeEvery(
+      actionTypes.GET_USER_MEDICAL_ASSISTANCES_REQUEST,
+      getMedicalAssistanceByUserIdSaga
     ),
   ]);
 }

@@ -1,3 +1,4 @@
+import {EmailIcon, PhoneIcon} from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -5,34 +6,49 @@ import {
   Heading,
   HStack,
   Kbd,
-  Stack,
-  Tag,
+  useMediaQuery,
   Wrap,
 } from "@chakra-ui/react";
+import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {connect, useDispatch} from "react-redux";
-import {useMediaQuery} from "@chakra-ui/react";
+import Cards from "~/components/medical-assistance/medical-assistance-cards";
+import DonationItemCards from "~/components/donation-item/donation-item-cards";
+import MedicalCampCards from "~/components/medical-camp/medical-camp-cards";
+import RadioCards from "~/components/partial-components/profile/radio-filter.component";
 import {selectUser} from "~/redux/auth/auth.selector";
-// import Cards from "~/components/donation-item/donation-item-cards";
-import FilterDonationItem from "~/components/donation-item/search-bar/filter.camp.component";
+import {getUsersMedicalCamp} from "~/redux/medical-camp/medical-camp.actions";
+import {selectUsersMedicalCamp} from "~/redux/medical-camp/medical-camp.selector";
+import {getMedicalAssistanceByUserId} from "~/redux/medical-service/medical-service.actions";
+import {selectUsersMedicalAssistance} from "~/redux/medical-service/medical-service.selector";
 // // import {getDonationItems} from "~/redux/donation-item/donation-item.actions";
 import styles from "./profile.module.scss";
-import RadioCards from "~/components/partial-components/profile/radio-filter.component";
-import {useRouter} from "next/router";
-import {EmailIcon, PhoneIcon} from "@chakra-ui/icons";
+import {selectUsersDonationItems} from "~/redux/donation-item/donation-item.selector";
+import {getUsersDonationItem} from "~/redux/donation-item/donation-item.actions";
 // import {selectDonationItems} from "~/redux/donation-item/donation-item.selector";
 // import SmallFooter from "~/components/partial-components/small-footer";
 
-const DonationItem = ({user}) => {
+const DonationItem = ({
+  user,
+  usersMedicalAssistance,
+  usersMedicalCamp,
+  usersDonationItems,
+}) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
-  const [currentView, setCurrentView] = useState(1);
+  const [currentView, setCurrentView] = useState(2);
   const router = useRouter();
 
   const handleLoading = () => {
     setLoading(false);
   };
+
+  useEffect(() => {
+    dispatch(getMedicalAssistanceByUserId(user?.id, () => setLoading(false)));
+    dispatch(getUsersMedicalCamp(user?.id, () => setLoading(false)));
+    dispatch(getUsersDonationItem(user?.id, () => setLoading(false)));
+  }, []);
 
   const onRadioChange = (value) => {
     if (value.toLowerCase() === "profile") {
@@ -49,11 +65,85 @@ const DonationItem = ({user}) => {
   const renderView = () => {
     switch (currentView) {
       case 2:
-        return <div>Old Item Donation</div>;
+        return (
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(usersDonationItems == null ||
+                  usersDonationItems.data.length == 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">No Items Listed yet</Heading>
+                  </Flex>
+                )}
+                {usersDonationItems?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <DonationItemCards donationItems={usersDonationItems} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
+        );
       case 3:
-        return <div>Medical Camp</div>;
+        return (
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(usersMedicalCamp == null ||
+                  usersMedicalCamp.data.length === 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">
+                      No Medical Camps Listed yet
+                    </Heading>
+                  </Flex>
+                )}
+                {usersMedicalCamp?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <MedicalCampCards medicalCamps={usersMedicalCamp} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
+        );
       case 4:
-        return <div>Medical Services</div>;
+        return (
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(usersMedicalAssistance == null ||
+                  usersMedicalAssistance.data.length == 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">No services Listed yet</Heading>
+                  </Flex>
+                )}
+                {usersMedicalAssistance?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <Cards medicalAssistances={usersMedicalAssistance} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
+        );
       default:
         return <div>Wrong Option</div>;
     }
@@ -62,7 +152,6 @@ const DonationItem = ({user}) => {
   return (
     <>
       <Flex m={8} direction="column">
-        {/* Profile */}
         <Flex direction="column">
           <Wrap spacing={5}>
             <Avatar />
@@ -87,7 +176,6 @@ const DonationItem = ({user}) => {
         </Box>
         {renderView()}
       </Flex>
-      {/* <SmallFooter /> */}
     </>
   );
 };
@@ -95,6 +183,9 @@ const DonationItem = ({user}) => {
 const mapStateToProps = (state) => {
   return {
     user: selectUser(state),
+    usersMedicalAssistance: selectUsersMedicalAssistance(state),
+    usersMedicalCamp: selectUsersMedicalCamp(state),
+    usersDonationItems: selectUsersDonationItems(state),
   };
 };
 

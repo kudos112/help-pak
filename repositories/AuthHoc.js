@@ -14,7 +14,7 @@ const Wrapper = (WrappedComponent) => {
 export default Wrapper;
 
 const checkUserAuthentication = () => {
-  let isLoggedIn = false;
+  let isLoggedIn = false; 
   isLoggedIn = useSelector((state) => selectIsLoggedIn(state));
   React.useEffect(() => {
     // if (!isLoggedIn) dispatch(getUserDetails());

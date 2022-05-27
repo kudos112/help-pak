@@ -3,6 +3,7 @@ import actionTypes from "./medical-camp.actionTypes";
 export const initState = {
   medicalCamps: null,
   selectedMedicalCamp: {},
+  currentUserMedicalCamp: null,
 };
 
 function MedicalCampReducer(state = initState, action) {
@@ -16,6 +17,11 @@ function MedicalCampReducer(state = initState, action) {
       return {
         ...state,
         ...{selectedMedicalCamp: action.medicalCamp},
+      };
+    case actionTypes.GET_USER_MEDICAL_CAMPS_SUCCESS:
+      return {
+        ...state,
+        ...{currentUserMedicalCamp: action.medicalCamp},
       };
     default:
       return state;

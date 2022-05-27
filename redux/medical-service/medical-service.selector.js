@@ -11,3 +11,8 @@ export const selectSelectedMedicalAssistance = createSelector(
   [selectMedicalAssistance],
   (medicalAssistance) => medicalAssistance.selectedMedicalAssistance
 );
+
+export const selectUsersMedicalAssistance = createSelector(
+  [selectMedicalAssistance],
+  (medicalAssistance) => medicalAssistance.currentUserMedicalAssistance
+);

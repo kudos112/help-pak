@@ -8,6 +8,7 @@ import {
 import {
   getMedicalCampsSuccess,
   getSelectedMedicalCampSuccess,
+  getUsersMedicalCampSuccess,
 } from "./medical-camp.actions";
 import actionTypes from "./medical-camp.actionTypes";
 
@@ -73,6 +74,24 @@ function* getSelectedMedicalCampSaga(action) {
   }
 }
 
+function* getUsersMedicalCampSaga(action) {
+  try {
+    const medicalCamp = yield call(
+      MedicalCampService.getMedicalCampByUserId,
+      action.id
+    );
+    yield put(getUsersMedicalCampSuccess(medicalCamp));
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actionTypes.CREATE_MEDICAL_CAMP, createMedicalCampSaga),
@@ -80,6 +99,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_SELECTED_MEDICAL_CAMP,
       getSelectedMedicalCampSaga
+    ),
+    takeEvery(
+      actionTypes.GET_USER_MEDICAL_CAMPS_REQUEST,
+      getUsersMedicalCampSaga
     ),
   ]);
 }

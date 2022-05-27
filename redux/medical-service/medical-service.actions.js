@@ -36,3 +36,14 @@ export function getSelectedMedicalAssistanceSuccess(medicalAssistance) {
     medicalAssistance,
   };
 }
+
+export function getMedicalAssistanceByUserId(id, callback) {
+  return {type: actionTypes.GET_USER_MEDICAL_ASSISTANCES_REQUEST, id, callback};
+}
+
+export function getMedicalAssistanceByUserIdSucess(medicalAssistance) {
+  return {
+    type: actionTypes.GET_USER_MEDICAL_ASSISTANCES_SUCCESS,
+    medicalAssistance,
+  };
+}
