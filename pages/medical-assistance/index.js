@@ -6,7 +6,6 @@ import FilterMedicalAssistance from "~/components/medical-assistance/search-bar/
 import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
 // import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
 import styles from "./medical-assistance.module.scss";
-import SmallFooter from "~/components/partial-components/small-footer";
 
 const MedicalAssistance = ({medicalAssistances}) => {
   const [loading, setLoading] = useState(true);
@@ -58,7 +57,6 @@ const MedicalAssistance = ({medicalAssistances}) => {
           </div>
         </div>
       </Flex>
-      <SmallFooter />
     </>
   );
 };

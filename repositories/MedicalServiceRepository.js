@@ -37,6 +37,15 @@ class MedicalServiceRepository {
     }
   }
 
+  async deleteMedicalAssistanceById(id) {
+    try {
+      const request = await Repository.delete(`${baseUrl}/${routes.get}/${id}`);
+      return request.data;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
   async getMedicalAssistanceByUserId(id) {
     try {
       const request = await Repository.get(

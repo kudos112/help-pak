@@ -4,7 +4,14 @@ import CustomInput from "~/components/fundamentals/custom-input/custom-input.com
 import CustomSelect from "~/components/fundamentals/custom-select";
 import {cities} from "~/utils/data/cities";
 
-const RightDiv = ({data, handleData, errors, onDrop, handleDeleteImages}) => {
+const RightDiv = ({
+  data,
+  handleData,
+  errors,
+  onDrop,
+  handleDeleteImages,
+  update = false,
+}) => {
   return (
     <>
       <CustomInput
@@ -39,23 +46,30 @@ const RightDiv = ({data, handleData, errors, onDrop, handleDeleteImages}) => {
         }}
         placeholder={"house no, street, hometown "}
       />
-      <FormControl mb={2} isRequired isInvalid={errors.images || false}>
-        <FormLabel color={"customGray"} fontSize={"0.9rem"}>
-          Images
-        </FormLabel>
-        <FileUploader
-          placeholder={data.images ? data.images : "Click here to upload"}
-          image={true}
-          accept={["image/jpeg", "image/png", "image/bmp"]}
-          maxFiles={4}
-          maxSize={1000000}
-          removeFile={handleDeleteImages}
-          onDrop={(acceptedFiles, rejectedFiles) =>
-            onDrop(acceptedFiles, rejectedFiles)
-          }
-        />
-        <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
-      </FormControl>{" "}
+      {!update && (
+        <FormControl
+          mb={2}
+          mt={1}
+          isRequired
+          isInvalid={errors.images || false}
+        >
+          <FormLabel color={"customGray"} fontSize={"0.9rem"}>
+            Images
+          </FormLabel>
+          <FileUploader
+            placeholder={data.images ? data.images : "Click here to upload"}
+            image={true}
+            accept={["image/jpeg", "image/png", "image/bmp"]}
+            maxFiles={4}
+            maxSize={1000000}
+            removeFile={handleDeleteImages}
+            onDrop={(acceptedFiles, rejectedFiles) =>
+              onDrop(acceptedFiles, rejectedFiles)
+            }
+          />
+          <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
+        </FormControl>
+      )}
     </>
   );
 };

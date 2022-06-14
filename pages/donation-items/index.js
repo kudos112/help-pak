@@ -7,7 +7,6 @@ import FilterDonationItem from "~/components/donation-item/search-bar/filter.cam
 // import {getDonationItems} from "~/redux/donation-item/donation-item.actions";
 import styles from "./donation-item.module.scss";
 import {selectDonationItems} from "~/redux/donation-item/donation-item.selector";
-import SmallFooter from "~/components/partial-components/small-footer";
 
 const DonationItem = ({donationItems}) => {
   const [loading, setLoading] = useState(true);
@@ -53,7 +52,6 @@ const DonationItem = ({donationItems}) => {
           </div>
         </div>
       </Flex>
-      <SmallFooter />
     </>
   );
 };

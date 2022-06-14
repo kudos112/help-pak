@@ -9,7 +9,7 @@ const CustomTextArea = ({title, error, required, placeholder, ...props}) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.inputContainer}>
-        <FormControl isRequired={required} isInvalid={error || false}>
+        <FormControl mb={2} isRequired={required} isInvalid={error || false}>
           <FormLabel color={"customGray"} fontSize={"0.9rem"}>
             {title}
           </FormLabel>

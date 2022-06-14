@@ -6,6 +6,7 @@ import {
   successNotification,
 } from "~/components/fundamentals/notification/notification";
 import {
+  deleteSelectedMedicalAssistanceSuccess,
   getMedicalAssistanceByUserIdSucess,
   getMedicalAssistancesSuccess,
   getSelectedMedicalAssistanceSuccess,
@@ -69,6 +70,31 @@ function* getSelectedMedicalAssistanceSaga(action) {
   }
 }
 
+function* deleteSelectedMedicalAssistanceSaga(action) {
+  try {
+    const medicalAssistance = yield call(
+      MedicalAssistanceService.deleteMedicalAssistanceById,
+      action.id
+    );
+    action.callback();
+    yield put(deleteSelectedMedicalAssistanceSuccess());
+    successNotification(
+      "Success",
+      "Medical Service Deleted",
+      "top-right",
+      3000
+    );
+    Router.back();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 function* getMedicalAssistanceByUserIdSaga(action) {
   try {
     const medicalAssistance = yield call(
@@ -97,6 +123,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_SELECTED_MEDICAL_ASSISTANCE,
       getSelectedMedicalAssistanceSaga
+    ),
+    takeEvery(
+      actionTypes.DELETE_SELECTED_MEDICAL_ASSISTANCE,
+      deleteSelectedMedicalAssistanceSaga
     ),
     takeEvery(
       actionTypes.GET_USER_MEDICAL_ASSISTANCES_REQUEST,

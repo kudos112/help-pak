@@ -5,7 +5,7 @@ import Repository, {baseUrl, getError} from "./genericRepository";
 const routes = {
   create: "v1/donation-item/",
   get: "v1/donation-item",
-  patch: "/v1/donation-item",
+  patch: "v1/donation-item",
   delete: "/v1/donation-item",
   getByUserId: "v1/donation-item/user",
 };
@@ -28,9 +28,30 @@ class DonationRepository {
     }
   }
 
+  async updateDonationItem(id, payload) {
+    try {
+      const request = await Repository.patch(
+        `${baseUrl}/${routes.patch}/${id}`,
+        payload
+      );
+      return request;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
   async getDonationItemById(id) {
     try {
       const request = await Repository.get(`${baseUrl}/${routes.get}/${id}`);
+      return request.data;
+    } catch (error) {
+      throw getError(error);
+    }
+  }
+
+  async deleteDonationItemById(id) {
+    try {
+      const request = await Repository.delete(`${baseUrl}/${routes.get}/${id}`);
       return request.data;
     } catch (error) {
       throw getError(error);

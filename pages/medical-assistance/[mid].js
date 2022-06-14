@@ -1,7 +1,14 @@
-import {EmailIcon, PhoneIcon, TimeIcon} from "@chakra-ui/icons";
+import {
+  DeleteIcon,
+  EditIcon,
+  EmailIcon,
+  PhoneIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 import {HiOutlineLocationMarker} from "react-icons/hi";
 import {
   Box,
+  Button,
   Circle,
   Container,
   Flex,
@@ -15,6 +22,8 @@ import {
   Tooltip,
   useColorModeValue,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import styles from "./medical-assistance.module.scss";
 import {useRouter} from "next/router";
@@ -22,16 +31,22 @@ import {useEffect, useState} from "react";
 import {AiOutlineArrowLeft} from "react-icons/ai";
 import {connect, useDispatch} from "react-redux";
 import ImageCarousel from "~/components/fundamentals/custom-carousel/custom-carousel.component";
-import {getSelectedMedicalAssistance} from "~/redux/medical-service/medical-service.actions";
+import {
+  deleteSelectedMedicalAssistance,
+  getSelectedMedicalAssistance,
+} from "~/redux/medical-service/medical-service.actions";
 import {selectSelectedMedicalAssistance} from "~/redux/medical-service/medical-service.selector";
 import {getDayNames} from "~/utils/days/days";
 import SmallFooter from "~/components/partial-components/small-footer";
 import GoBackButton from "~/components/fundamentals/goBack-button";
+import {selectUser} from "~/redux/auth/auth.selector";
+import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
 
-const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
+const MedicalAssistanceDetailedPage = ({medicalAssistance, currentUser}) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
   const {query = {}} = useRouter();
   const router = useRouter();
 
@@ -49,6 +64,7 @@ const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
   };
 
   const handleLoading = () => setLoading(false);
+  const handleActionLoading = () => setActionLoading(false);
 
   const getMedicalAssistanceDetails = (mid) => {
     dispatch(getSelectedMedicalAssistance(mid, handleLoading));
@@ -57,6 +73,8 @@ const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
   return (
     <>
       <Container maxW={"5xl"} py={12}>
+        <GoBackButton />
+
         {loading && (
           <div
             style={{
@@ -77,24 +95,69 @@ const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
         {!loading && (
           <SimpleGrid columns={{base: 1, md: 1}} spacing={10}>
             <Stack spacing={4}>
-              <GoBackButton />
               <Box>
-                <Tooltip label={medicalAssistance?.name}>
-                  <Heading p={5} size={"lg"} color={"gray.600"}>
-                    {medicalAssistance?.name}
-                  </Heading>
-                </Tooltip>
-                <Tooltip label={`${medicalAssistance.city}, Pakistan` || ""}>
-                  <Text
-                    pl={5}
-                    mt={-4}
-                    fontSize={"sm"}
-                    letterSpacing={1.1}
-                    width={"auto"}
-                  >
-                    {`${medicalAssistance.city}, Pakistan` || ""}
-                  </Text>
-                </Tooltip>
+                <Wrap justify="space-between" align="center">
+                  <WrapItem>
+                    <Flex direction={"column"}>
+                      <Tooltip label={medicalAssistance?.name}>
+                        <Heading p={5} size={"lg"} color={"gray.600"}>
+                          {medicalAssistance?.name}
+                        </Heading>
+                      </Tooltip>
+                      <Tooltip
+                        label={`${medicalAssistance.city}, Pakistan` || ""}
+                      >
+                        <Text
+                          pl={5}
+                          mt={-4}
+                          fontSize={"sm"}
+                          letterSpacing={1.1}
+                          width={"auto"}
+                        >
+                          {`${medicalAssistance.city}, Pakistan` || ""}
+                        </Text>
+                      </Tooltip>
+                    </Flex>
+                  </WrapItem>
+                  {medicalAssistance?.provider === currentUser?.id && (
+                    <Wrap>
+                      <WrapItem>
+                        <Box>
+                          <Button
+                            leftIcon={<EditIcon />}
+                            colorScheme="green"
+                            variant="solid"
+                            isLoading={actionLoading}
+                          >
+                            Update
+                          </Button>
+                        </Box>
+                      </WrapItem>
+                      <WrapItem>
+                        <Box>
+                          <Button
+                            leftIcon={<DeleteIcon />}
+                            colorScheme="red"
+                            variant="solid"
+                            isLoading={actionLoading}
+                            onClick={() => {
+                              setActionLoading(true);
+                              dispatch(
+                                deleteSelectedMedicalAssistance(
+                                  medicalAssistance.id,
+                                  handleActionLoading
+                                )
+                              );
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </WrapItem>
+                    </Wrap>
+                  )}
+                </Wrap>
+
                 {medicalAssistance?.images && (
                   <ImageCarousel images={getImages(medicalAssistance.images)} />
                 )}
@@ -244,6 +307,7 @@ const MedicalAssistanceDetailedPage = ({medicalAssistance}) => {
 const mapStateToProps = (state) => {
   return {
     medicalAssistance: selectSelectedMedicalAssistance(state),
+    currentUser: selectUser(state),
   };
 };
 

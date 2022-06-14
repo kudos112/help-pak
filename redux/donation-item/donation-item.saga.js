@@ -6,6 +6,7 @@ import {
   successNotification,
 } from "~/components/fundamentals/notification/notification";
 import {
+  deleteSelectedDonationItemSuccess,
   getDonationItemsSuccess,
   getSelectedDonationItemSuccess,
   getUsersDonationItemSuccess,
@@ -75,6 +76,26 @@ function* getSelectedDonationItemSaga(action) {
   }
 }
 
+function* deleteSelectedDonationItemSaga(action) {
+  try {
+    const donationItem = yield call(
+      DonationItemService.deleteDonationItemById,
+      action.id
+    );
+    yield put(deleteSelectedDonationItemSuccess());
+    successNotification("Success", "Item Deleted", "top-right", 3000);
+    Router.back();
+    action.callback();
+  } catch (error) {
+    if (action && action.callback) {
+      action.callback();
+      errorNotification("Error", error);
+    }
+  } finally {
+    yield cancel();
+  }
+}
+
 function* getUsersDonationItemSaga(action) {
   try {
     const donationItem = yield call(
@@ -100,6 +121,10 @@ export default function* rootSaga() {
     takeEvery(
       actionTypes.GET_SELECTED_DONATION_ITEM,
       getSelectedDonationItemSaga
+    ),
+    takeEvery(
+      actionTypes.DELETE_SELECTED_DONATION_ITEM,
+      deleteSelectedDonationItemSaga
     ),
     takeEvery(
       actionTypes.GET_USERS_DONATION_ITEMS_REQUEST,

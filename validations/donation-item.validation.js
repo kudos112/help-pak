@@ -29,6 +29,11 @@ export const verifyPayload = (payload) => {
   const result = Joi.validate(payload, schema);
   if (result.error) {
     let error = getError(result.error);
+    var matches = error.match(/\[(.*?)\]/);
+
+    if (matches) {
+      error = matches[1];
+    }
     errorNotification("Failed", error);
     return true;
   }

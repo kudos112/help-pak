@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import {isUrl} from "~/utils/isUrl";
 
 export default function CarouselCard({data}) {
   const {name, images, serviceType, providerName, city} = data;
@@ -40,16 +41,30 @@ export default function CarouselCard({data}) {
               curser: "pointer",
             }}
           >
-            <Box
-              h={"210px"}
-              bg={"gray.100"}
-              mt={-6}
-              mx={-6}
-              mb={4}
-              pos={"relative"}
-            >
-              <Image src={images[0]} layout={"fill"} />
-            </Box>
+            {isUrl(images[0]) ? (
+              <Box
+                h={"210px"}
+                bg={"gray.100"}
+                mt={-6}
+                mx={-6}
+                mb={4}
+                pos={"relative"}
+              >
+                <Image src={images[0]} layout={"fill"} />
+              </Box>
+            ) : (
+              <Flex
+                h={"210px"}
+                bg={"gray.100"}
+                mt={-6}
+                mx={-6}
+                mb={4}
+                align="center"
+                justify={"center"}
+              >
+                <Text>No Image Available</Text>
+              </Flex>
+            )}
             <Stack spacing={3}>
               <Tooltip label={serviceType}>
                 <Text isTruncated>
@@ -71,25 +86,6 @@ export default function CarouselCard({data}) {
               >
                 {name || ""}
               </Heading>
-              {/* <Text
-                fontSize={"14px"}
-                color={"gray.500"}
-                overflow={"scroll"}
-                css={{
-                  "&::-webkit-scrollbar": {
-                    width: "4px",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    width: "6px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    background: Colors.lightGreen,
-                    borderRadius: "24px",
-                  },
-                }}
-              >
-                {description || ""}
-              </Text> */}
             </Stack>
             <Stack mt={2} direction={"row"} spacing={4} align={"center"}>
               <Avatar alt={"Provider"} size={"sm"} />

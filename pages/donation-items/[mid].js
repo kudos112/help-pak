@@ -1,11 +1,13 @@
-import {EmailIcon, PhoneIcon} from "@chakra-ui/icons";
+import {DeleteIcon, EditIcon, EmailIcon, PhoneIcon} from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Circle,
   Container,
   Flex,
   Heading,
   HStack,
+  IconButton,
   SimpleGrid,
   Spinner,
   Stack,
@@ -13,8 +15,11 @@ import {
   Text,
   Tooltip,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import {Link} from "react-scroll";
+import NextLink from "next/link";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {HiOutlineLocationMarker} from "react-icons/hi";
@@ -22,7 +27,10 @@ import {connect, useDispatch} from "react-redux";
 import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
 import ImageCarousel from "~/components/fundamentals/custom-carousel/custom-carousel.component";
 import GoBackButton from "~/components/fundamentals/goBack-button";
-import {getSelectedDonationItem} from "~/redux/donation-item/donation-item.actions";
+import {
+  deleteSelectedDonationItem,
+  getSelectedDonationItem,
+} from "~/redux/donation-item/donation-item.actions";
 import {selectSelectedDonationItem} from "~/redux/donation-item/donation-item.selector";
 import styles from "./donation-item.module.scss";
 import ChatService from "@/repositories/ChatRepository";
@@ -38,6 +46,7 @@ const DonationItemDetailedPage = ({donationItem, currentUser}) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
   const {query = {}} = useRouter();
   const router = useRouter();
 
@@ -77,6 +86,7 @@ const DonationItemDetailedPage = ({donationItem, currentUser}) => {
   };
 
   const handleLoading = () => setLoading(false);
+  const handleActionLoading = () => setActionLoading(false);
 
   const getDonationItemDetails = (mid) => {
     dispatch(getSelectedDonationItem(mid, handleLoading));
@@ -108,38 +118,88 @@ const DonationItemDetailedPage = ({donationItem, currentUser}) => {
           <SimpleGrid columns={{base: 1, md: 1}} spacing={10}>
             <Stack spacing={4}>
               <Box>
-                <Flex direction="row" align="center" justify={"space-between"}>
-                  <Flex direction="column">
-                    <Tooltip label={donationItem?.name}>
-                      <Heading p={5} size={"lg"} color={"gray.600"}>
-                        {donationItem?.name}
-                      </Heading>
-                    </Tooltip>
-                    <Tooltip label={`${donationItem.city}, Pakistan` || ""}>
-                      <Text
-                        pl={5}
-                        mt={-4}
-                        fontSize={"sm"}
-                        letterSpacing={1.1}
-                        width={"auto"}
-                      >
-                        {`${donationItem.city}, Pakistan` || ""}
-                      </Text>
-                    </Tooltip>
-                  </Flex>
-                  <Box w={{base: "100px", md: "200px"}}>
-                    <Link
-                      activeClass="active"
-                      to="contactSection"
-                      spy={true}
-                      smooth={true}
-                      offset={-100}
-                      duration={500}
-                    >
-                      <CustomButton title="Ask for Item" />
-                    </Link>
-                  </Box>
-                </Flex>
+                <Wrap justify="space-between" align="center">
+                  <WrapItem>
+                    <Flex direction={"column"}>
+                      <Tooltip label={donationItem?.name}>
+                        <Heading p={5} size={"lg"} color={"gray.600"}>
+                          {donationItem?.name}
+                        </Heading>
+                      </Tooltip>
+                      <Tooltip label={`${donationItem.city}, Pakistan` || ""}>
+                        <Text
+                          pl={5}
+                          mt={-4}
+                          fontSize={"sm"}
+                          letterSpacing={1.1}
+                          width={"auto"}
+                        >
+                          {`${donationItem.city}, Pakistan` || ""}
+                        </Text>
+                      </Tooltip>
+                    </Flex>
+                  </WrapItem>
+                  {donationItem?.ownerId !== currentUser?.id && (
+                    <WrapItem>
+                      <Box w={{base: "100px", md: "200px"}}>
+                        <Link
+                          activeClass="active"
+                          to="contactSection"
+                          spy={true}
+                          smooth={true}
+                          offset={-100}
+                          duration={500}
+                        >
+                          <CustomButton title="Ask for Item" />
+                        </Link>
+                      </Box>
+                    </WrapItem>
+                  )}
+                  {donationItem?.ownerId === currentUser?.id && (
+                    <Wrap>
+                      <WrapItem>
+                        <Box>
+                          <NextLink
+                            href={{
+                              pathname: "/donation-items/update",
+                              query: donationItem,
+                            }}
+                          >
+                            <Button
+                              leftIcon={<EditIcon />}
+                              colorScheme="green"
+                              isLoading={actionLoading}
+                              variant="solid"
+                            >
+                              Update
+                            </Button>
+                          </NextLink>
+                        </Box>
+                      </WrapItem>
+                      <WrapItem>
+                        <Box>
+                          <Button
+                            leftIcon={<DeleteIcon />}
+                            colorScheme="red"
+                            variant="solid"
+                            isLoading={actionLoading}
+                            onClick={() => {
+                              setActionLoading(true);
+                              dispatch(
+                                deleteSelectedDonationItem(
+                                  donationItem.id,
+                                  handleActionLoading
+                                )
+                              );
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </WrapItem>
+                    </Wrap>
+                  )}
+                </Wrap>
 
                 {donationItem?.images && (
                   <ImageCarousel images={getImages(donationItem.images)} />
@@ -234,15 +294,18 @@ const DonationItemDetailedPage = ({donationItem, currentUser}) => {
                     </Tooltip>
                   </Flex>
                 </div>
-                <Box w={"100%"}>
-                  <CustomButton
-                    title="Start messaging..."
-                    onClick={createConversation}
-                    disable={
-                      !currentUser || currentUser?.id === donationItem?.ownerId
-                    }
-                  />
-                </Box>
+                {donationItem?.ownerId !== currentUser?.id && (
+                  <Box w={"100%"}>
+                    <CustomButton
+                      title="Start messaging..."
+                      onClick={createConversation}
+                      disable={
+                        !currentUser ||
+                        currentUser?.id === donationItem?.ownerId
+                      }
+                    />
+                  </Box>
+                )}
               </VStack>
             </Stack>
           </SimpleGrid>

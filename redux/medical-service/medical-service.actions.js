@@ -37,6 +37,16 @@ export function getSelectedMedicalAssistanceSuccess(medicalAssistance) {
   };
 }
 
+export function deleteSelectedMedicalAssistance(id, callback) {
+  return {type: actionTypes.DELETE_SELECTED_MEDICAL_ASSISTANCE, id, callback};
+}
+
+export function deleteSelectedMedicalAssistanceSuccess() {
+  return {
+    type: actionTypes.DELETE_SUCCESS_SELECTED_MEDICAL_ASSISTANCE,
+  };
+}
+
 export function getMedicalAssistanceByUserId(id, callback) {
   return {type: actionTypes.GET_USER_MEDICAL_ASSISTANCES_REQUEST, id, callback};
 }

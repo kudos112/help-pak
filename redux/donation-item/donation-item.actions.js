@@ -39,6 +39,16 @@ export function getSelectedDonationItemSuccess(donationItem) {
   };
 }
 
+export function deleteSelectedDonationItem(id, callback) {
+  return {type: actionTypes.DELETE_SELECTED_DONATION_ITEM, id, callback};
+}
+
+export function deleteSelectedDonationItemSuccess() {
+  return {
+    type: actionTypes.DELETE_SUCCESS_SELECTED_DONATION_ITEM,
+  };
+}
+
 export function getUsersDonationItem(id, callback) {
   return {type: actionTypes.GET_USERS_DONATION_ITEMS_REQUEST, id, callback};
 }

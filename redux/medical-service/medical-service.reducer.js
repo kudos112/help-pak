@@ -23,6 +23,11 @@ function MedicalAssistanceReducer(state = initState, action) {
         ...state,
         ...{currentUserMedicalAssistance: action.medicalAssistance},
       };
+    case actionTypes.DELETE_SUCCESS_SELECTED_MEDICAL_ASSISTANCE:
+      return {
+        ...state,
+        ...{selectedMedicalAssistance: {}},
+      };
     default:
       return state;
   }

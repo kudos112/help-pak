@@ -18,6 +18,11 @@ function DonationItemReducer(state = initState, action) {
         ...state,
         ...{selectedDonationItem: action.donationItem},
       };
+    case actionTypes.DELETE_SUCCESS_SELECTED_DONATION_ITEM:
+      return {
+        ...state,
+        ...{selectedDonationItem: {}},
+      };
     case actionTypes.GET_USERS_DONATION_ITEMS_SUCCESS:
       return {
         ...state,

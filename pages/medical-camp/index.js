@@ -60,7 +60,7 @@ const MedicalCamp = ({medicalCamps}) => {
           </div>
         </div>
       </Flex>
-      <SmallFooter />
+      {/* <SmallFooter /> */}
     </>
   );
 };
