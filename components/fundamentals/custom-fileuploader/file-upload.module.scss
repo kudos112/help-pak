@@ -63,11 +63,11 @@
             // text-overflow: ellipsis;
 
             @include respond(medium) {
-              width: 100px;
+             width: 85%;
             }
 
             @include respond(small) {
-              width: 100px;
+              width: 85%;
             }
           }
 

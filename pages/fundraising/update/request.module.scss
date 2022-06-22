@@ -1,0 +1,72 @@
+@import "/public/scss/variables";
+@import "/public/scss/mixins";
+
+.page {
+  @include FlexCenter();
+  flex-direction: column;
+
+  .heading {
+    color: $gray;
+    font-size: 35px;
+    text-align: center;
+    @include respond(medium) {
+      font-size: 25px;
+    }
+  }
+
+  .container {
+    @include FlexCenter();
+    flex-direction: column;
+    gap: 2rem;
+    width: 70%;
+    margin-bottom: 1rem;
+
+    @include respond(small) {
+      width: 80%;
+    }
+
+    .stepper {
+      margin: 50px;
+    }
+
+    .inputContainer {
+      @include FlexCenter();
+      align-items: flex-start;
+      width: 100%;
+      gap: 2rem;
+
+      @include respond(medium) {
+        gap: 0rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .leftDiv {
+        @include FlexCenter();
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 40%;
+        @include respond(medium) {
+          width: 400px;
+        }
+        @include respond(small) {
+          width: 300px;
+        }
+      }
+
+      .rightDiv {
+        @include FlexCenter();
+        flex-direction: column;
+        width: 40%;
+
+        @include respond(medium) {
+          width: 400px;
+        }
+        @include respond(small) {
+          width: 300px;
+        }
+      }
+    }
+  }
+}

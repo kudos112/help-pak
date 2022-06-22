@@ -1,19 +1,15 @@
 import {Heading} from "@chakra-ui/react";
-import {Router, useRouter} from "next/router";
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useRouter} from "next/router";
+import {useState} from "react";
 import LeftDiv from "~/components/donation-item/left-div";
 import RightDiv from "~/components/donation-item/right-div";
 import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
 import {
   errorNotification,
   successNotification,
-  warningNotification,
 } from "~/components/fundamentals/notification/notification";
-import {createDonationItem} from "~/redux/donation-item/donation-item.actions";
 import AuthenticationWrapper from "~/repositories/AuthHoc";
 import DonationItemRepository from "~/repositories/DonationItemRepository";
-import {uploadTwoOrMoreImages} from "~/utils/image-uploader/upload-images.util";
 import {
   validatePropery,
   verifyPayload,

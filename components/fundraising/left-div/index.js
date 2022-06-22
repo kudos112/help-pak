@@ -2,16 +2,16 @@ import CustomInput from "~/components/fundamentals/custom-input/custom-input.com
 import CustomSelect from "~/components/fundamentals/custom-select";
 import CustomTextArea from "~/components/fundamentals/custom-textarea/custom-textarea.component";
 import { cities } from "~/utils/data/cities";
+import reasons from "~/utils/data/fundraisingsTypes.options";
 
-const LeftDiv = ( { data, handleData, errors } ) =>
-{
-   
+const LeftDiv = ({data, handleData, errors, update}) => {
   return (
     <>
       <CustomInput
         title="Fundraising Title"
         type="text"
         required
+        disabled={update}
         onChange={(e) => {
           handleData("name", e.target.value);
         }}
@@ -19,16 +19,17 @@ const LeftDiv = ( { data, handleData, errors } ) =>
         error={errors.name}
         placeholder={"Orphans need shelter and clothes"}
       />
-      <CustomInput
-        title="Fundraising Reason"
-        type="text"
-        required
-        onChange={(e) => {
-          handleData("reason", e.target.value);
-        }}
+      <CustomSelect
+        label="Fundraising Reason"
+        options={reasons}
         value={data.reason}
+        onChange={(item) => {
+          handleData("reason", item?.value || "");
+        }}
+        required
         error={errors.reason}
-        placeholder={"For Orphans"}
+        placeholder="type or select reason"
+        instanceId="123"
       />
 
       <CustomTextArea

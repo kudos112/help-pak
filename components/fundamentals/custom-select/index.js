@@ -10,6 +10,13 @@ const CustomSelect = ({
   error,
   ...props
 }) => {
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      height: 40,
+      minHeight: 40,
+    }),
+  };
   return (
     <FormControl mb={2} isRequired={required} isInvalid={error || false}>
       <FormLabel color={"customGray"} fontSize={"0.9rem"}>
@@ -25,6 +32,7 @@ const CustomSelect = ({
         defaultInputValue={value}
         options={options}
         onChange={onChange}
+        styles={customStyles}
         {...props}
       />
       <FormErrorMessage>{error}</FormErrorMessage>

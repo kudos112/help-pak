@@ -1,0 +1,25 @@
+const options = [
+  {label: "PET AND ANIMAL CAUSES", value: "PET AND ANIMAL CAUSES"},
+  {label: "ADOPTION COSTS", value: "ADOPTION COSTS"},
+  {label: "BREAST CANCER TREATMENT", value: "BREAST CANCER TREATMENT"},
+  {
+    label: "CANCER TREATMENT AND AWARENESS",
+    value: "CANCER TREATMENT AND AWARENESS",
+  },
+  {label: "CLUBS AND COMMUNITIES", value: "CLUBS AND COMMUNITIES"},
+  {label: "CREATIVE PROJECTS", value: "CREATIVE PROJECTS"},
+  {label: "FRATERNITIES AND SORORITIES", value: "FRATERNITIES AND SORORITIES"},
+  {label: "KIDS AND FAMILIES", value: "KIDS AND FAMILIES"},
+  {label: "MEDICAL EXPENSES", value: "MEDICAL EXPENSES"},
+  {label: "MEMORIALS AND FUNERALS", value: "MEMORIALS AND FUNERALS"},
+  {label: "MILITARY AND VETERANS", value: "MILITARY AND VETERANS"},
+  {label: "POLITICAL CAMPAIGNS", value: "POLITICAL CAMPAIGNS"},
+  {label: "RELIGIOUS CAUSES", value: "RELIGIOUS CAUSES"},
+  {label: "RUNS, WALKS, AND RIDES", value: "RUNS, WALKS, AND RIDES"},
+  {label: "SCHOOLS AND EDUCATION", value: "SCHOOLS AND EDUCATION"},
+  {label: "SPORTS", value: "SPORTS"},
+  {label: "TRIPS AND ADVENTURES", value: "TRIPS AND ADVENTURES"},
+  {label: "WEDDINGS", value: "WEDDINGS"},
+];
+
+export default options;

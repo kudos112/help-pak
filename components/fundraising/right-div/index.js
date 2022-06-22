@@ -1,8 +1,21 @@
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import {Box, Circle, Flex, FormControl, FormErrorMessage, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Tooltip} from "@chakra-ui/react";
+import {
+  Box,
+  Circle,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Tooltip,
+} from "@chakra-ui/react";
 import FileUploader from "~/components/fundamentals/custom-fileuploader/file-upload.component";
 import CustomInput from "~/components/fundamentals/custom-input/custom-input.component";
-
 
 const PaymentMethod = ({index, paymentMethod, handlePaymentMethodsData}) => {
   return (
@@ -10,7 +23,7 @@ const PaymentMethod = ({index, paymentMethod, handlePaymentMethodsData}) => {
       <CustomInput
         title="Bank Name"
         required
-        value={paymentMethod.name}
+        value={paymentMethod.bankName}
         // error={errors.fullAddress}
         onChange={(e) =>
           handlePaymentMethodsData(index, "bankName", e.target.value)
@@ -52,10 +65,9 @@ const RightDiv = ({
   handlePaymentMethodsData,
   removePaymentMethod,
   update = false,
-} ) =>
-{
-   const format = (val) => `Rs.` + val;
-   const parse = (val) => val.replace(/^\$/, "");
+}) => {
+  //  const format = (val) => `Rs.` + val;
+  //  const parse = (val) => val.replace(/^\$/, "");
   return (
     <>
       <CustomInput
@@ -71,7 +83,7 @@ const RightDiv = ({
       {!update && (
         <FormControl
           mb={2}
-          mt={1}
+          mt={-1}
           isRequired
           isInvalid={errors.images || false}
         >
@@ -85,14 +97,19 @@ const RightDiv = ({
             maxFiles={4}
             maxSize={1000000}
             removeFile={handleDeleteImages}
-            onDrop={(acceptedFiles, rejectedFiles) =>
-              onDrop(acceptedFiles, rejectedFiles)
-            }
+            onDrop={(acceptedFiles, rejectedFiles) => {
+              onDrop(acceptedFiles, rejectedFiles);
+            }}
           />
           <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
         </FormControl>
       )}
-      <FormControl mb={3} isRequired={true} isInvalid={errors.amount || false}>
+      <FormControl
+        mb={3}
+        isRequired={true}
+        isDisabled={update}
+        isInvalid={errors.amount || false}
+      >
         <FormLabel color={"customGray"} fontSize={"0.9rem"}>
           {"Required Amount (in rupees)"}
         </FormLabel>
@@ -102,10 +119,11 @@ const RightDiv = ({
             // alert(valueString)
             handleData("amount", valueString);
           }}
-          // value={format(data.amount)}
+          value={data.amount}
           precision={2}
           allowMouseWheel
           min={0}
+          isRequired
           step={1000}
         >
           <NumberInputField />
@@ -118,43 +136,44 @@ const RightDiv = ({
           {errors.amount}
         </FormErrorMessage>
       </FormControl>
-      <FormControl isRequired isInvalid={errors.images || false}>
-        <FormLabel color={"customGray"} fontSize={"0.9rem"}>
-          Payment Methods
-        </FormLabel>
-        {paymentMethods.map((paymentMethod, index) => {
-          return (
-            <PaymentMethod
-              index={index}
-              paymentMethod={paymentMethod}
-              handlePaymentMethodsData={handlePaymentMethodsData}
-            />
-          );
-        })}
+      {!update && (
+        <FormControl isRequired isInvalid={errors.images || false}>
+          <FormLabel color={"customGray"} fontSize={"0.9rem"}>
+            Payment Methods
+          </FormLabel>
+          {paymentMethods.map((paymentMethod, index) => {
+            return (
+              <PaymentMethod
+                index={index}
+                paymentMethod={paymentMethod}
+                handlePaymentMethodsData={handlePaymentMethodsData}
+              />
+            );
+          })}
 
-        <Flex w={"100%"} gap={2} justify={"flex-end"}>
-          <Tooltip label="Remove Doctor">
-            <Box
-              as="button"
-              onClick={removePaymentMethod}
-              isDisabled={paymentMethods.length === 1}
-            >
-              <Circle size="40px" bg="red" color="white">
-                <MinusIcon />
-              </Circle>
-            </Box>
-          </Tooltip>
-          <Tooltip label={"Add Doctor"}>
-            <Box as="button" onClick={addPaymentMethod}>
-              <Circle size="40px" bg="green" color="white">
-                <AddIcon />
-              </Circle>
-            </Box>
-          </Tooltip>
-        </Flex>
-        <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
-      </FormControl>
-      {/* </div> */}
+          <Flex w={"100%"} gap={2} justify={"flex-end"}>
+            <Tooltip label="Remove Doctor">
+              <Box
+                as="button"
+                onClick={removePaymentMethod}
+                isDisabled={paymentMethods.length === 1}
+              >
+                <Circle size="40px" bg="red" color="white">
+                  <MinusIcon />
+                </Circle>
+              </Box>
+            </Tooltip>
+            <Tooltip label={"Add Doctor"}>
+              <Box as="button" onClick={addPaymentMethod}>
+                <Circle size="40px" bg="green" color="white">
+                  <AddIcon />
+                </Circle>
+              </Box>
+            </Tooltip>
+          </Flex>
+          <FormErrorMessage>{errors.images || ""}</FormErrorMessage>
+        </FormControl>
+      )}
     </>
   );
 };

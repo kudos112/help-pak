@@ -73,7 +73,11 @@ const ShowData = ({data, files}) => {
       if (success) {
         setImages(urls);
         // setLoading(false);
-        successNotification("Success", "Images Uploaded Successfully");
+        successNotification(
+          "Success",
+          "Images Uploaded Successfully",
+          "top-right"
+        );
       } else setLoading(false);
     });
   };

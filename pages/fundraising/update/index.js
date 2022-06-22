@@ -1,39 +1,42 @@
-import {Heading, useDisclosure} from "@chakra-ui/react";
+import {Heading} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {connect, useDispatch} from "react-redux";
-import LeftDiv from "~/components/fundraising/left-div";
-import RightDiv from "~/components/fundraising/right-div";
 import CustomButton from "~/components/fundamentals/custom-button/custom-button.component";
 import {
   errorNotification,
   successNotification,
   warningNotification,
 } from "~/components/fundamentals/notification/notification";
-import AuthenticationWrapper from "~/repositories/AuthHoc";
-import {uploadTwoOrMoreImages} from "~/utils/image-uploader/upload-images.util";
-import {
-  validatePropery,
-  verifyPayload,
-} from "~/validations/fundraising.validation";
-import styles from "./request.module.scss";
+import LeftDiv from "~/components/fundraising/left-div";
+import RightDiv from "~/components/fundraising/right-div";
 import {selectUser} from "~/redux/auth/auth.selector";
 import {createFundraising} from "~/redux/fundraising/fundraising.actions";
-import ConfirmationAlert from "~/components/partial-components/confirmation-alert/confirmation-alert.component";
+import AuthenticationWrapper from "~/repositories/AuthHoc";
+import FundraisingRepository from "~/repositories/FundraisingRepository";
+import {
+  validatePropery,
+  verifyUpdatePayload,
+} from "~/validations/fundraising.validation";
+import styles from "./request.module.scss";
 
-const FundraisingRequest = ({currentUser}) => {
-  const {isOpen, onClose, onOpen} = useDisclosure();
+const FundraisingUpdate = ({currentUser}) => {
   const dispatch = useDispatch();
+  const {query = {}, payments = {}} = useRouter();
+  const router = useRouter();
   const [data, setData] = useState({
-    name: "For Orphans",
-    amount: "0.00",
-    reason: "ADOPTION COSTS",
-    description: "xyz",
-    phoneNo: currentUser.phoneNo,
-    email: currentUser.email,
-    city: "Lahore",
-    fullAddress: "LDA Avenue 1",
-    images: "",
+    name: query.name || "",
+    amount: query.amount || "",
+    reason: query.reason || "",
+    description: query.description || "",
+    phoneNo: query.phoneNo || "",
+    email: query.email || "",
+    city: query.city || "",
+    fullAddress: query.fullAddress || "",
+    images: query.images || "",
   });
+
+  console.log("Payment Methods", payments);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -50,13 +53,7 @@ const FundraisingRequest = ({currentUser}) => {
   const [files, setFiles] = useState([]);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [paymentMethods, setPaymentMethods] = useState([
-    {
-      bankName: "Jazzcash",
-      accountName: "Abdul Qadoos",
-      accountNo: "03099091509",
-    },
-  ]);
+  const [paymentMethods, setPaymentMethods] = useState(query.paymentMethods);
 
   const addPaymentMethod = (e) => {
     e.preventDefault();
@@ -129,58 +126,52 @@ const FundraisingRequest = ({currentUser}) => {
 
   const payload = {
     reason: data.reason,
-    name: data.name,
+    // name: data.name,
     description: data.description,
     amount: data.amount,
     city: data.city,
     phoneNo: data.phoneNo,
     email: data.email,
     fullAddress: data.fullAddress,
-    paymentMethods,
+    // paymentMethods,
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (data.amount == 0) {
       errorNotification("Error", "Please add amount for fundraising.");
       return;
     }
-    let errors = verifyPayload(payload);
+    let errors = verifyUpdatePayload(payload);
     if (errors) return;
-    if (files.length <= 0) {
-      errorNotification("Error", "Please upload at least one image");
-      return;
-    }
-    onOpen();
-  };
 
-  const onConfirmation = () => {
     setLoading(true);
-
-    if (files.length === images.length) {
-      let newPayload = {...payload, images: images};
-      dispatch(createFundraising(newPayload, () => setLoading(false)));
-      return;
-    }
-    uploadTwoOrMoreImages(files, (success, urls) => {
-      if (success) {
-        setImages(urls);
+    try {
+      const request = await FundraisingRepository.updateFundraising(
+        query.id,
+        payload
+      );
+      if (request.status == 200) {
+        successNotification("Success", "Fundraising Updated Successfully");
         setLoading(false);
-        successNotification("Success", "Images Uploaded Successfully");
-      } else setLoading(false);
-    });
+        router.back();
+      }
+    } catch (err) {
+      setLoading(false);
+      errorNotification("Failed", err);
+    }
+
+    // uploadTwoOrMoreImages(files, (success, urls) => {
+    //   if (success) {
+    //     setImages(urls);
+    //     setLoading(false);
+    //     successNotification("Success", "Images Uploaded Successfully");
+    //   } else setLoading(false);
+    // });
   };
 
   return (
     <div className={styles.page}>
-      <ConfirmationAlert
-        title="Confirmation"
-        description={`Images and Payment Methods will not updated later, So please add them carefully.\n\nDo you want to upload now?`}
-        onOpen={onOpen}
-        isOpen={isOpen}
-        onClose={onClose}
-        onConfirmation={onConfirmation}
-      />
       <Heading m={4} className={styles.heading}>
         {"Raise Funds for deservings"}
       </Heading>
@@ -191,10 +182,16 @@ const FundraisingRequest = ({currentUser}) => {
           id="donationForm"
         >
           <div className={styles.leftDiv}>
-            <LeftDiv data={data} handleData={handleData} errors={errors} />
+            <LeftDiv
+              data={data}
+              handleData={handleData}
+              errors={errors}
+              update
+            />
           </div>
           <div className={styles.rightDiv}>
             <RightDiv
+              update
               data={data}
               handleData={handleData}
               errors={errors}
@@ -210,7 +207,7 @@ const FundraisingRequest = ({currentUser}) => {
         <div>
           <CustomButton
             style={{paddingLeft: 100, paddingRight: 100}}
-            title="Request for fundraising"
+            title="update fundraise"
             type="submit"
             form="donationForm"
             loading={loading}
@@ -228,5 +225,5 @@ const mapStateToProps = (state) => {
 };
 
 export default AuthenticationWrapper(
-  connect(mapStateToProps)(FundraisingRequest)
+  connect(mapStateToProps)(FundraisingUpdate)
 );
