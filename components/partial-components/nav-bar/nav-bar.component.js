@@ -394,8 +394,20 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Ngo",
+    label: "NGO",
     href: "#",
+    children: [
+      {
+        label: "NGOs",
+        subLabel: "NGOs registered with out platform",
+        href: "/ngo",
+      },
+      {
+        label: "Publish Your NGO",
+        subLabel: "Create online webpage for NGO",
+        href: "/ngo/request",
+      },
+    ],
   },
   {
     label: "Messages",

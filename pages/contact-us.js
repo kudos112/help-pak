@@ -31,7 +31,7 @@ import {
   errorNotification,
   successNotification,
 } from "~/components/fundamentals/notification/notification";
-import SmallFooter from "~/components/partial-components/small-footer";
+import {socialLinks} from "~/links";
 import emailRepository from "~/repositories/emailRepository";
 
 export default function contact() {
@@ -139,6 +139,8 @@ export default function contact() {
                         size="lg"
                         isRound={true}
                         _hover={{bg: "#6B7280", color: "white"}}
+                        href={socialLinks.facebook}
+                        target="_blank"
                         icon={<MdFacebook size="28px" />}
                       />
                       <IconButton
@@ -146,6 +148,8 @@ export default function contact() {
                         variant="ghost"
                         size="lg"
                         isRound={true}
+                        href={socialLinks.twitter}
+                        target="_blank"
                         _hover={{bg: "#6B7280", color: "white"}}
                         icon={<AiFillTwitterCircle size="28px" />}
                       />
@@ -154,6 +158,8 @@ export default function contact() {
                         variant="ghost"
                         size="lg"
                         isRound={true}
+                        href={socialLinks.instagram}
+                        target="_blank"
                         _hover={{bg: "#6B7280", color: "white"}}
                         icon={<AiFillInstagram size="28px" />}
                       />
@@ -237,7 +243,6 @@ export default function contact() {
           </Box>
         </Flex>
       </Container>
-      <SmallFooter />
     </>
   );
 }

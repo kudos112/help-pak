@@ -1,22 +1,18 @@
-import {SearchIcon} from "@chakra-ui/icons";
 import {
   Button,
   Flex,
   FormControl,
   FormLabel,
   Heading,
-  IconButton,
   Input,
-  InputGroup,
 } from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import Select from "react-select";
-import {getFundraisings} from "~/redux/fundraising/fundraising.actions";
-import conditions from "~/utils/data/itemCondition.options";
-import reasons from "~/utils/data/fundraisingsTypes.options";
-import {cities} from "~/utils/data/cities";
 import CustomSelect from "~/components/fundamentals/custom-select";
+import {getFundraisings} from "~/redux/fundraising/fundraising.actions";
+import {cities} from "~/utils/data/cities";
+import reasons from "~/utils/data/fundraisingsTypes.options";
+import conditions from "~/utils/data/itemCondition.options";
 
 const FilterFundraising = ({handleLoading}) => {
   const dispatch = useDispatch();
@@ -87,7 +83,7 @@ const FilterFundraising = ({handleLoading}) => {
       />
       <CustomSelect
         label="Filter By Reason"
-        options={cities}
+        options={reasons}
         value={filter.reason}
         onChange={(item) => {
           handleData("reason", item?.value || "");
@@ -96,7 +92,7 @@ const FilterFundraising = ({handleLoading}) => {
         placeholder="type or select reason"
         instanceId="123"
       />
-      <CustomSelect
+      {/* <CustomSelect
         label="Filter By Payment Method"
         options={conditions}
         value={filter.bankName}
@@ -105,7 +101,7 @@ const FilterFundraising = ({handleLoading}) => {
         }}
         placeholder="type or select bank name"
         instanceId="123"
-      />
+      /> */}
     </Flex>
   );
 };

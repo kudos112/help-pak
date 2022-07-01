@@ -1,0 +1,49 @@
+@import "/public/scss/variables";
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5;
+
+  .inputContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    .title {
+      color: $gray;
+      font-size: 0.8rem;
+      left: 0;
+      margin: 0px;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.8rem;
+      left: 0;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .input {
+      width: 100%;
+      height: 2.5rem;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding-left: 12px;
+      border: 2px solid #d3d3d3;
+      outline: none;
+      color: $gray;
+      font-size: 1rem;
+      &:focus {
+        border: 2px solid $green;
+      }
+    }
+  }
+}

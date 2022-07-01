@@ -73,8 +73,6 @@ const FundraisingDetailedPage = ({fundraising, currentUser}) => {
     else return [];
   };
 
-  console.log(fundraising);
-
   const handleLoading = () => setLoading(false);
   const handleActionLoading = () => setActionLoading(false);
 

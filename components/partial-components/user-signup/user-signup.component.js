@@ -12,6 +12,7 @@ import {uploadImage} from "~/utils/image-uploader/upload-images.util";
 import convertImageToBase64 from "~/utils/imageToBase64/imageToBase64";
 import {useDispatch} from "react-redux";
 import {userSignUpRequest} from "~/redux/auth/auth.actions";
+import CustomPhoneNoInput from "~/components/fundamentals/custom-phoneNo-input/custom-phoneNo-input.component";
 
 const UserSignUp = ({userType = "INDIVIDUAL"}) => {
   const [loading, setLoading] = useState(false);
@@ -126,10 +127,11 @@ const UserSignUp = ({userType = "INDIVIDUAL"}) => {
               onDrop(acceptedFiles, rejectedFiles, "backSideImage")
             }
           />
-          <CustomInput
+          <CustomPhoneNoInput
             title="Enter Your PhoneNo"
             value={data.phoneNo}
             placeholder="phone number"
+            type="number"
             required
             onChange={(e) => handleData("phoneNo", e.target.value)}
           />

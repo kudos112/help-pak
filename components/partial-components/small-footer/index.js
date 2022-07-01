@@ -8,6 +8,7 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import {socialLinks} from "~/links";
 import {FaInstagram, FaTwitter, FaFacebook} from "react-icons/fa";
 
 const SocialButton = ({children, label, href}) => {
@@ -20,6 +21,7 @@ const SocialButton = ({children, label, href}) => {
       cursor={"pointer"}
       as={"a"}
       href={href}
+      target="_blank"
       display={"inline-flex"}
       alignItems={"center"}
       justifyContent={"center"}
@@ -55,13 +57,13 @@ export default function SmallWithSocial() {
         <Stack direction={"row"} spacing={6}>
           <Link href={"/contact-us"}>Write About Us</Link>
           <Text>Social Links</Text>
-          <SocialButton label={"Facebook"} href={"#"}>
+          <SocialButton label={"Facebook"} href={socialLinks.facebook}>
             <FaFacebook />
           </SocialButton>
-          <SocialButton label={"Twitter"} href={"#"}>
+          <SocialButton label={"Twitter"} href={socialLinks.twitter}>
             <FaTwitter />
           </SocialButton>
-          <SocialButton label={"Instagram"} href={"#"}>
+          <SocialButton label={"Instagram"} href={socialLinks.instagram}>
             <FaInstagram />
           </SocialButton>
         </Stack>

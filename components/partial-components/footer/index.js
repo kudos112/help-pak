@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 
 import {FaFacebook, FaTwitter, FaInstagram} from "react-icons/fa";
+import {socialLinks} from "~/links";
 
 const Logo = (props) => {
   return (
@@ -46,6 +47,7 @@ const SocialButton = ({children, label, href}) => {
       cursor={"pointer"}
       as={"a"}
       href={href}
+      target="_blank"
       display={"inline-flex"}
       alignItems={"center"}
       color="customGray"
@@ -146,13 +148,13 @@ export default function LargeWithLogoLeft() {
         >
           <Text>© Help Pakistan. All rights reserved</Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton label={"Twitter"} href={"#"}>
+            <SocialButton label={"Facebook"} href={socialLinks.facebook}>
               <FaFacebook color="white" />
             </SocialButton>
-            <SocialButton label={"YouTube"} href={"#"}>
+            <SocialButton label={"Twitter"} href={socialLinks.twitter}>
               <FaTwitter color="white" />
             </SocialButton>
-            <SocialButton label={"Instagram"} href={"#"}>
+            <SocialButton label={"Instagram"} href={socialLinks.instagram}>
               <FaInstagram color="white" />
             </SocialButton>
           </Stack>

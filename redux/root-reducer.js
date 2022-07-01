@@ -1,5 +1,6 @@
 import {combineReducers} from "redux";
 import user from "./user/user.reducer";
+import ngo from "./ngo/ngo.reducer";
 import auth from "./auth/auth.reducer";
 import medicalAssistance from "./medical-service/medical-service.reducer";
 import medicalCamp from "./medical-camp/medical-camp.reducer";
@@ -10,6 +11,7 @@ import chat from "./chat/chat.reducer";
 const rootReducer = combineReducers({
   user,
   auth,
+  ngo,
   medicalAssistance,
   medicalCamp,
   donationItem,

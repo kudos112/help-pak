@@ -61,6 +61,22 @@ export const uploadOneImage = async (img, cb) => {
   }
 };
 
+export const uploadSingleImage = (file, callback) => {
+  convertImageToBase64(file, (result, success) => {
+    if (success) {
+      uploadImage(result, (url, success) => {
+        if (success) {
+          callback(url);
+        } else
+          errorNotification(
+            "error",
+            "Error occured while uploading founder image\nTry again"
+          );
+      });
+    }
+  });
+};
+
 export const uploadTwoOrMoreImages = (files, callback) => {
   let urls = [];
   try {

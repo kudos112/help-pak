@@ -36,6 +36,7 @@
       width: 100%;
       .dropzone {
         flex-grow: 4;
+
         .placeholder {
           display: flex;
           justify-content: space-between;
@@ -79,6 +80,55 @@
             border: 1px solid $green;
             background-color: $green;
           }
+
+        }
+
+        .disabled {
+display: flex;
+          justify-content: space-between;
+          // background-color: white;
+          align-items: center;
+          width: 100%;
+          min-height: 2.5rem;
+          margin-top: 2px;
+          margin-bottom: 10px;
+          border-radius: 5px;
+          box-sizing: border-box;
+          padding-left: 12px;
+          padding-right: 12px;
+          outline: none;
+          color: $gray;
+          border: 1px solid #d3d3d3;
+          font-size: 1rem;
+
+          .truncated {
+            // overflow: hidden;
+            display: block;
+            width: 100%;
+            word-break: break-all;
+            // white-space: nowrap;
+            // text-overflow: ellipsis;
+
+            @include respond(medium) {
+             width: 85%;
+            }
+
+            @include respond(small) {
+              width: 85%;
+            }
+          }
+
+          &:focus {
+            // border: 1px solid $green;
+            border: none
+          }
+          &:hover {
+            // color: white;
+            cursor: no-drop;
+            // border: 1px solid $green;
+            // background-color: $green;
+          }
+
         }
       }
       .deleteIcon {

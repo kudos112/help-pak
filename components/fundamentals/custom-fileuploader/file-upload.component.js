@@ -10,6 +10,7 @@ const FileUploader = ({
   error,
   image,
   removeFile,
+  disabled,
   ...props
 }) => {
   return (
@@ -18,12 +19,16 @@ const FileUploader = ({
         <p className={styles.title}>{title}</p>
         <div className={styles.dropzoneWrapper}>
           <div className={styles.dropzone}>
-            <Dropzone {...props}>
+            <Dropzone {...props} disabled={disabled}>
               {({getRootProps, getInputProps}) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className={styles.placeholder}>
+                    <div
+                      className={
+                        disabled ? styles.disabled : styles.placeholder
+                      }
+                    >
                       <p className={styles.truncated}>{placeholder}</p>
                       {image ? (
                         <svg

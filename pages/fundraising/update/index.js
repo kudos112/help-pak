@@ -36,7 +36,6 @@ const FundraisingUpdate = ({currentUser}) => {
     images: query.images || "",
   });
 
-  console.log("Payment Methods", payments);
 
   const [errors, setErrors] = useState({
     name: "",
