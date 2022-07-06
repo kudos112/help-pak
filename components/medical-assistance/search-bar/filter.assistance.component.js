@@ -15,38 +15,12 @@ import {getMedicalAssistances} from "~/redux/medical-service/medical-service.act
 import {cities} from "~/utils/data/cities";
 import options from "~/utils/data/serviceType.options";
 
-const FilterMedicalAssistance = ({handleLoading}) => {
-  const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState({
-    name: "",
-    city: "",
-    serviceType: "",
-  });
-
-  const resetFilter = () => {
-    setFilter({
-      name: "",
-      city: "",
-      serviceType: "",
-    });
-  };
-
-  const handleData = (name, value) => {
-    setFilter({...filter, [name]: value});
-  };
-
-  useEffect(() => {
-    dispatch(
-      getMedicalAssistances(
-        handleLoading,
-        filter.name,
-        filter.city,
-        filter.serviceType
-      )
-    );
-  }, [filter]);
-
+const FilterMedicalAssistance = ({
+  handleLoading,
+  resetFilter,
+  filter,
+  handleData,
+}) => {
   return (
     <Flex pl={5} pr={5} m={3} flexDirection="column">
       <Heading size={"md"} mb={3} color="customGray">

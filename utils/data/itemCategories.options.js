@@ -6,6 +6,7 @@ const options = [
     value: "Stationary",
   },
   {label: "Vehicles", value: "Vehicles"},
+  {label: "Toys", value: "Toys"},
   {label: "Furniture", value: "Furniture"},
   {label: "Home Appliances", value: "Home Appliances"},
   {label: "Tools", value: "Tools"},

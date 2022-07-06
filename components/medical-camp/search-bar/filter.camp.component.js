@@ -8,43 +8,16 @@ import {
   Input,
   InputGroup,
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
 import Select from "react-select";
-import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
-import {cities} from "~/utils/data/cities";
 import options from "~/utils/data/campTypes.options";
+import {cities} from "~/utils/data/cities";
 
-const FilterMedicalCamp = ({handleLoading}) => {
-  const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState({
-    name: "",
-    city: "",
-    campType: "",
-  });
-  // const [name, setName] = useState("")
-  // const [city, setCity] = useState("")
-  // const [campType, setCampType] = useState("");
-
-  const resetFilter = () => {
-    setFilter({
-      name: "",
-      city: "",
-      campType: "",
-    });
-  };
-
-  const handleData = (name, value) => {
-    setFilter({...filter, [name]: value});
-  };
-
-  useEffect(() => {
-    dispatch(
-      getMedicalCamps(handleLoading, filter.name, filter.city, filter.campType)
-    );
-  }, [filter]);
-
+const FilterMedicalCamp = ({
+  handleLoading,
+  filter,
+  resetFilter,
+  handleData,
+}) => {
   return (
     <Flex pl={5} pr={5} m={3} flexDirection="column">
       <Heading size={"md"} mb={3} color="customGray">

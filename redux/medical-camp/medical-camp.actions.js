@@ -4,12 +4,19 @@ export function createMedicalCamp(payload, callback) {
   return {type: actionTypes.CREATE_MEDICAL_CAMP, payload, callback};
 }
 
-export function getMedicalCamps(callback, name = "", city = "", campType = "") {
+export function getMedicalCamps(
+  callback,
+  name = "",
+  city = "",
+  campType = "",
+  page = 1
+) {
   return {
     type: actionTypes.GET_MEDICAL_CAMPS_REQUEST,
     name,
     city,
     campType,
+    page,
     callback,
   };
 }

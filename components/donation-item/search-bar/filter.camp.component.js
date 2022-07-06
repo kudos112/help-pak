@@ -16,44 +16,12 @@ import conditions from "~/utils/data/itemCondition.options";
 import {cities} from "~/utils/data/cities";
 import options from "~/utils/data/itemCategories.options";
 
-const FilterDonationItem = ({handleLoading}) => {
-  const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState({
-    name: "",
-    city: "",
-    category: "",
-    condition: "",
-  });
-  // const [name, setName] = useState("")
-  // const [category, setCity] = useState("")
-  // const [condition, setCampType] = useState("");
-
-  const resetFilter = () => {
-    setFilter({
-      name: "",
-      city: "",
-      category: "",
-      condition: "",
-    });
-  };
-
-  const handleData = (name, value) => {
-    setFilter({...filter, [name]: value});
-  };
-
-  useEffect(() => {
-    dispatch(
-      getDonationItems(
-        handleLoading,
-        filter.name,
-        filter.city,
-        filter.category,
-        filter.condition
-      )
-    );
-  }, [filter]);
-
+const FilterDonationItem = ({
+  handleLoading,
+  resetFilter,
+  filter,
+  handleData,
+}) => {
   return (
     <Flex pl={5} pr={5} m={3} flexDirection="column">
       <Heading size={"md"} mb={3} color="customGray">

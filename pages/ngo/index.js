@@ -1,21 +1,51 @@
+import {ArrowLeftIcon, ArrowRightIcon} from "@chakra-ui/icons";
 import {Flex, Heading, useMediaQuery} from "@chakra-ui/react";
-import {useState} from "react";
-import {connect} from "react-redux";
+import {useEffect, useState} from "react";
+import ReactPaginate from "react-paginate";
+import {connect, useDispatch} from "react-redux";
 import Cards from "~/components/ngo/ngo-cards";
 import FilterFundraising from "~/components/ngo/search-bar/filter.component";
-import {selectFundraisings} from "~/redux/fundraising/fundraising.selector";
+import {getNgos} from "~/redux/ngo/ngo.actions";
 import {selectNgos} from "~/redux/ngo/ngo.selector";
-// import {getMedicalAssistances} from "~/redux/fundraising/fundraising.actions";
 import styles from "./ngo.module.scss";
 
 const Fundraising = ({ngos}) => {
   const [loading, setLoading] = useState(true);
-  // const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
 
   const handleLoading = () => {
     setLoading(false);
   };
+
+  const dispatch = useDispatch();
+
+  const [filter, setFilter] = useState({
+    name: "",
+    city: "",
+    bankName: "",
+  });
+
+  const resetFilter = () => {
+    setFilter({
+      name: "",
+      city: "",
+      bankName: "",
+    });
+  };
+
+  const handleData = (name, value) => {
+    setFilter({...filter, [name]: value});
+  };
+
+  const handlePageChange = (event) => {
+    setPage(event.selected);
+  };
+
+  useEffect(() => {
+    dispatch(getNgos(handleLoading, filter.name, filter.city, page + 1));
+  }, [filter, page]);
 
   return (
     <>
@@ -26,7 +56,12 @@ const Fundraising = ({ngos}) => {
 
         <div className={styles.main}>
           <div className={styles.filter}>
-            <FilterFundraising handleLoading={handleLoading} />
+            <FilterFundraising
+              handleLoading={handleLoading}
+              filter={filter}
+              resetFilter={resetFilter}
+              handleData={handleData}
+            />
           </div>
 
           <div className={styles.cards}>
@@ -46,6 +81,28 @@ const Fundraising = ({ngos}) => {
                     direction="column"
                   >
                     <Cards ngos={ngos} />
+                    <Flex justify={"end"} m={4}>
+                      <ReactPaginate
+                        previousLabel={<ArrowLeftIcon />}
+                        nextLabel={<ArrowRightIcon />}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link previous"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        pageCount={ngos.totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        forcePage={page}
+                      />
+                    </Flex>
                   </Flex>
                 )}
               </div>

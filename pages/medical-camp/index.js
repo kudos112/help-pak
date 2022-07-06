@@ -1,27 +1,59 @@
-import {Flex, Heading} from "@chakra-ui/react";
+import {ArrowLeftIcon, ArrowRightIcon} from "@chakra-ui/icons";
+import {Flex, Heading, useMediaQuery} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
+import ReactPaginate from "react-paginate";
 import {connect, useDispatch} from "react-redux";
-import {useMediaQuery} from "@chakra-ui/react";
 import Cards from "~/components/medical-camp/medical-camp-cards";
 import FilterMedicalCamp from "~/components/medical-camp/search-bar/filter.camp.component";
-// import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
-import styles from "./medical-camp.module.scss";
+import {getMedicalCamps} from "~/redux/medical-camp/medical-camp.actions";
 import {selectMedicalCamps} from "~/redux/medical-camp/medical-camp.selector";
-import SmallFooter from "~/components/partial-components/small-footer";
+import styles from "./medical-camp.module.scss";
 
 const MedicalCamp = ({medicalCamps}) => {
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
   const dispatch = useDispatch();
+
+  const [filter, setFilter] = useState({
+    name: "",
+    city: "",
+    campType: "",
+  });
+
+  const resetFilter = () => {
+    setFilter({
+      name: "",
+      city: "",
+      campType: "",
+    });
+  };
+
+  const handleData = (name, value) => {
+    setFilter({...filter, [name]: value});
+  };
+
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
 
   const handleLoading = () => {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   // dispatch(getMedicalCamps(handleLoading));
-  // }, []);
+  const handlePageChange = (event) => {
+    setPage(event.selected);
+  };
+
+  useEffect(() => {
+    dispatch(
+      getMedicalCamps(
+        handleLoading,
+        filter.name,
+        filter.city,
+        filter.campType,
+        page + 1
+      )
+    );
+  }, [filter, page]);
+
   return (
     <>
       <Flex direction="column">
@@ -31,7 +63,12 @@ const MedicalCamp = ({medicalCamps}) => {
         {/* {JSON.stringify(medicalCamps)} */}
         <div className={styles.main}>
           <div className={styles.filter}>
-            <FilterMedicalCamp handleLoading={handleLoading} />
+            <FilterMedicalCamp
+              handleLoading={handleLoading}
+              filter={filter}
+              handleData={handleData}
+              resetFilter={resetFilter}
+            />
           </div>
 
           <div className={styles.cards}>
@@ -46,13 +83,35 @@ const MedicalCamp = ({medicalCamps}) => {
                     </Heading>
                   </Flex>
                 )}
-                {medicalCamps?.data && (
+                {medicalCamps?.data.length > 0 && (
                   <Flex
                     ml={mediumSized ? 8 : 8}
                     mr={mediumSized ? 8 : 8}
                     direction="column"
                   >
                     <Cards medicalCamps={medicalCamps} />
+                    <Flex justify={"end"} m={4}>
+                      <ReactPaginate
+                        previousLabel={<ArrowLeftIcon />}
+                        nextLabel={<ArrowRightIcon />}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link previous"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        pageCount={medicalCamps.totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        forcePage={page}
+                      />
+                    </Flex>
                   </Flex>
                 )}
               </div>

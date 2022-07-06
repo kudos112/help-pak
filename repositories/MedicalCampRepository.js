@@ -47,10 +47,10 @@ class MedicalServiceRepository {
     }
   }
 
-  async getMedicalCamps(name, city, campType) {
+  async getMedicalCamps(name, city, campType, page) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.get}?enabled=true&deleted=false&name=${name}&city=${city}&campType=${campType}`
+        `${baseUrl}/${routes.get}?enabled=true&deleted=false&name=${name}&city=${city}&campType=${campType}&page=${page}`
       );
       // if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;

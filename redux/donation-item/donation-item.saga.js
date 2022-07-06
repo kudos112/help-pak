@@ -39,7 +39,8 @@ function* getDonationItemsSaga(action) {
       action.name,
       action.city,
       action.category,
-      action.condition
+      action.condition,
+      action.page
     );
     yield put(getDonationItemsSuccess(data));
     if (action && action.callback) action.callback();

@@ -59,6 +59,10 @@ const DonationItem = ({
       setCurrentView(3);
     } else if (value.toLowerCase() === "medical services") {
       setCurrentView(4);
+    } else if (value.toLowerCase() === "fundraisings") {
+      setCurrentView(5);
+    } else if (value.toLowerCase() === "ngos") {
+      setCurrentView(6);
     }
   };
 
@@ -144,6 +148,58 @@ const DonationItem = ({
             )}
           </div>
         );
+      case 5:
+        return (
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(usersMedicalAssistance == null ||
+                  usersMedicalAssistance.data.length == 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">No services Listed yet</Heading>
+                  </Flex>
+                )}
+                {usersMedicalAssistance?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <Cards medicalAssistances={usersMedicalAssistance} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      case 6:
+        return (
+          <div className={styles.cards}>
+            {loading ? (
+              <Flex m={8}>loading...</Flex>
+            ) : (
+              <div>
+                {(usersMedicalAssistance == null ||
+                  usersMedicalAssistance.data.length == 0) && (
+                  <Flex m={3} h="100%" align="center" justify={"center"}>
+                    <Heading color="gray.400">No services Listed yet</Heading>
+                  </Flex>
+                )}
+                {usersMedicalAssistance?.data && (
+                  <Flex
+                    ml={mediumSized ? 8 : 8}
+                    mr={mediumSized ? 8 : 8}
+                    direction="column"
+                  >
+                    <Cards medicalAssistances={usersMedicalAssistance} />
+                  </Flex>
+                )}
+              </div>
+            )}
+          </div>
+        );
       default:
         return <div>Wrong Option</div>;
     }
@@ -158,15 +214,21 @@ const DonationItem = ({
             <Flex direction={"column"} gap={2}>
               <Heading color={"customGray"}>{user?.name}</Heading>
               <Box>
-                <Kbd>{user?.userType}</Kbd>
+                <Kbd color="customGray" _hover={{color: "customGreen"}}>
+                  {user?.userType}
+                </Kbd>
               </Box>
               <HStack fontSize={15} color="customGray">
-                <EmailIcon />
-                <a href={`mailto:${user?.email}`}>{user?.email}</a>
+                <a href={`mailto:${user?.email}`}>
+                  <EmailIcon mr="2" />
+                  {user?.email}
+                </a>
               </HStack>
               <HStack fontSize={15} color="customGray">
-                <PhoneIcon />
-                <a href={`tel:${user?.phoneNo}`}>{user?.phoneNo}</a>
+                <a href={`tel:${user?.phoneNo}`}>
+                  <PhoneIcon mr="2" />
+                  {user?.phoneNo}
+                </a>
               </HStack>
             </Flex>
           </Wrap>

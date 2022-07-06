@@ -27,6 +27,11 @@
       height: auto;
       overflow-y: none;
     }
+    .paginationBar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
   }
 }
 

@@ -1,6 +1,26 @@
 @import "/public/scss/variables";
 @import "/public/scss/mixins";
 
+.page-item.active .page-link {
+    color: white !important;
+    background-color: $green !important;
+    border: 1px solid $green,
+  }
+.page-item.disabled .page-link {
+    color: lightgray !important;
+  }
+.page-item .page-link{
+    color: $gray !important;
+}
+
+.page-item .page-link .previous{
+    color: $green !important;
+}
+
+a:hover{
+  color: $green !important;
+}
+
 body {
   // @font-face {
   //   font-family: firstfont;
@@ -15,6 +35,7 @@ body {
     color: inherit;
     text-decoration: none;
   }
+  
   // /* width */
   // ::-webkit-scrollbar {
   //   width: 10px;

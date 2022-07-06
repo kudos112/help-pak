@@ -38,7 +38,8 @@ function* getMedicalAssistancesSaga(action) {
       MedicalAssistanceService.getMedicalAssistances,
       action.name,
       action.city,
-      action.serviceType
+      action.serviceType,
+      action.page
     );
     yield put(getMedicalAssistancesSuccess(data));
     if (action && action.callback) action.callback();

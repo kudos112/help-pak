@@ -9,6 +9,7 @@ export function getNgos(
   name = "",
   city = "",
   reason = "",
+  page = 1,
   bankName = ""
 ) {
   return {
@@ -17,6 +18,7 @@ export function getNgos(
     city,
     reason,
     bankName,
+    page,
     callback,
   };
 }

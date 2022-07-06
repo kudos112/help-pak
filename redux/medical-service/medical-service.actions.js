@@ -8,13 +8,15 @@ export function getMedicalAssistances(
   callback,
   name = "",
   city = "",
-  serviceType = ""
+  serviceType = "",
+  page = 1
 ) {
   return {
     type: actionTypes.GET_MEDICAL_ASSISTANCES_REQUEST,
     name,
     city,
     serviceType,
+    page,
     callback,
   };
 }

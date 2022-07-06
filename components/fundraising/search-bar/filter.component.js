@@ -14,35 +14,12 @@ import {cities} from "~/utils/data/cities";
 import reasons from "~/utils/data/fundraisingsTypes.options";
 import conditions from "~/utils/data/itemCondition.options";
 
-const FilterFundraising = ({handleLoading}) => {
-  const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState({
-    name: "",
-    city: "",
-    reason: "",
-    bankName: "",
-  });
-
-  const resetFilter = () => {
-    setFilter({
-      name: "",
-      city: "",
-      reason: "",
-      bankName: "",
-    });
-  };
-
-  const handleData = (name, value) => {
-    setFilter({...filter, [name]: value});
-  };
-
-  useEffect(() => {
-    dispatch(
-      getFundraisings(handleLoading, filter.name, filter.city, filter.reason)
-    );
-  }, [filter]);
-
+const FilterFundraising = ({
+  handleLoading,
+  resetFilter,
+  handleData,
+  filter,
+}) => {
   return (
     <Flex pl={5} pr={5} m={3} flexDirection="column">
       <Heading size={"md"} mb={3} color="customGray">

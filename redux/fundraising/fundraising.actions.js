@@ -9,7 +9,8 @@ export function getFundraisings(
   name = "",
   city = "",
   reason = "",
-  bankName = ""
+  bankName = "",
+  page = 1
 ) {
   return {
     type: actionTypes.GET_FUNDRAISINGS_REQUEST,
@@ -17,6 +18,7 @@ export function getFundraisings(
     city,
     reason,
     bankName,
+    page,
     callback,
   };
 }

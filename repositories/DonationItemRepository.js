@@ -69,10 +69,10 @@ class DonationRepository {
     }
   }
 
-  async getDonationItems(name, city, category, condition) {
+  async getDonationItems(name, city, category, condition, page) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.get}?enabled=true&deleted=false&name=${name}&city=${city}&category=${category}&condition=${condition}`
+        `${baseUrl}/${routes.get}?enabled=true&deleted=false&name=${name}&city=${city}&category=${category}&condition=${condition}&page=${page}`
       );
       // if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;

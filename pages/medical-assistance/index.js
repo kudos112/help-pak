@@ -1,25 +1,58 @@
+import {ArrowLeftIcon, ArrowRightIcon} from "@chakra-ui/icons";
 import {Flex, Heading, useMediaQuery} from "@chakra-ui/react";
-import {useState} from "react";
-import {connect} from "react-redux";
+import {useEffect, useState} from "react";
+import ReactPaginate from "react-paginate";
+import {connect, useDispatch} from "react-redux";
 import Cards from "~/components/medical-assistance/medical-assistance-cards";
 import FilterMedicalAssistance from "~/components/medical-assistance/search-bar/filter.assistance.component";
+import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
 import {selectMedicalAssistances} from "~/redux/medical-service/medical-service.selector";
-// import {getMedicalAssistances} from "~/redux/medical-service/medical-service.actions";
 import styles from "./medical-assistance.module.scss";
 
 const MedicalAssistance = ({medicalAssistances}) => {
   const [loading, setLoading] = useState(true);
-  // const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
+  const handlePageChange = (event) => {
+    setPage(event.selected);
+  };
+
+  const dispatch = useDispatch();
+
+  const [filter, setFilter] = useState({
+    name: "",
+    city: "",
+    serviceType: "",
+  });
+
+  const resetFilter = () => {
+    setFilter({
+      name: "",
+      city: "",
+      serviceType: "",
+    });
+  };
+
+  const handleData = (name, value) => {
+    setFilter({...filter, [name]: value});
+  };
+
+  useEffect(() => {
+    dispatch(
+      getMedicalAssistances(
+        handleLoading,
+        filter.name,
+        filter.city,
+        filter.serviceType,
+        page + 1
+      )
+    );
+  }, [filter, page]);
 
   const handleLoading = () => {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   dispatch(getMedicalAssistances(handleLoading));
-  // }, []);
   return (
     <>
       <Flex direction="column">
@@ -29,7 +62,12 @@ const MedicalAssistance = ({medicalAssistances}) => {
 
         <div className={styles.main}>
           <div className={styles.filter}>
-            <FilterMedicalAssistance handleLoading={handleLoading} />
+            <FilterMedicalAssistance
+              handleLoading={handleLoading}
+              filter={filter}
+              handleData={handleData}
+              resetFilter={resetFilter}
+            />
           </div>
 
           <div className={styles.cards}>
@@ -43,13 +81,35 @@ const MedicalAssistance = ({medicalAssistances}) => {
                     <Heading color="gray.400">No services Listed yet</Heading>
                   </Flex>
                 )}
-                {medicalAssistances?.data && (
+                {medicalAssistances?.data.length > 0 && (
                   <Flex
                     ml={mediumSized ? 8 : 8}
                     mr={mediumSized ? 8 : 8}
                     direction="column"
                   >
                     <Cards medicalAssistances={medicalAssistances} />
+                    <Flex justify={"end"} m={4}>
+                      <ReactPaginate
+                        previousLabel={<ArrowLeftIcon />}
+                        nextLabel={<ArrowRightIcon />}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link previous"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        pageCount={medicalAssistances.totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        forcePage={page}
+                      />
+                    </Flex>
                   </Flex>
                 )}
               </div>

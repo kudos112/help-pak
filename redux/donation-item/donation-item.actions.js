@@ -9,7 +9,8 @@ export function getDonationItems(
   name = "",
   city = "",
   category = "",
-  condition = ""
+  condition = "",
+  page = 1
 ) {
   return {
     type: actionTypes.GET_DONATION_ITEMS_REQUEST,
@@ -17,6 +18,7 @@ export function getDonationItems(
     city,
     category,
     condition,
+    page,
     callback,
   };
 }

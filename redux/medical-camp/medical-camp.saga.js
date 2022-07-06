@@ -37,7 +37,8 @@ function* getMedicalCampsSaga(action) {
       MedicalCampService.getMedicalCamps,
       action.name,
       action.city,
-      action.campType
+      action.campType,
+      action.page
     );
     yield put(getMedicalCampsSuccess(data));
     if (action && action.callback) action.callback();

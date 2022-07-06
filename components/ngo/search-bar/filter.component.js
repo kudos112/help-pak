@@ -15,31 +15,12 @@ import {cities} from "~/utils/data/cities";
 import reasons from "~/utils/data/fundraisingsTypes.options";
 import conditions from "~/utils/data/itemCondition.options";
 
-const FilterFundraising = ({handleLoading}) => {
-  const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState({
-    name: "",
-    city: "",
-    bankName: "",
-  });
-
-  const resetFilter = () => {
-    setFilter({
-      name: "",
-      city: "",
-      bankName: "",
-    });
-  };
-
-  const handleData = (name, value) => {
-    setFilter({...filter, [name]: value});
-  };
-
-  useEffect(() => {
-    dispatch(getNgos(handleLoading, filter.name, filter.city));
-  }, [filter]);
-
+const FilterFundraising = ({
+  handleLoading,
+  resetFilter,
+  filter,
+  handleData,
+}) => {
   return (
     <Flex pl={5} pr={5} m={3} flexDirection="column">
       <Heading size={"md"} mb={3} color="customGray">

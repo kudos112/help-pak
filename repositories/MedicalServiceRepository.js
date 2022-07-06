@@ -57,10 +57,10 @@ class MedicalServiceRepository {
     }
   }
 
-  async getMedicalAssistances(name, city, serviceType) {
+  async getMedicalAssistances(name, city, serviceType, page) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.get}?name=${name}&city=${city}&serviceType=${serviceType}&enabled=true&deleted=false`
+        `${baseUrl}/${routes.get}?name=${name}&city=${city}&serviceType=${serviceType}&page=${page}&enabled=true&deleted=false`
       );
       if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;

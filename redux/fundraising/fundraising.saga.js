@@ -39,7 +39,8 @@ function* getFundraisingsSaga(action) {
       action.name,
       action.city,
       action.reason,
-      action.bankName
+      action.bankName,
+      action.page
     );
     yield put(getFundraisingsSuccess(data));
     if (action && action.callback) action.callback();
