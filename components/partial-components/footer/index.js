@@ -82,7 +82,10 @@ export default function LargeWithLogoLeft() {
     >
       <Container as={Stack} maxW={"6xl"} py={10}>
         <SimpleGrid
-          templateColumns={{sm: "1fr 1fr", md: "2fr 1fr 1.3fr 1.3fr 1.3fr"}}
+          templateColumns={{
+            sm: "1fr 1fr",
+            md: "2fr 1fr 1.3fr 1.3fr 1.3fr 1.3fr",
+          }}
           spacing={8}
         >
           <Stack spacing={6}>
@@ -98,8 +101,8 @@ export default function LargeWithLogoLeft() {
           </Stack>
           <Stack align={"flex-start"}>
             <ListHeader>Fundraising</ListHeader>
-            <Link href={"#"}>Request Fundraise</Link>
-            <Link href={"#"}>Fundraisings</Link>
+            <Link href={"/fundraising/request"}>Request Fundraise</Link>
+            <Link href={"/fundraising"}>Fundraisings</Link>
             {/* <Link href={"#"}>Tutorials</Link>
             <Link href={"#"}>Pricing</Link>
             <Link href={"#"}>Releases</Link> */}
@@ -126,6 +129,14 @@ export default function LargeWithLogoLeft() {
             <Link href={"/medical-assistance/request"}>
               List Your Medical Service
             </Link>
+            {/* <Link href={"#"}>Dribbble</Link> */}
+            {/* <Link href={"#"}>Instagram</Link> */}
+            {/* <Link href={"#"}>LinkedIn</Link> */}
+          </Stack>
+          <Stack align={"flex-start"}>
+            <ListHeader>NGO</ListHeader>
+            <Link href={"/ngo"}>NGOs</Link>
+            <Link href={"/ngo/request"}>List Your Medical Service</Link>
             {/* <Link href={"#"}>Dribbble</Link> */}
             {/* <Link href={"#"}>Instagram</Link> */}
             {/* <Link href={"#"}>LinkedIn</Link> */}

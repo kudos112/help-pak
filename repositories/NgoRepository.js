@@ -60,9 +60,7 @@ class NgoRepository {
 
   async getNgoByUserId(id) {
     try {
-      const request = await Repository.get(
-        `${baseUrl}/${routes.getByUserId}/${id}`
-      );
+      const request = await Repository.get(`${baseUrl}/${routes.getByUserId}`);
       return request.data;
     } catch (error) {
       throw getError(error);

@@ -1,13 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Hide,
-  Text,
-  chakra,
-  Link,
-} from "@chakra-ui/react";
+import {Box, Button, Flex, Heading, Hide, Text, chakra} from "@chakra-ui/react";
+import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import child from "~/public/images/child.png";
 import Image from "next/image";
@@ -28,14 +20,16 @@ export default function Home() {
             Giving is not just about making a donation, it’s about making a
             difference
           </p>
-          <Button className={styles.button}>Donate Now</Button>{" "}
+          <Link href="/fundraising/request">
+            <Button className={styles.button}>Donate Now</Button>
+          </Link>
         </div>
         <Hide breakpoint="(max-width: 1000px)">
           {" "}
           <div className={styles.img}>
             <Image
               src={child}
-              width="500"
+              width="600"
               height="500"
               objectFit="fill"
               alt="donation.jpg"

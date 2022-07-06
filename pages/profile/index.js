@@ -15,6 +15,8 @@ import {connect, useDispatch} from "react-redux";
 import Cards from "~/components/medical-assistance/medical-assistance-cards";
 import DonationItemCards from "~/components/donation-item/donation-item-cards";
 import MedicalCampCards from "~/components/medical-camp/medical-camp-cards";
+import FundraisingCards from "~/components/fundraising/fundraising-cards";
+import NGOCards from "~/components/ngo/ngo-cards";
 import RadioCards from "~/components/partial-components/profile/radio-filter.component";
 import {selectUser} from "~/redux/auth/auth.selector";
 import {getUsersMedicalCamp} from "~/redux/medical-camp/medical-camp.actions";
@@ -25,6 +27,10 @@ import {selectUsersMedicalAssistance} from "~/redux/medical-service/medical-serv
 import styles from "./profile.module.scss";
 import {selectUsersDonationItems} from "~/redux/donation-item/donation-item.selector";
 import {getUsersDonationItem} from "~/redux/donation-item/donation-item.actions";
+import {getUsersFundraising} from "../../redux/fundraising/fundraising.actions";
+import {selectUsersFundraisings} from "~/redux/fundraising/fundraising.selector";
+import {getUsersNgo} from "~/redux/ngo/ngo.actions";
+import {selectUsersNgos} from "~/redux/ngo/ngo.selector";
 // import {selectDonationItems} from "~/redux/donation-item/donation-item.selector";
 // import SmallFooter from "~/components/partial-components/small-footer";
 
@@ -33,18 +39,18 @@ const DonationItem = ({
   usersMedicalAssistance,
   usersMedicalCamp,
   usersDonationItems,
+  usersFundraisings,
+  usersNgos,
 }) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [mediumSized] = useMediaQuery("(max-width: 995px)");
-  const [currentView, setCurrentView] = useState(2);
+  const [currentView, setCurrentView] = useState(5);
   const router = useRouter();
 
-  const handleLoading = () => {
-    setLoading(false);
-  };
-
   useEffect(() => {
+    dispatch(getUsersFundraising(user?.id, () => setLoading(false)));
+    dispatch(getUsersNgo(user?.id, () => setLoading(false)));
     dispatch(getMedicalAssistanceByUserId(user?.id, () => setLoading(false)));
     dispatch(getUsersMedicalCamp(user?.id, () => setLoading(false)));
     dispatch(getUsersDonationItem(user?.id, () => setLoading(false)));
@@ -155,19 +161,23 @@ const DonationItem = ({
               <Flex m={8}>loading...</Flex>
             ) : (
               <div>
-                {(usersMedicalAssistance == null ||
-                  usersMedicalAssistance.data.length == 0) && (
+                {(usersFundraisings == null ||
+                  usersFundraisings?.length == 0) && (
                   <Flex m={3} h="100%" align="center" justify={"center"}>
-                    <Heading color="gray.400">No services Listed yet</Heading>
+                    <Heading color="gray.400">
+                      No Fundraisings Listed yet
+                    </Heading>
                   </Flex>
                 )}
-                {usersMedicalAssistance?.data && (
+                {usersFundraisings?.length > 0 && (
                   <Flex
                     ml={mediumSized ? 8 : 8}
                     mr={mediumSized ? 8 : 8}
                     direction="column"
                   >
-                    <Cards medicalAssistances={usersMedicalAssistance} />
+                    <FundraisingCards
+                      fundraisings={{data: usersFundraisings}}
+                    />
                   </Flex>
                 )}
               </div>
@@ -181,19 +191,18 @@ const DonationItem = ({
               <Flex m={8}>loading...</Flex>
             ) : (
               <div>
-                {(usersMedicalAssistance == null ||
-                  usersMedicalAssistance.data.length == 0) && (
+                {(usersNgos == null || usersNgos?.length == 0) && (
                   <Flex m={3} h="100%" align="center" justify={"center"}>
-                    <Heading color="gray.400">No services Listed yet</Heading>
+                    <Heading color="gray.400">No Ngos Listed yet</Heading>
                   </Flex>
                 )}
-                {usersMedicalAssistance?.data && (
+                {usersNgos?.length > 0 && (
                   <Flex
                     ml={mediumSized ? 8 : 8}
                     mr={mediumSized ? 8 : 8}
                     direction="column"
                   >
-                    <Cards medicalAssistances={usersMedicalAssistance} />
+                    <NGOCards ngos={{data: usersNgos}} />
                   </Flex>
                 )}
               </div>
@@ -248,6 +257,8 @@ const mapStateToProps = (state) => {
     usersMedicalAssistance: selectUsersMedicalAssistance(state),
     usersMedicalCamp: selectUsersMedicalCamp(state),
     usersDonationItems: selectUsersDonationItems(state),
+    usersFundraisings: selectUsersFundraisings(state),
+    usersNgos: selectUsersNgos(state),
   };
 };
 

@@ -2,6 +2,7 @@ import {SimpleGrid} from "@chakra-ui/react";
 import CarouselCard from "~/components/partial-components/fundraising/card-carousel.component";
 
 const Cards = ({fundraisings}) => {
+  console.log(fundraisings);
   return (
     <SimpleGrid
       columns={6}
