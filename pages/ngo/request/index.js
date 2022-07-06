@@ -90,7 +90,7 @@ const NGOPublishRequest = ({currentUser}) => {
     if (index < paymentMethods.length) {
       const newArr = paymentMethods.map((obj, ind) => {
         if (ind === index) {
-          return {...obj, [name]: [value]};
+          return {...obj, [name]: value};
         }
         return {...obj};
       });
