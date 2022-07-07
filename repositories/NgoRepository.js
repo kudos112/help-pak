@@ -70,7 +70,7 @@ class NgoRepository {
   async getNgos(name, city, reason, bankName, page) {
     try {
       const request = await Repository.get(
-        `${baseUrl}/${routes.get}?name=${name}&city=${city}&page=${page}`
+        `${baseUrl}/${routes.get}?published=true&name=${name}&city=${city}&page=${page}`
       );
       // if (request == undefined) throw new Error("Your session is expired");
       const {data} = request;

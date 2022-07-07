@@ -48,12 +48,7 @@ const ShowData = ({data, files}) => {
     }
   }, [images]);
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setDisabled(false);
-  //   dispatch(createMedicalAssistance(payload, handleLoading));
-  // };
+  
   const onSubmit = (e) => {
     e.preventDefault();
     // let errors = verifyPayload(payload);
@@ -84,7 +79,6 @@ const ShowData = ({data, files}) => {
 
   return (
     <div>
-      {JSON.stringify(payload)}
       <div className={styles.showData}>
         <div className={styles.leftDiv}>
           <p>Service Type: {data.serviceType}</p>
